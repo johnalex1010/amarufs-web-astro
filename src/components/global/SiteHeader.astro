@@ -1,0 +1,57 @@
+---
+import { navigation } from "../../data/navigation";
+import { site } from "../../data/site";
+
+interface Props {
+  activePage: string;
+}
+
+const { activePage } = Astro.props;
+const whatsappHref = `https://wa.me/${site.whatsapp}?text=Hola%20Amaru%20FS%2C%20quiero%20recibir%20informaci%C3%B3n.`;
+const isActive = (key: string) => activePage === key || (activePage.startsWith("propietarios-") && key === "propietarios");
+---
+
+<header class="site-header" data-header>
+  <a class="brand" href="/" aria-label="Ir al inicio de Amaru FS Inmobiliaria">
+    <img src={site.logoHorizontal} alt="Logo de Amaru FS Inmobiliaria" width="324" height="108" />
+  </a>
+  <button
+    class="nav-toggle"
+    type="button"
+    aria-label="Abrir menú"
+    aria-expanded="false"
+    aria-controls="main-nav"
+    data-nav-toggle
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <nav class="main-nav" id="main-nav" data-nav>
+    {
+      navigation.map((item) =>
+        item.children ? (
+          <div class="nav-item has-submenu">
+            <a class:list={{ "is-active": isActive(item.key) }} href={item.href} aria-current={activePage === item.key ? "page" : undefined}>
+              <i class={item.icon} aria-hidden="true"></i> {item.label} <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </a>
+            <div class="submenu" aria-label="Submenú de propietarios">
+              {item.children.map((child) => (
+                <a class:list={{ "is-active": activePage === child.key }} href={child.href} aria-current={activePage === child.key ? "page" : undefined}>
+                  <i class={child.icon} aria-hidden="true"></i> {child.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a class:list={{ "is-active": activePage === item.key }} href={item.href} aria-current={activePage === item.key ? "page" : undefined}>
+            <i class={item.icon} aria-hidden="true"></i> {item.label}
+          </a>
+        )
+      )
+    }
+    <a class="nav-cta" href={whatsappHref} target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+    </a>
+  </nav>
+</header>

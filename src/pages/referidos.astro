@@ -1,0 +1,299 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/pages/referidos.css";
+---
+
+<BaseLayout
+  title="Referidos Amaru FS Inmobiliaria | Recomienda propietarios y recibe recompensa por cierre"
+  description="Conoce el programa de referidos de Amaru FS Inmobiliaria. Recomienda propietarios con inmuebles para venta, arriendo o administración y participa por recompensa cuando haya cierre."
+  ogTitle="Programa de referidos Amaru FS Inmobiliaria"
+  ogDescription="Recomienda propietarios con inmuebles reales en Bogotá o Sabana y participa por recompensa cuando el negocio cierre."
+  activePage="referidos"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "index.html" },
+              { "@type": "ListItem", "position": 2, "name": "Referidos", "item": "referidos.html" }
+            ]
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Programa de referidos inmobiliarios Amaru FS Inmobiliaria",
+            "provider": {
+              "@type": "RealEstateAgent",
+              "name": "Amaru FS Inmobiliaria"
+            },
+            "areaServed": ["Bogotá", "Sabana"],
+            "description": "Programa para referir propietarios con inmuebles reales para venta, arriendo o administración. La recompensa aplica por cierre documentado según reglas internas."
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Qué se considera un referido válido?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Un propietario o contacto autorizado con un inmueble real para venta, arriendo o administración, ubicado inicialmente en Bogotá o Sabana y con datos mínimos verificables."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Cuándo se paga la recompensa?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "La recompensa aplica únicamente cuando el referido termina en un negocio cerrado y documentado por Amaru FS Inmobiliaria, según las reglas internas del programa."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Hay un valor definido de recompensa?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "El valor exacto debe aprobarse internamente antes de publicarse como promesa definitiva."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Qué pasa si dos personas refieren el mismo inmueble?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Se reconoce el primer registro verificable, según la trazabilidad de Amaru FS Inmobiliaria."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Puedo referir un inmueble para administración?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sí. El objetivo del referido puede ser venta, arriendo o administración, siempre que el contacto sea válido y autorizado."
+                }
+              }
+            ]
+          }
+    </script>
+  </Fragment>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Referidos inmobiliarios</p>
+        <h1>Refiere propietarios con inmuebles y participa por recompensa de cierre</h1>
+        <p class="hero__lead">Si conoces a alguien que quiere vender, arrendar o administrar un inmueble en Bogotá o
+          Sabana, puedes conectarlo con Amaru FS Inmobiliaria. Si el referido es válido y el negocio se cierra con
+          nosotros, puedes recibir una recompensa según las reglas del programa.</p>
+        <div class="hero__actions" aria-label="Acciones principales">
+          <a class="btn btn--primary"
+            href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20enviar%20un%20referido%20inmobiliario."
+            target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Enviar referido por
+            WhatsApp</a>
+          <a class="btn btn--light" href="#reglas"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Ver reglas
+            del programa</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-labelledby="hero-panel-title">
+        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
+        <h2 id="hero-panel-title">Tu contacto puede convertirse en una oportunidad real</h2>
+        <p>Recibimos referidos reales, con datos verificables y autorización para contactar al propietario. La recompensa
+          aplica únicamente por cierre documentado.</p>
+      </aside>
+    </section>
+
+    <section class="valid-referrals section-pad" aria-labelledby="valid-title">
+      <div class="section-heading">
+        <p class="eyebrow">A quién puedes referir</p>
+        <h2 id="valid-title">Referidos válidos para Amaru FS Inmobiliaria</h2>
+        <p>Puedes referir a un propietario o contacto autorizado que tenga un inmueble real para vender, arrendar o
+          administrar. El enfoque inicial está en Bogotá y Sabana, según viabilidad comercial y validación interna.</p>
+      </div>
+      <div class="referral-grid">
+        <article class="referral-card">
+          <i class="fa-solid fa-sign-hanging" aria-hidden="true"></i>
+          <h3>Propietarios que quieren vender</h3>
+        </article>
+        <article class="referral-card">
+          <i class="fa-solid fa-door-open" aria-hidden="true"></i>
+          <h3>Propietarios que quieren arrendar</h3>
+        </article>
+        <article class="referral-card">
+          <i class="fa-solid fa-building-user" aria-hidden="true"></i>
+          <h3>Propietarios que buscan administración inmobiliaria</h3>
+        </article>
+        <article class="referral-card">
+          <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+          <h3>Contactos autorizados para hablar del inmueble</h3>
+        </article>
+        <article class="referral-card referral-card--accent">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <h3>Aliados locales que conocen oportunidades reales</h3>
+        </article>
+      </div>
+    </section>
+
+    <section class="process section-pad" id="proceso" aria-labelledby="process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Cómo funciona</p>
+        <h2 id="process-title">Proceso del programa de referidos</h2>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
+          <h3>Envías el referido</h3>
+          <p>Compartes los datos mínimos del propietario y del inmueble por WhatsApp.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 02</span>
+          <h3>Validamos la información</h3>
+          <p>Revisamos si el contacto es real, si el inmueble existe y si el propietario está dispuesto a conversar.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 03</span>
+          <h3>Inicia el proceso comercial</h3>
+          <p>Contactamos al propietario, aclaramos dudas y definimos si el inmueble puede avanzar.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 04</span>
+          <h3>Se formaliza y publica</h3>
+          <p>Cuando corresponde, se realiza contrato y Amaru FS publica con información verificada.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> 05</span>
+          <h3>La recompensa aplica por cierre</h3>
+          <p>Se reconoce únicamente cuando el negocio se cierra y queda documentado según las reglas internas.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="checklist section-pad" aria-labelledby="data-title">
+      <div class="checklist__content">
+        <p class="eyebrow">Datos mínimos</p>
+        <h2 id="data-title">Qué información necesitamos</h2>
+        <p>Para conservar trazabilidad, el referido debe llegar con datos básicos que permitan verificar quién refiere,
+          quién es el propietario y cuál es el inmueble.</p>
+      </div>
+      <ul class="checklist__grid">
+        <li><i class="fa-solid fa-id-card" aria-hidden="true"></i> Nombre del referidor.</li>
+        <li><i class="fa-solid fa-phone" aria-hidden="true"></i> Teléfono del referidor.</li>
+        <li><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Nombre del propietario referido.</li>
+        <li><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i> Teléfono del propietario referido.</li>
+        <li><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Tipo de inmueble.</li>
+        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ciudad y sector.</li>
+        <li><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Objetivo: venta, arriendo o administración.</li>
+        <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Confirmación de autorización para contacto.</li>
+      </ul>
+    </section>
+
+    <section class="rules section-pad" id="reglas" aria-labelledby="rules-title">
+      <div class="rules__content">
+        <p class="eyebrow">Reglas básicas</p>
+        <h2 id="rules-title">Condiciones visibles del programa</h2>
+        <p>El referido debe ser verificable y corresponder a un propietario o contacto autorizado. Si dos personas
+          refieren el mismo inmueble, se reconoce el primer registro verificable. La recompensa no se paga por enviar
+          datos: aplica cuando el negocio se cierra con Amaru FS Inmobiliaria y cumple las condiciones internas.</p>
+      </div>
+      <div class="rules__cards" aria-label="Condiciones principales del programa de referidos">
+        <article>
+          <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
+          <h3>Trazabilidad</h3>
+          <p>El primer registro verificable define la prioridad del referido.</p>
+        </article>
+        <article>
+          <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
+          <h3>Cierre documentado</h3>
+          <p>La recompensa aplica por negocio cerrado, no por datos enviados.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="pending section-pad" aria-labelledby="pending-title">
+      <div class="pending__box">
+        <p class="eyebrow">Antes de publicación masiva</p>
+        <h2 id="pending-title">Condiciones que deben aprobarse internamente</h2>
+        <p>Antes de comunicar una promesa definitiva, Amaru FS Inmobiliaria debe aprobar el valor exacto de la
+          recompensa, el momento de pago, la evidencia requerida, el tratamiento de datos personales y el texto legal
+          final del programa.</p>
+      </div>
+    </section>
+
+    <section class="closing section-pad" aria-labelledby="closing-title">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2 id="closing-title">¿Conoces un propietario que quiere arrendar o vender?</h2>
+        <p>Envíanos los datos básicos y revisamos si el referido puede avanzar. La conversación inicial no garantiza
+          recompensa; la recompensa aplica por cierre documentado.</p>
+      </div>
+      <a class="btn btn--secondary"
+        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20enviar%20un%20referido%20inmobiliario.%20Tengo%20datos%20b%C3%A1sicos%20del%20propietario%20y%20del%20inmueble."
+        target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Enviar referido por
+        WhatsApp</a>
+    </section>
+
+    <section class="faq section-pad" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes sobre referidos</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Qué se considera un referido válido?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>Un propietario o contacto autorizado con un inmueble real para venta, arriendo o administración, ubicado
+              inicialmente en Bogotá o Sabana y con datos mínimos verificables.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Cuándo se paga la recompensa?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>La recompensa aplica únicamente cuando el referido termina en un negocio cerrado y documentado por Amaru
+              FS Inmobiliaria, según las reglas internas del programa.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Hay un valor definido de recompensa?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>El valor exacto debe aprobarse internamente antes de publicarse como promesa definitiva.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Qué pasa si dos personas refieren el mismo inmueble?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>Se reconoce el primer registro verificable, según la trazabilidad de Amaru FS Inmobiliaria.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Puedo referir un inmueble para administración?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>Sí. El objetivo del referido puede ser venta, arriendo o administración, siempre que el contacto sea
+              válido y autorizado.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

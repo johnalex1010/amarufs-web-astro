@@ -1,0 +1,50 @@
+---
+import SiteHeader from "../components/global/SiteHeader.astro";
+import SiteFooter from "../components/global/SiteFooter.astro";
+import { fontAwesomeHref, site } from "../data/site";
+import "../styles/tokens.css";
+import "../styles/utilities.css";
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  activePage: string;
+}
+
+const {
+  title,
+  description,
+  ogTitle = title,
+  ogDescription = description,
+  activePage
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={site.logoHorizontal} />
+    <link rel="icon" href="/images/favicon.webp" type="image/webp" />
+    <link rel="preload" href="/fonts/BebasNeue-Regular.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="/fonts/Outfit-Regular.woff" as="font" type="font/woff" crossorigin />
+    <link rel="stylesheet" href={fontAwesomeHref} />
+    <slot name="head" />
+  </head>
+  <body>
+    <SiteHeader activePage={activePage} />
+    <slot />
+    <SiteFooter />
+    <script>
+      import "../scripts/site-interactions.js";
+    </script>
+  </body>
+</html>

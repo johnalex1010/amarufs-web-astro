@@ -1,0 +1,242 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/pages/arrendatarios.css";
+---
+
+<BaseLayout
+  title="Arrendatarios | Consulta inmuebles en arriendo con Amaru FS Inmobiliaria"
+  description="Consulta inmuebles en arriendo con Amaru FS Inmobiliaria. Recibe características, fotos, videos y requisitos. La aseguradora realiza el estudio de viabilidad."
+  ogTitle="Arrendatarios Amaru FS Inmobiliaria"
+  ogDescription="Información clara para consultar inmuebles en arriendo y avanzar con requisitos."
+  activePage="arrendatarios"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "index.html" },
+              { "@type": "ListItem", "position": 2, "name": "Arrendatarios", "item": "arrendatarios.html" }
+            ]
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Amaru FS Inmobiliaria aprueba mi solicitud de arriendo?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación del proceso. La aseguradora realiza el estudio de viabilidad del interesado y su deudor."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Puedo pedir fotos o videos antes de avanzar?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sí. Por página web, WhatsApp o llamada se pueden compartir fotos, videos y características disponibles del inmueble."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Qué pasa después de revisar los requisitos?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Si decides continuar, se avanza al estudio de viabilidad con la aseguradora. Si todo sale bien, se prepara el contrato de arrendamiento con las cláusulas correspondientes."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿El inmueble siempre estará disponible?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "La disponibilidad debe confirmarse, porque puede cambiar según visitas, solicitudes y avances del proceso."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿El estudio con la aseguradora tiene algún coste?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sí, el costo lo dará la aseguradora según el valor del canon de arrendamiento. Amaru FS Inmobiliaria no recibe ningún dinero por ese concepto."
+                }
+              }
+            ]
+          }
+    </script>
+  </Fragment>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Arrendatarios en Bogotá y Sabana</p>
+        <h1>Encuentra inmuebles en arriendo con información clara y atención directa</h1>
+        <p class="hero__lead">Si te interesa un inmueble publicado por Amaru FS Inmobiliaria, te compartimos características, fotos, videos y requisitos. Cuando el proceso avanza, la aseguradora realiza el estudio de viabilidad del interesado y su deudor.</p>
+        <div class="hero__actions" aria-label="Acciones principales">
+          <a class="btn btn--primary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." target="_blank" rel="noopener"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
+          <a class="btn btn--light" href="#informacion"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Más información</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-labelledby="hero-panel-title">
+        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></span>
+        <h2 id="hero-panel-title">Antes de avanzar, revisa información real del inmueble</h2>
+        <p>Te orientamos con datos claros: precio, ubicación, características, fotos, videos y disponibilidad confirmada antes de continuar.</p>
+      </aside>
+    </section>
+
+    <section class="process section-pad" id="proceso" aria-labelledby="process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Paso a paso</p>
+        <h2 id="process-title">Cómo avanzar si te interesa un inmueble</h2>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 01</span>
+          <h3>Elige un inmueble disponible</h3>
+          <p>Revisa las características, fotos, ubicación y precio publicado.</p>
+        </li>
+        <li>
+          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 02</span>
+          <h3>Escríbenos por WhatsApp</h3>
+          <p>Indica cuál inmueble te interesa para confirmar disponibilidad y resolver dudas.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-images" aria-hidden="true"></i> 03</span>
+          <h3>Recibe información adicional</h3>
+          <p>Te compartimos características, fotos o videos disponibles para que evalúes si quieres continuar.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 04</span>
+          <h3>Revisa requisitos</h3>
+          <p>Si sigues interesado, te compartimos la información de requisitos necesarios para avanzar.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> 05</span>
+          <h3>Estudio de aseguradora</h3>
+          <p>La aseguradora, no Amaru FS Inmobiliaria, realiza el estudio de viabilidad del interesado y su deudor.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 06</span>
+          <h3>Contrato de arrendamiento</h3>
+          <p>Si el estudio y las condiciones avanzan correctamente, se realiza el contrato con las cláusulas correspondientes.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="questions section-pad" id="informacion" aria-labelledby="questions-title">
+      <div class="section-heading">
+        <p class="eyebrow">Qué puedes preguntar</p>
+        <h2 id="questions-title">Información útil antes de visitar o aplicar</h2>
+      </div>
+      <ul class="info-grid">
+        <li><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Disponibilidad actual del inmueble.</li>
+        <li><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Precio o canon de arriendo.</li>
+        <li><i class="fa-solid fa-receipt" aria-hidden="true"></i> Valor de administración, si aplica.</li>
+        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ubicación y referencias del sector.</li>
+        <li><i class="fa-solid fa-camera" aria-hidden="true"></i> Fotos y videos disponibles.</li>
+        <li><i class="fa-solid fa-door-open" aria-hidden="true"></i> Condiciones de visita.</li>
+        <li><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> Requisitos generales para iniciar el proceso.</li>
+        <li><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Siguiente paso con aseguradora.</li>
+      </ul>
+    </section>
+
+    <section class="requirements section-pad" aria-labelledby="requirements-title">
+      <div class="requirements__left">
+        <div class="requirements__content">
+          <p class="eyebrow">Requisitos para aplicar</p>
+          <h2 id="requirements-title">Requisitos para aplicar a un inmueble en arriendo</h2>
+          <p>Cuando confirmas que un inmueble te interesa y quieres avanzar, Amaru FS Inmobiliaria te comparte la información de requisitos necesarios para iniciar el proceso. Estos requisitos deben revisarse antes del estudio de viabilidad y pueden variar según el inmueble, el canon de arrendamiento y las condiciones de la aseguradora.</p>
+          <p>La entrega de requisitos no garantiza aprobación. La aseguradora es quien realiza el estudio de viabilidad del interesado y su deudor.</p>
+        </div>
+        <figure class="requirements__image">
+          <img src="/images/arrendatarios-requisitos.jpg" alt="Imagen de apoyo de Amaru FS Inmobiliaria para inmuebles en arriendo" width="1500" height="1500" loading="lazy">
+        </figure>
+      </div>
+      <aside class="requirements__pending" aria-labelledby="pending-title">
+        <h3 id="pending-title">Pendiente por completar internamente</h3>
+        <ul>
+          <li>Documentos del arrendatario: <span>[AGREGAR REQUISITOS DEL ARRENDATARIO]</span></li>
+          <li>Documentos del deudor o codeudor: <span>[AGREGAR REQUISITOS DEL DEUDOR O CODEUDOR]</span></li>
+          <li>Requisitos de ingresos: <span>[AGREGAR CONDICIONES DE INGRESOS]</span></li>
+          <li>Formularios o formatos necesarios: <span>[AGREGAR FORMULARIOS]</span></li>
+          <li>Costo del estudio de aseguradora, si aplica: <span>[AGREGAR CONDICIÓN O RANGO APROBADO]</span></li>
+          <li>Tiempo estimado de respuesta: <span>[AGREGAR TIEMPO ESTIMADO]</span></li>
+          <li>Exclusiones o casos especiales: <span>[AGREGAR EXCLUSIONES]</span></li>
+          <li>Texto legal o comercial aprobado: <span>[AGREGAR TEXTO APROBADO]</span></li>
+        </ul>
+        <p>No publicar requisitos definitivos hasta que estén aprobados por Amaru FS Inmobiliaria y alineados con las condiciones vigentes de la aseguradora.</p>
+      </aside>
+    </section>
+
+    <section class="roles section-pad" aria-labelledby="roles-title">
+      <div class="section-heading">
+        <p class="eyebrow">Roles del proceso</p>
+        <h2 id="roles-title">Quién hace qué en el proceso de arriendo</h2>
+      </div>
+      <div class="role-grid">
+        <article>
+          <i class="fa-solid fa-house-user" aria-hidden="true"></i>
+          <h3>Amaru FS Inmobiliaria</h3>
+          <p>Atiende tu interés inicial, comparte información del inmueble, orienta sobre requisitos y coordina los pasos comerciales relacionados con el inmueble.</p>
+        </article>
+        <article>
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+          <h3>Aseguradora</h3>
+          <p>Realiza el estudio de viabilidad del interesado y su deudor. Ese estudio es independiente del acompañamiento comercial de Amaru FS Inmobiliaria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="trust section-pad" aria-labelledby="trust-title">
+      <div class="trust__box">
+        <p class="eyebrow">Confianza para tomar decisión</p>
+        <h2 id="trust-title">Información clara antes de comprometerte</h2>
+        <p>Cada inmueble debe presentar información verificable para reducir dudas: fotos, videos, características, ubicación, precio y condiciones relevantes. Si algo necesita confirmación, te lo diremos antes de avanzar.</p>
+      </div>
+    </section>
+
+    <section class="closing section-pad" aria-labelledby="closing-title">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2 id="closing-title">¿Ya viste un inmueble que te interesa?</h2>
+        <p>Escríbenos por WhatsApp con el nombre o enlace del inmueble. Confirmamos información disponible y te indicamos los requisitos para continuar.</p>
+      </div>
+      <a class="btn btn--secondary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20consultar%20un%20inmueble%20en%20arriendo." target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar inmuebles</a>
+    </section>
+
+    <section class="faq section-pad" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes de arrendatarios</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false"><span>¿Amaru FS Inmobiliaria aprueba mi solicitud de arriendo?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+          <div class="faq-item__body"><p>No. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación del proceso. La aseguradora realiza el estudio de viabilidad del interesado y su deudor.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false"><span>¿Puedo pedir fotos o videos antes de avanzar?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+          <div class="faq-item__body"><p>Sí. Por página web, WhatsApp o llamada se pueden compartir fotos, videos y características disponibles del inmueble.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false"><span>¿Qué pasa después de revisar los requisitos?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+          <div class="faq-item__body"><p>Si decides continuar, se avanza al estudio de viabilidad con la aseguradora. Si todo sale bien, se prepara el contrato de arrendamiento con las cláusulas correspondientes.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false"><span>¿El inmueble siempre estará disponible?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+          <div class="faq-item__body"><p>La disponibilidad debe confirmarse, porque puede cambiar según visitas, solicitudes y avances del proceso.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false"><span>¿El estudio con la aseguradora tiene algún coste?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+          <div class="faq-item__body"><p>Sí, el costo lo dará la aseguradora según el valor del canon de arrendamiento. Amaru FS Inmobiliaria no recibe ningún dinero por ese concepto.</p></div>
+        </article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

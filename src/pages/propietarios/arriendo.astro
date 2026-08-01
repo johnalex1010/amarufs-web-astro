@@ -1,0 +1,328 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/pages/propietarios-arriendo.css";
+---
+
+<BaseLayout
+  title="Arrienda tu inmueble con Amaru FS | Propietarios en Bogotá y Sabana"
+  description="Arrienda tu inmueble con Amaru FS. Validamos la propiedad, tomamos fotos y videos, publicamos después del contrato y orientamos el proceso con aseguradora."
+  ogTitle="Arrienda tu inmueble con Amaru FS"
+  ogDescription="Proceso claro para propietarios que quieren arrendar inmuebles en Bogotá y Sabana."
+  activePage="propietarios-arriendo"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "index.html"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Propietarios",
+                "item": "propietarios.html"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Arriendo",
+                "item": "/propietarios/arriendo/"
+              }
+            ]
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Arriendo de inmuebles con acompañamiento inmobiliario",
+            "provider": {
+              "@type": "RealEstateAgent",
+              "name": "Amaru FS Inmobiliaria"
+            },
+            "areaServed": ["Bogotá", "Sabana"],
+            "serviceType": "Validación, publicación y acompañamiento comercial para inmuebles en arriendo"
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Amaru FS Inmobiliaria publica mi inmueble en arriendo de inmediato?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿El propietario publica el inmueble directamente?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Quién estudia al arrendatario?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "La aseguradora realiza el estudio de viabilidad del interesado y su deudor. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación comercial."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Qué porcentaje cobra la inmobiliaria por arrendar?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "La información de cobro debe validarse internamente y quedar alineada con el contrato usado para propietarios arrendadores."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Amaru FS garantiza que el inmueble se arrienda de forma inmediata?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Amaru FS acompaña la publicación y atención de interesados, pero no promete arriendo inmediato ni cierre garantizado."
+                }
+              }
+            ]
+          }
+    </script>
+  </Fragment>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Propietarios arrendadores en Bogotá y Sabana</p>
+        <h1>Arrienda tu inmueble con validación, publicación y seguimiento comercial</h1>
+        <p class="hero__lead">En Amaru FS acompañamos a propietarios que quieren arrendar con un proceso claro: resolvemos dudas, visitamos el inmueble, registramos fotos y videos, verificamos la ficha técnica, formalizamos el contrato y publicamos con información validada.</p>
+        <div class="hero__actions" aria-label="Acciones principales">
+          <a class="btn btn--primary"
+            href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20arrendar%20mi%20inmueble."
+            target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Quiero arrendar mi inmueble</a>
+          <a class="btn btn--light" href="#proceso"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Conocer el proceso de arriendo</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-labelledby="hero-panel-title">
+        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-door-open"></i></span>
+        <h2 id="hero-panel-title">Tu inmueble en arriendo necesita interesados reales y requisitos claros</h2>
+        <p>Amaru FS acompaña la publicación y la atención inicial. La aseguradora, no la inmobiliaria, realiza el estudio de viabilidad del interesado y su deudor.</p>
+      </aside>
+    </section>
+
+    <section class="audience section-pad" aria-labelledby="audience-title">
+      <div class="section-heading">
+        <p class="eyebrow">Ruta de arriendo</p>
+        <h2 id="audience-title">Esta ruta es para propietarios que quieren arrendar</h2>
+      </div>
+      <div class="audience__layout">
+        <div class="audience__box">
+          <i class="fa-solid fa-house-circle-check" aria-hidden="true"></i>
+          <p>Esta página es para propietarios con inmuebles disponibles para arriendo en Bogotá o Sabana. El proceso inicia con una conversación, continúa con validación del inmueble y avanza a publicación solo después de formalizar el acuerdo con Amaru FS.</p>
+        </div>
+        <div class="audience__summary" aria-label="Condiciones para arrendar con Amaru FS Inmobiliaria">
+          <article>
+            <i class="fa-solid fa-building" aria-hidden="true"></i>
+            <span>Inmueble validado</span>
+          </article>
+          <article>
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            <span>Aseguradora</span>
+          </article>
+          <article>
+            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+            <span>Contrato formal</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="process section-pad" id="proceso" aria-labelledby="process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Proceso de arriendo</p>
+        <h2 id="process-title">Cómo ayudamos a arrendar tu inmueble</h2>
+      </div>
+      <ol class="timeline timeline--rent">
+        <li>
+          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
+          <h3>Contacto inicial</h3>
+          <p>Nos escribes por WhatsApp o llamada y nos cuentas qué inmueble quieres arrendar, dónde está ubicado y qué condiciones iniciales tienes.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
+          <h3>Aclaración de dudas</h3>
+          <p>Explicamos el alcance del servicio, los pasos para publicar y qué información debe estar clara antes de recibir interesados.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
+          <h3>Visita al inmueble</h3>
+          <p>Amaru FS visita la propiedad para tomar fotos, grabar videos y revisar características relevantes.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 04</span>
+          <h3>Ficha técnica</h3>
+          <p>Organizamos canon, administración, área, distribución, ubicación, estado y condiciones de visita.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 05</span>
+          <h3>Contrato</h3>
+          <p>Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 06</span>
+          <h3>Publicación</h3>
+          <p>Amaru FS Inmobiliaria publica el inmueble con información verificada y atiende consultas de interesados por canales directos.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> 07</span>
+          <h3>Aseguradora</h3>
+          <p>Cuando un interesado avanza, se comparten requisitos y la aseguradora estudia la viabilidad del interesado y su deudor.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-file-contract" aria-hidden="true"></i> 08</span>
+          <h3>Contrato de arriendo</h3>
+          <p>Si el proceso avanza correctamente, se realiza el contrato de arrendamiento con las cláusulas correspondientes.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="commission section-pad" aria-labelledby="commission-title">
+      <div class="commission__content">
+        <p class="eyebrow">Condiciones de cobro</p>
+        <h2 id="commission-title">Porcentajes y condiciones de cobro por arriendo</h2>
+        <p>Los porcentajes, comisiones o condiciones de cobro por arriendo deben explicarse de forma clara antes de publicar el inmueble y quedar soportados en el acuerdo correspondiente entre propietario e inmobiliaria.</p>
+      </div>
+      <aside class="commission__pending" aria-labelledby="commission-pending-title">
+        <h3 id="commission-pending-title">Pendiente por completar internamente</h3>
+        <ul>
+          <li>Porcentaje o comisión que cobra Amaru FS Inmobiliaria por arriendo: <span>8%.</span></li>
+          <li>Base sobre la que se calcula el cobro: <span>Sobre el valor del canon de arriendo del inmueble.</span></li>
+          <li>Momento en que se causa o paga el cobro: <span>Mensualmente, una vez se arriende el inmueble.</span></li>
+          <li>Distribución entre partes, si aplica: <span>Aseguradora 2.5% y Amaru FS Inmobiliaria 8%, para un total de 10.5% sobre el canon.</span></li>
+        </ul>
+        <p>No publicar porcentajes como información definitiva hasta que estén aprobados por Amaru FS y alineados con el contrato usado para propietarios arrendadores.</p>
+      </aside>
+    </section>
+
+    <section class="checklist section-pad" aria-labelledby="checklist-title">
+      <div class="checklist__content">
+        <p class="eyebrow">Antes de arrendar</p>
+        <h2 id="checklist-title">Información útil antes de arrendar</h2>
+        <p>Mientras más clara sea la información del inmueble, más fácil será orientar interesados reales, resolver dudas y avanzar hacia requisitos sin generar expectativas incorrectas.</p>
+      </div>
+      <ul class="checklist__grid">
+        <li><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Tipo de inmueble.</li>
+        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ciudad, sector y referencias de ubicación.</li>
+        <li><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Canon esperado.</li>
+        <li><i class="fa-solid fa-receipt" aria-hidden="true"></i> Valor de administración, si aplica.</li>
+        <li><i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> Área, habitaciones, baños y parqueadero.</li>
+        <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Estado actual del inmueble.</li>
+        <li><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Disponibilidad para fotos, videos y visitas.</li>
+        <li><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Condiciones especiales del arriendo, si existen.</li>
+      </ul>
+    </section>
+
+    <section class="deliverables section-pad" aria-labelledby="roles-title">
+      <div class="section-heading">
+        <p class="eyebrow">Responsabilidades claras</p>
+        <h2 id="roles-title">Qué hace Amaru FS y qué hace la aseguradora</h2>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-house-user"></i></span>
+          <h3>Amaru FS Inmobiliaria</h3>
+          <p>Valida el inmueble, organiza la ficha, publica la propiedad, atiende interesados, comparte información disponible y orienta sobre requisitos.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+          <h3>Aseguradora</h3>
+          <p>Realiza el estudio de viabilidad del interesado y su deudor. Esta validación no la hace Amaru FS Inmobiliaria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="transparency section-pad" aria-labelledby="transparency-title">
+      <div class="transparency__box">
+        <p class="eyebrow">Transparencia antes de publicar</p>
+        <h2 id="transparency-title">Qué no promete Amaru FS Inmobiliaria</h2>
+        <p>Amaru FS Inmobiliaria no garantiza aprobación de arrendatarios, arriendo inmediato ni tiempos exactos de cierre. El compromiso es publicar información verificada, atender interesados y acompañar el proceso con claridad.</p>
+      </div>
+    </section>
+
+    <section class="closing section-pad" aria-labelledby="closing-title">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2 id="closing-title">¿Quieres arrendar tu inmueble?</h2>
+        <p>Cuéntanos dónde está ubicado, qué tipo de inmueble es y cuál es el canon esperado. Revisamos el caso y te indicamos el siguiente paso.</p>
+      </div>
+      <a class="btn btn--secondary"
+        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20el%20arriendo%20de%20mi%20inmueble."
+        target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Iniciar arriendo por WhatsApp</a>
+    </section>
+
+    <section class="faq section-pad" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes sobre arriendo de inmuebles</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Amaru FS Inmobiliaria publica mi inmueble en arriendo de inmediato?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿El propietario publica el inmueble directamente?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>No. La publicación la realiza Amaru FS después de validar el inmueble y formalizar el acuerdo correspondiente.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Quién estudia al arrendatario?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>La aseguradora realiza el estudio de viabilidad del interesado y su deudor. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación comercial.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Qué porcentaje cobra la inmobiliaria por arrendar?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>El documento base indica 8% sobre el valor del canon, pero esta información debe validarse internamente y quedar alineada con el contrato antes de publicarse como dato definitivo.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Amaru FS garantiza que el inmueble se arrienda de forma inmediata?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>No. Amaru FS acompaña la publicación y atención de interesados, pero no promete arriendo inmediato ni cierre garantizado.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

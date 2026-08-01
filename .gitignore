@@ -1,0 +1,25 @@
+# Dependencias
+node_modules/
+
+# Build local
+dist/
+.astro/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Logs y temporales
+*.log
+*.tmp
+*.temp
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Vercel se configurara al final del proceso, cuando se autorice
+.vercel/

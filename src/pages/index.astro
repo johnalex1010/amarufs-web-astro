@@ -1,0 +1,266 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/pages/home.css";
+---
+
+<BaseLayout
+  title="Amaru FS Inmobiliaria | Arriendo y venta de inmuebles en Bogotá y Sabana"
+  description="Arrienda, vende o encuentra inmuebles con Amaru FS Inmobiliaria. Acompañamiento directo, fotos reales, ficha clara, seguimiento por WhatsApp y proceso validado en Bogotá y Sabana."
+  ogTitle="Amaru FS Inmobiliaria en Bogotá y Sabana"
+  ogDescription="Inmuebles reales, atención directa y acompañamiento para propietarios, arrendatarios y referidos."
+  activePage="inicio"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "RealEstateAgent",
+            "name": "Amaru FS Inmobiliaria",
+            "areaServed": ["Bogotá", "Sabana"],
+            "telephone": "+57 315 877 4545",
+            "url": "https://www.amarufs.co/",
+            "logo": "/images/logo-horizontal-fondo-blanco.png",
+            "sameAs": []
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Amaru FS Inmobiliaria publica directamente mi inmueble?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sí, pero solo después de validar el inmueble, registrar fotos y videos, verificar la ficha técnica y formalizar el contrato con el propietario. El propietario no publica directamente desde un usuario propio."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Dónde trabaja Amaru FS Inmobiliaria?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "El enfoque inicial está en Bogotá y Sabana, según disponibilidad, viabilidad comercial y validación interna del inmueble."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Cómo contacto a Amaru FS Inmobiliaria?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "El canal principal es WhatsApp 315 877 4545, porque permite resolver dudas, compartir información del inmueble y coordinar pasos con rapidez."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Qué pasa si quiero tomar un inmueble en arriendo?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Amaru FS Inmobiliaria comparte información, fotos, videos y requisitos. La aseguradora realiza el estudio de viabilidad del interesado y su deudor."
+                }
+              }
+            ]
+          }
+    </script>
+  </Fragment>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Inmobiliaria en Bogotá y Sabana</p>
+        <h1>Arrienda o vende tu inmueble con acompañamiento directo en Bogotá y Sabana</h1>
+        <p class="hero__lead">En Amaru FS Inmobiliaria ayudamos a propietarios, arrendatarios y compradores con
+          información clara, fotos reales, seguimiento por WhatsApp y un proceso pensado para generar confianza desde el
+          primer contacto.</p>
+        <div class="hero__actions" aria-label="Acciones principales">
+          <a class="btn btn--primary"
+            href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20validar%20mi%20inmueble."
+            target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Quiero validar mi
+            inmueble</a>
+          <a class="btn btn--light" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20consultar%20inmuebles%20disponibles." target="_blank" rel="noopener"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver
+            inmuebles disponibles</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-labelledby="hero-panel-title">
+        <img src="/images/inmueble-roble.jpg" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+        <h2 id="hero-panel-title">Inmuebles reales, proceso claro y contacto directo</h2>
+        <p>Si tienes un inmueble para arrendar o vender, revisamos tu caso, visitamos la propiedad, verificamos la ficha
+          técnica y publicamos después del contrato con la inmobiliaria.</p>
+      </aside>
+    </section>
+
+    <section class="intro section-pad" aria-labelledby="intro-title">
+      <div class="section-heading">
+        <p class="eyebrow">Atención directa</p>
+        <h2 id="intro-title">Un proceso claro para cada intención inmobiliaria</h2>
+      </div>
+      <div class="intro__grid">
+        <p><i class="fa-solid fa-key" aria-hidden="true"></i> Si buscas vivienda o una oportunidad de compra, te
+          compartimos información del inmueble disponible y te orientamos antes de avanzar.</p>
+        <p><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> Si quieres publicar tu inmueble, coordinamos
+          los pasos necesarios para validar información, material visual, condiciones y contrato.</p>
+      </div>
+    </section>
+
+    <section class="routes section-pad" id="rutas" aria-labelledby="routes-title">
+      <div class="section-heading">
+        <p class="eyebrow">Rutas principales</p>
+        <h2 id="routes-title">¿Qué necesitas hacer hoy?</h2>
+      </div>
+      <div class="card-grid">
+        <article class="route-card">
+          <span class="route-card__icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span>
+          <h3>Propietarios</h3>
+          <p>Tienes un inmueble para vender, arrendar o administrar. Te explicamos el proceso, validamos la información
+            y publicamos la propiedad.</p>
+          <a href="/propietarios/">Soy propietario <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+        <article class="route-card">
+          <span class="route-card__icon" aria-hidden="true"><i class="fa-solid fa-door-open"></i></span>
+          <h3>Arrendatarios</h3>
+          <p>Estás interesado en un inmueble disponible. Te compartimos características, fotos, videos y requisitos. La
+            aseguradora realiza el estudio de viabilidad.</p>
+          <a href="/arrendatarios/">Busco inmueble en arriendo <i class="fa-solid fa-arrow-right"
+              aria-hidden="true"></i></a>
+        </article>
+        <article class="route-card">
+          <span class="route-card__icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
+          <h3>Referidos</h3>
+          <p>Conoces a alguien que quiere vender, arrendar o administrar un inmueble. Registra el referido y participa
+            en la recompensa por cierre.</p>
+          <a href="/referidos/">Referir un propietario <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="process section-pad" id="proceso" aria-labelledby="process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Proceso para propietarios</p>
+        <h2 id="process-title">Así validamos y publicamos tu inmueble</h2>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
+          <h3>Contacto inicial</h3>
+          <p>Nos escribes por WhatsApp o nos llamas para contarnos si quieres vender, arrendar o administrar tu
+            inmueble.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
+          <h3>Aclaración de dudas</h3>
+          <p>Revisamos tu caso por llamada o reunión presencial para explicar condiciones, alcance y pasos.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
+          <h3>Visita y material real</h3>
+          <p>Nos acercamos al inmueble para tomar fotos, grabar video y verificar la ficha técnica.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 04</span>
+          <h3>Contrato con la inmobiliaria</h3>
+          <p>Antes de publicar, debe existir un acuerdo formal entre propietario y Amaru FS Inmobiliaria.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 05</span>
+          <h3>Publicación y seguimiento</h3>
+          <p>Amaru FS Inmobiliaria publica el inmueble con características verificadas y atiende a los interesados por
+            canales directos.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="properties section-pad" id="inmuebles" aria-labelledby="properties-title">
+      <div class="properties__content">
+        <p class="eyebrow">Inmuebles disponibles</p>
+        <h2 id="properties-title">Propiedades disponibles para visitar, arrendar o comprar</h2>
+        <p>Consulta inmuebles reales con información de precio, ubicación, características, fotos y disponibilidad. Si
+          alguno te interesa, escríbenos por WhatsApp para confirmar detalles y avanzar al siguiente paso.</p>
+        <a class="btn btn--primary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20consultar%20inmuebles%20disponibles." target="_blank" rel="noopener"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Ver
+          todos los inmuebles</a>
+      </div>
+      <div class="properties__visual" style="background-image: linear-gradient(180deg, rgba(11, 34, 83, 0.16), rgba(11, 34, 83, 0.48)), url('/images/inmueble-roble.jpg');" aria-label="Espacio editorial con fotograf?a real de inmueble">
+        <div class="property-window">
+          <span><i class="fa-solid fa-image" aria-hidden="true"></i></span>
+          <strong>Fotos reales</strong>
+          <p>Fachada, sala o espacio principal del inmueble verificado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust section-pad" aria-labelledby="trust-title">
+      <div class="trust__box">
+        <p class="eyebrow">Confianza sin prometer de más</p>
+        <h2 id="trust-title">Una inmobiliaria cercana, clara y enfocada en resultados</h2>
+        <p>Amaru FS Inmobiliaria está construyendo una cartera inmobiliaria con base en confianza, atención directa y
+          contenido verificable. No competimos por prometer volumen: trabajamos para que cada inmueble publicado tenga
+          información útil y seguimiento comercial.</p>
+      </div>
+    </section>
+
+    <section class="referrals section-pad" id="referidos" aria-labelledby="referrals-title">
+      <div>
+        <p class="eyebrow">Programa de referidos</p>
+        <h2 id="referrals-title">¿Conoces un propietario que quiere arrendar o vender?</h2>
+        <p>Puedes ayudarnos a conectar con propietarios en Bogotá y Sabana. El programa de referidos funciona con
+          recompensa por cierre: el referido debe ser verificable y el negocio debe cerrarse con Amaru FS Inmobiliaria
+          según las reglas internas del programa.</p>
+      </div>
+      <a class="btn btn--secondary"
+        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20conocer%20el%20programa%20de%20referidos."
+        target="_blank" rel="noopener"><i class="fa-solid fa-handshake" aria-hidden="true"></i> Conocer programa de
+        referidos</a>
+    </section>
+
+    <section class="faq section-pad" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes sobre Amaru FS Inmobiliaria</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Amaru FS Inmobiliaria publica directamente mi inmueble?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>Sí, pero solo después de validar el inmueble, registrar fotos y videos, verificar la ficha técnica y
+              formalizar el contrato con el propietario. El propietario no publica directamente desde un usuario propio.
+            </p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Dónde trabaja Amaru FS Inmobiliaria?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>El enfoque inicial está en Bogotá y Sabana, según disponibilidad, viabilidad comercial y validación
+              interna del inmueble.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Cómo contacto a Amaru FS Inmobiliaria?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>El canal principal es WhatsApp 315 877 4545, porque permite resolver dudas, compartir información del
+              inmueble y coordinar pasos con rapidez.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Qué pasa si quiero tomar un inmueble en arriendo?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>Amaru FS Inmobiliaria comparte información, fotos, videos y requisitos. La aseguradora realiza el estudio
+              de viabilidad del interesado y su deudor.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

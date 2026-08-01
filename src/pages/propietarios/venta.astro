@@ -1,0 +1,322 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/pages/propietarios-venta.css";
+---
+
+<BaseLayout
+  title="Vende tu inmueble con Amaru FS Inmobiliaria | Propietarios en Bogotá y Sabana"
+  description="Vende tu inmueble con acompañamiento de Amaru FS Inmobiliaria. Validamos la propiedad, registramos fotos y videos, verificamos la ficha técnica y publicamos después del contrato."
+  ogTitle="Vende tu inmueble con Amaru FS Inmobiliaria"
+  ogDescription="Proceso claro para propietarios que quieren vender inmuebles en Bogotá y Sabana."
+  activePage="propietarios-venta"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "index.html"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Propietarios",
+                "item": "propietarios.html"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Venta",
+                "item": "/propietarios/venta/"
+              }
+            ]
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Venta de inmuebles con acompañamiento inmobiliario",
+            "provider": {
+              "@type": "RealEstateAgent",
+              "name": "Amaru FS Inmobiliaria"
+            },
+            "areaServed": ["Bogotá", "Sabana"],
+            "serviceType": "Acompañamiento comercial para venta de inmuebles"
+          }
+    </script>
+    <script type="application/ld+json">
+      {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Amaru FS Inmobiliaria publica mi inmueble en venta de inmediato?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿El propietario publica el inmueble directamente?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Qué porcentaje cobra la inmobiliaria por vender?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "La información de comisión debe validarse internamente y quedar alineada con el contrato usado para propietarios vendedores."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Amaru FS Inmobiliaria garantiza la venta?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Amaru FS Inmobiliaria acompaña la publicación y el seguimiento comercial, pero no promete cierres garantizados."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Dónde trabaja Amaru FS Inmobiliaria la venta de inmuebles?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "El enfoque inicial está en Bogotá y Sabana, sujeto a validación interna y viabilidad comercial del inmueble."
+                }
+              }
+            ]
+          }
+    </script>
+  </Fragment>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">Propietarios vendedores en Bogotá y Sabana</p>
+        <h1>Vende tu inmueble con acompañamiento inmobiliario en Bogotá y Sabana</h1>
+        <p class="hero__lead">En Amaru FS Inmobiliaria te acompañamos desde la primera conversación hasta la publicación formal del inmueble: aclaramos dudas, visitamos la propiedad, registramos fotos y videos, verificamos la ficha técnica y publicamos después del contrato con la inmobiliaria.</p>
+        <div class="hero__actions" aria-label="Acciones principales">
+          <a class="btn btn--primary"
+            href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20vender%20mi%20inmueble."
+            target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Quiero vender mi inmueble</a>
+          <a class="btn btn--light" href="#proceso"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Conocer el proceso de venta</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-labelledby="hero-panel-title">
+        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-sign-hanging"></i></span>
+        <h2 id="hero-panel-title">Tu inmueble en venta necesita información clara y seguimiento comercial</h2>
+        <p>Organizamos la información comercial para que los interesados entiendan ubicación, características, precio, disponibilidad y siguiente paso de contacto.</p>
+      </aside>
+    </section>
+
+    <section class="audience section-pad" aria-labelledby="audience-title">
+      <div class="section-heading">
+        <p class="eyebrow">Ruta de venta</p>
+        <h2 id="audience-title">Esta ruta es para propietarios que quieren vender</h2>
+      </div>
+      <div class="audience__layout">
+        <div class="audience__box">
+          <i class="fa-solid fa-house-circle-check" aria-hidden="true"></i>
+          <p>Esta página es para propietarios de apartamentos, casas, locales u otros inmuebles que quieren vender con una inmobiliaria que acompañe el proceso comercial. El enfoque inicial de Amaru FS Inmobiliaria está en Bogotá y Sabana, sujeto a validación del inmueble y viabilidad comercial.</p>
+        </div>
+        <div class="audience__summary" aria-label="Condiciones para vender con Amaru FS Inmobiliaria">
+          <article>
+            <i class="fa-solid fa-building" aria-hidden="true"></i>
+            <span>Inmueble real</span>
+          </article>
+          <article>
+            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+            <span>Contrato previo</span>
+          </article>
+          <article>
+            <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
+            <span>Publicación verificada</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="process section-pad" id="proceso" aria-labelledby="process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Proceso de venta</p>
+        <h2 id="process-title">Cómo vendemos tu inmueble</h2>
+      </div>
+      <ol class="timeline timeline--sale">
+        <li>
+          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
+          <h3>Contacto inicial</h3>
+          <p>Nos escribes por WhatsApp o llamada y nos cuentas qué tipo de inmueble quieres vender, dónde está ubicado y cuál es tu objetivo.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
+          <h3>Aclaración de dudas</h3>
+          <p>Revisamos contigo el proceso, la información necesaria, las condiciones comerciales y los pasos antes de publicar.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
+          <h3>Visita al inmueble</h3>
+          <p>Amaru FS Inmobiliaria se acerca al inmueble para conocerlo, tomar fotos, grabar videos y validar características relevantes.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 04</span>
+          <h3>Ficha técnica</h3>
+          <p>Organizamos área, ubicación, distribución, estado, características, precio esperado, disponibilidad y condiciones de venta.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 05</span>
+          <h3>Contrato</h3>
+          <p>Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 06</span>
+          <h3>Publicación</h3>
+          <p>La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad.</p>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-handshake" aria-hidden="true"></i> 07</span>
+          <h3>Interesados reales</h3>
+          <p>Atendemos consultas, compartimos información del inmueble y coordinamos los siguientes pasos comerciales.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="commission section-pad" aria-labelledby="commission-title">
+      <div class="commission__content">
+        <p class="eyebrow">Comisión inmobiliaria</p>
+        <h2 id="commission-title">Porcentajes y comisión por venta</h2>
+        <p>La comisión inmobiliaria y su distribución deben quedar claras antes de iniciar la publicación formal del inmueble. Esta información debe explicarse al propietario durante la conversación comercial y quedar soportada en el acuerdo correspondiente.</p>
+      </div>
+      <aside class="commission__pending" aria-labelledby="commission-pending-title">
+        <h3 id="commission-pending-title">Pendiente por completar internamente</h3>
+        <ul>
+          <li>Porcentaje o comisión que cobra Amaru FS Inmobiliaria por venta: <span>3% sobre el valor de la venta.</span></li>
+          <li>Base sobre la que se calcula la comisión: <span>Valor de la venta.</span></li>
+          <li>Momento en que se causa o paga la comisión: <span>Al finalizar el proceso de venta.</span></li>
+        </ul>
+        <p>No publicar porcentajes como información definitiva hasta que estén aprobados por Amaru FS Inmobiliaria y alineados con el contrato usado para propietarios vendedores.</p>
+      </aside>
+    </section>
+
+    <section class="checklist section-pad" aria-labelledby="checklist-title">
+      <div class="checklist__content">
+        <p class="eyebrow">Antes de vender</p>
+        <h2 id="checklist-title">Información útil antes de vender</h2>
+        <p>Mientras más clara sea la información del inmueble, más fácil será presentar la propiedad, orientar a los interesados y avanzar con conversaciones comerciales serias.</p>
+      </div>
+      <ul class="checklist__grid">
+        <li><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Tipo de inmueble.</li>
+        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ciudad, sector y referencias de ubicación.</li>
+        <li><i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> Área y distribución.</li>
+        <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Estado actual del inmueble.</li>
+        <li><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Precio esperado de venta.</li>
+        <li><i class="fa-solid fa-receipt" aria-hidden="true"></i> Administración, si aplica.</li>
+        <li><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Disponibilidad para fotos, videos y visitas.</li>
+        <li><i class="fa-solid fa-file-contract" aria-hidden="true"></i> Documentos o condiciones relevantes para avanzar.</li>
+      </ul>
+    </section>
+
+    <section class="deliverables section-pad" aria-labelledby="deliverables-title">
+      <div class="section-heading">
+        <p class="eyebrow">Acompañamiento comercial</p>
+        <h2 id="deliverables-title">Qué recibe el propietario</h2>
+      </div>
+      <div class="service-grid">
+        <article class="service-card">
+          <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-clipboard-list"></i></span>
+          <h3>Preparación del inmueble</h3>
+          <p>Orientación inicial, visita al inmueble, registro visual y organización de ficha técnica para presentar la propiedad con información verificable.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-bullhorn"></i></span>
+          <h3>Publicación y seguimiento</h3>
+          <p>Publicación con información verificada y atención directa de interesados para generar conversaciones comerciales de calidad.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="transparency section-pad" aria-labelledby="transparency-title">
+      <div class="transparency__box">
+        <p class="eyebrow">Transparencia antes de publicar</p>
+        <h2 id="transparency-title">Qué no promete Amaru FS Inmobiliaria</h2>
+        <p>Amaru FS Inmobiliaria no garantiza compradores, tiempos exactos de venta ni valorizaciones no verificadas. El compromiso es acompañar el proceso con información clara, publicación responsable, seguimiento comercial y comunicación directa.</p>
+      </div>
+    </section>
+
+    <section class="closing section-pad" aria-labelledby="closing-title">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2 id="closing-title">¿Quieres vender tu inmueble?</h2>
+        <p>Cuéntanos dónde está ubicado, qué tipo de inmueble es y cuál es tu expectativa de venta. Revisamos el caso y te indicamos el siguiente paso.</p>
+      </div>
+      <a class="btn btn--secondary"
+        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20la%20venta%20de%20mi%20inmueble."
+        target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Iniciar venta por WhatsApp</a>
+    </section>
+
+    <section class="faq section-pad" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes sobre venta de inmuebles</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Amaru FS Inmobiliaria publica mi inmueble en venta de inmediato?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿El propietario publica el inmueble directamente?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Qué porcentaje cobra la inmobiliaria por vender?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>El documento base indica 3% sobre el valor de la venta, pero esta información debe validarse internamente y quedar alineada con el contrato antes de publicarse como dato definitivo.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Amaru FS Inmobiliaria garantiza la venta?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>No. Amaru FS Inmobiliaria acompaña la publicación y el seguimiento comercial, pero no promete cierres garantizados.</p>
+          </div>
+        </article>
+        <article class="faq-item">
+          <button type="button" aria-expanded="false">
+            <span>¿Dónde trabaja Amaru FS Inmobiliaria la venta de inmuebles?</span>
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          </button>
+          <div class="faq-item__body">
+            <p>El enfoque inicial está en Bogotá y Sabana, sujeto a validación interna y viabilidad comercial del inmueble.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
