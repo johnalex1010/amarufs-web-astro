@@ -87,8 +87,8 @@ web-astro/
 - Legibilidad primero: cada página debe escribirse como HTML/Astro estructurado, indentado y editable.
 - No usar `set:html`, strings gigantes, JSON o arrays para renderizar contenido de página cuando el marcado puede escribirse directamente.
 - Los arrays y objetos solo deben usarse para datos realmente reutilizables o dinámicos, no para esconder HTML estático.
-- `tokens.css` concentra fuentes, `:root`, variables de marca, tokens de layout y estilos base de etiquetas nativas (`html`, `body`, `a`, `button`, `img`, `h1`, `h2`, `h3`, `p`).
-- Los CSS de página no deben redefinir `:root` ni estilos base globales; solo deben contener layout, secciones y componentes propios de la página.
+- `tokens.css` concentra fuentes, `:root`, variables de marca, tokens de layout, estilos base de etiquetas nativas (`html`, `body`, `a`, `button`, `img`, `h1`, `h2`, `h3`, `p`) y estilos compartidos de header/footer.
+- Los CSS de página no deben redefinir `:root`, estilos base globales, header ni footer; solo deben contener layout, secciones y componentes propios de la página.
 - Ancho de contenido: las secciones y bloques principales usan `--content-max-width: 1700px`.
 - Header y footer conservan `--max-width: 1500px` para no estirar la navegación ni el cierre institucional.
 - Colores de marca obligatorios:
