@@ -541,8 +541,11 @@
 		gap: 18px;
 	}
 
+	.hero__panel {
+		display: none;
+	}
+
 	.hero__content,
-	.hero__panel,
 	.requirements__content,
 	.requirements__pending,
 	.trust__box,
@@ -551,7 +554,8 @@
 	}
 
 	h1 {
-		font-size: 48px;
+		font-size: 42px;
+		overflow-wrap: anywhere;
 	}
 
 	h2 {

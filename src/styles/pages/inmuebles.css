@@ -1793,8 +1793,11 @@ p {
 		gap: 18px;
 	}
 
+	.hero__panel {
+		display: none;
+	}
+
 	.hero__content,
-	.hero__panel,
 	.properties__content,
 	.search-panel,
 	.trust__box,

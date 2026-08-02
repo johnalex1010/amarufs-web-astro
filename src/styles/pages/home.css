@@ -577,8 +577,11 @@
 		gap: 18px;
 	}
 
+	.hero__panel {
+		display: none;
+	}
+
 	.hero__content,
-	.hero__panel,
 	.properties__content,
 	.trust__box,
 	.referrals {
@@ -586,7 +589,8 @@
 	}
 
 	h1 {
-		font-size: 48px;
+		font-size: 42px;
+		overflow-wrap: anywhere;
 	}
 
 	h2 {
