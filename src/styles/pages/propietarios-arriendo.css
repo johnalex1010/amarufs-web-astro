@@ -656,8 +656,8 @@
 		padding: 26px;
 	}
 
-	h1 {
-		font-size: 42px;
+	.hero__content h1 {
+		font-size: 48px;
 		overflow-wrap: anywhere;
 	}
 
