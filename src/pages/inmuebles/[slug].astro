@@ -1,0 +1,441 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../data/site";
+import { getPublishedProperties, getPublishedPropertyBySlug } from "../../lib/properties";
+import {
+  extractGoogleMapsSrc,
+  formatCurrency,
+  getOperationLabel,
+  getPriceLabel,
+  getPropertyPrice,
+  getPropertyWhatsappHref,
+  getYoutubeEmbedSrc
+} from "../../lib/property-utils";
+import "../../styles/pages/detalle-inmueble.css";
+
+export async function getStaticPaths() {
+  const properties = await getPublishedProperties();
+  return properties.map((property) => ({
+    params: { slug: property.slug }
+  }));
+}
+
+const { slug } = Astro.params;
+const property = slug ? await getPublishedPropertyBySlug(slug) : undefined;
+
+if (!property) {
+  return Astro.redirect("/inmuebles/");
+}
+
+const price = getPropertyPrice(property);
+const formattedPrice = formatCurrency(price);
+const mapsSrc = extractGoogleMapsSrc(property.googleMapsEmbed);
+const youtubeSrc = getYoutubeEmbedSrc(property.youtubeShortUrl);
+const whatsappHref = getPropertyWhatsappHref(property);
+const isRent = property.operation === "arriendo";
+const operationLabel = getOperationLabel(property.operation);
+const priceLabel = getPriceLabel(property.operation);
+const totalLabel = isRent ? "Total mensual" : "Valor publicado";
+const processTitle = isRent
+  ? "Cómo avanzar si quieres arrendar este inmueble"
+  : "Cómo avanzar si quieres comprar este inmueble";
+const processSteps = isRent
+  ? [
+      {
+        icon: "fa-brands fa-whatsapp",
+        title: "Consulta disponibilidad",
+        text: "Escríbenos por WhatsApp con el nombre o código del inmueble."
+      },
+      {
+        icon: "fa-solid fa-images",
+        title: "Revisa fotos y características",
+        text: "Confirmamos información disponible para que decidas si quieres continuar."
+      },
+      {
+        icon: "fa-solid fa-list-check",
+        title: "Solicita requisitos",
+        text: "Si el inmueble te interesa, te compartimos los requisitos necesarios para iniciar el proceso."
+      },
+      {
+        icon: "fa-solid fa-file-shield",
+        title: "Estudio de aseguradora",
+        text: "La aseguradora, no Amaru FS Inmobiliaria, realiza el estudio del interesado y su deudor."
+      },
+      {
+        icon: "fa-solid fa-file-signature",
+        title: "Contrato",
+        text: "Si el proceso avanza correctamente, se realiza el contrato de arrendamiento."
+      }
+    ]
+  : [
+      {
+        icon: "fa-brands fa-whatsapp",
+        title: "Consulta disponibilidad",
+        text: "Escríbenos por WhatsApp con el nombre o código del inmueble."
+      },
+      {
+        icon: "fa-solid fa-images",
+        title: "Revisa fotos y características",
+        text: "Validamos la información disponible para que decidas si quieres conocer más."
+      },
+      {
+        icon: "fa-solid fa-calendar-check",
+        title: "Agenda una visita",
+        text: "Coordinamos la visita según disponibilidad del inmueble y autorización del propietario."
+      },
+      {
+        icon: "fa-solid fa-handshake",
+        title: "Presenta interés",
+        text: "Si quieres avanzar, se revisan condiciones comerciales y pasos documentales."
+      },
+      {
+        icon: "fa-solid fa-file-signature",
+        title: "Cierre",
+        text: "Si las partes avanzan correctamente, se formaliza el proceso con los documentos correspondientes."
+      }
+    ];
+const faqItems = [
+  {
+    question: "¿El inmueble sigue disponible?",
+    answer:
+      "La disponibilidad debe confirmarse por WhatsApp, porque puede cambiar según visitas, solicitudes y avances del proceso."
+  },
+  {
+    question: "¿Puedo pedir más fotos o videos?",
+    answer:
+      "Sí. Si hay material adicional disponible, Amaru FS Inmobiliaria puede compartirlo por WhatsApp o llamada."
+  },
+  {
+    question: isRent ? "¿Quién realiza el estudio si quiero arrendar?" : "¿Puedo agendar una visita?",
+    answer: isRent
+      ? "La aseguradora realiza el estudio de viabilidad del interesado y su deudor. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación comercial."
+      : "Sí, si el inmueble está disponible y las condiciones permiten avanzar. La visita debe coordinarse con Amaru FS Inmobiliaria vía WhatsApp."
+  },
+  {
+    question: "¿El precio publicado puede cambiar?",
+    answer:
+      "El precio debe estar confirmado antes de publicarse, pero puede cambiar si el propietario actualiza condiciones. Se recomienda confirmar por WhatsApp."
+  },
+  {
+    question: "¿Qué información debo enviar por WhatsApp?",
+    answer:
+      "Envía el nombre o enlace del inmueble, tu interés principal y las dudas que quieras resolver antes de avanzar."
+  }
+];
+const detailJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Accommodation",
+  name: property.title,
+  image: property.gallery.map((photo) => photo.src),
+  description: property.description,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: property.locationLabel,
+    addressCountry: "CO"
+  },
+  provider: {
+    "@type": "RealEstateAgent",
+    name: site.name
+  },
+  offers: {
+    "@type": "Offer",
+    price,
+    priceCurrency: "COP",
+    availability: "https://schema.org/InStock"
+  }
+};
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title={`${property.seoTitle} | Amaru FS Inmobiliaria`}
+  description={property.metaDescription}
+  ogTitle={property.title}
+  ogDescription={property.summary ?? property.metaDescription}
+  activePage="inmuebles"
+  disableReveal
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(detailJsonLd)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <main id="inicio">
+    <section class="detail-hero">
+      <div class="property-gallery" data-property-gallery>
+        <figure class="property-gallery__stage">
+          <img src={property.gallery[0].src} alt={`${property.gallery[0].alt} de la galería`} width={property.gallery[0].width ?? 2000} height={property.gallery[0].height ?? 1500} data-gallery-main />
+          <button class="property-gallery__zoom" type="button" aria-label="Ampliar foto actual" data-gallery-open>
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          </button>
+          <div class="detail-hero__tags" aria-label="Información rápida del inmueble">
+            <span><i class={isRent ? "fa-solid fa-door-open" : "fa-solid fa-sign-hanging"} aria-hidden="true"></i> {operationLabel}</span>
+            <span><i class="fa-solid fa-building" aria-hidden="true"></i> {property.propertyType}</span>
+            <span><i class="fa-solid fa-camera" aria-hidden="true"></i> <b data-gallery-count>1 / {property.gallery.length}</b></span>
+          </div>
+        </figure>
+        <div class="property-gallery__nav" aria-label="Fotos del inmueble">
+          <button class="property-gallery__arrow" type="button" aria-label="Ver foto anterior" data-gallery-prev>
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <div class="property-gallery__thumbs" role="list">
+            {
+              property.gallery.map((photo, index) => (
+                <button
+                  class:list={{ "property-gallery__thumb": true, "is-active": index === 0 }}
+                  type="button"
+                  aria-label={`Ver imagen ${index + 1} del inmueble`}
+                  aria-current={index === 0 ? "true" : "false"}
+                  data-gallery-thumb
+                  data-gallery-src={photo.src}
+                  data-gallery-alt={photo.alt}
+                >
+                  <img src={photo.src} alt="" width="220" height="165" loading="lazy" />
+                </button>
+              ))
+            }
+          </div>
+          <button class="property-gallery__arrow" type="button" aria-label="Ver foto siguiente" data-gallery-next>
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <aside class="property-summary" aria-labelledby="property-title">
+        <p class="eyebrow">Ficha del inmueble</p>
+        <h1 id="property-title">{property.title}</h1>
+        <p class="summary-lead">{property.summary ?? property.description}</p>
+        <dl class="summary-list">
+          {property.internalCode && (
+            <div>
+              <dt>Código</dt>
+              <dd>{property.internalCode}</dd>
+            </div>
+          )}
+          <div>
+            <dt>Ubicación</dt>
+            <dd>{property.locationLabel}</dd>
+          </div>
+          <div>
+            <dt>Estado</dt>
+            <dd>Publicado</dd>
+          </div>
+          <div>
+            <dt>{priceLabel}</dt>
+            <dd>{formattedPrice}</dd>
+          </div>
+        </dl>
+        <div class="summary-actions">
+          <a class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
+          <a class="btn btn--ghost" href={`tel:+${site.whatsapp}`}><i class="fa-solid fa-phone" aria-hidden="true"></i> Llamar a un asesor</a>
+        </div>
+        <p class="summary-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Disponibilidad, precio y condiciones deben confirmarse por WhatsApp antes de agendar visita o solicitar requisitos.</p>
+      </aside>
+    </section>
+
+    <section class="section-pad section-band section-band--white intro-block" aria-labelledby="intro-title">
+      <div class="section-heading">
+        <p class="eyebrow">Información principal</p>
+        <h2 id="intro-title">{property.title}</h2>
+        <p>Revisa la información principal de este inmueble y confirma disponibilidad con Amaru FS Inmobiliaria. Los datos publicados deben estar verificados antes de recibir visitas o solicitudes.</p>
+      </div>
+      <div class="quick-grid">
+        {property.features.map((feature) => (
+          <article>
+            <i class={feature.icon} aria-hidden="true"></i>
+            <span>{feature.label}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section-pad section-band section-band--gray description-section" aria-labelledby="description-title">
+      <div class="section-heading">
+        <p class="eyebrow">Descripción</p>
+        <h2 id="description-title">Descripción del inmueble</h2>
+        <p>La descripción final debe explicar distribución, estado, espacios principales, iluminación, acceso, características destacadas y condiciones relevantes. Si algún dato necesita confirmación, Amaru FS lo valida antes de avanzar.</p>
+      </div>
+      <div class="description-box">
+        <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+        <p>{property.description}</p>
+      </div>
+    </section>
+
+    <section class="section-pad section-band section-band--white price-layout" aria-labelledby="price-title">
+      <div class="price-card">
+        <p class="eyebrow">Precio y operación</p>
+        <h2 id="price-title">Precio y condiciones comerciales</h2>
+        <div class="price-lines">
+          <div>
+            <span>{priceLabel}</span>
+            <strong>{formattedPrice}</strong>
+          </div>
+          <div>
+            <span>Administración</span>
+            <strong>Por confirmar</strong>
+          </div>
+          <div>
+            <span>{totalLabel}</span>
+            <strong>{formattedPrice}</strong>
+          </div>
+        </div>
+        <p>El valor publicado debe separar canon, administración y total mensual cuando esa información esté confirmada. Antes de avanzar, confirma disponibilidad, requisitos y condiciones por WhatsApp.</p>
+      </div>
+      <aside class="operation-card">
+        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+        <h3>Nota de transparencia</h3>
+        <p>Los valores pueden cambiar si el propietario actualiza condiciones o si el inmueble deja de estar disponible. Confirmar siempre por WhatsApp antes de avanzar.</p>
+      </aside>
+    </section>
+
+    <section class="section-pad section-band section-band--gray location-layout" aria-labelledby="location-title">
+      <div>
+        <p class="eyebrow">Ubicación</p>
+        <h2 id="location-title">Ubicación del inmueble</h2>
+        <p>Revisa ciudad, sector y referencias generales del inmueble. La ubicación exacta o el punto de encuentro para visita deben confirmarse con Amaru FS Inmobiliaria, según seguridad, autorización y disponibilidad.</p>
+      </div>
+      <div class="map-card" aria-label={`Ubicación general de ${property.title}`}>
+        {mapsSrc ? (
+          <iframe src={mapsSrc} width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title={`Mapa de ${property.title}`}></iframe>
+        ) : (
+          <>
+            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+            <strong>{property.locationLabel}</strong>
+            <span>Mapa pendiente de validación</span>
+          </>
+        )}
+      </div>
+    </section>
+
+    <section class="section-pad section-band section-band--white location-layout" aria-labelledby="nearby-title">
+      <div>
+        <p class="eyebrow">Zonas aledañas</p>
+        <h2 id="nearby-title">Referencias cercanas</h2>
+        <p>Estas referencias ayudan a entender el entorno general del inmueble sin exponer datos privados.</p>
+      </div>
+      <ul class="nearby-list">
+        {property.nearbyZones.map((zone) => (
+          <li>
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>{zone}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {youtubeSrc && (
+      <section class="section-pad section-band section-band--gray location-layout" aria-labelledby="video-title">
+        <div>
+          <p class="eyebrow">Video</p>
+          <h2 id="video-title">Video del inmueble</h2>
+        </div>
+        <div class="video-card">
+          <iframe src={youtubeSrc} width="315" height="560" title={`Video de ${property.title}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </section>
+    )}
+
+    <section class="process section-pad section-band section-band--white" aria-labelledby="rent-process-title">
+      <div class="section-heading">
+        <p class="eyebrow">Proceso de {operationLabel.toLowerCase()}</p>
+        <h2 id="rent-process-title">{processTitle}</h2>
+      </div>
+      <ol class="timeline">
+        {
+          processSteps.map((step, index) => (
+            <li>
+              <span><i class={step.icon} aria-hidden="true"></i> {String(index + 1).padStart(2, "0")}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="section-pad section-band section-band--gray trust-grid" aria-labelledby="trust-title">
+      <div class="section-heading">
+        <p class="eyebrow">Confianza</p>
+        <h2 id="trust-title">Información verificada antes de avanzar</h2>
+        <p>Amaru FS Inmobiliaria trabaja con información real del inmueble, fotos autorizadas y características revisadas. Si algún dato necesita confirmación, lo validamos antes de agendar visitas o avanzar con requisitos.</p>
+      </div>
+      <div class="trust-cards">
+        <article>
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          <h3>Acompañamiento directo</h3>
+          <p>Te orientamos por WhatsApp o llamada para resolver dudas antes de avanzar.</p>
+        </article>
+        <article>
+          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+          <h3>Información clara</h3>
+          <p>Publicamos precio, ubicación, características y material visual cuando están verificados.</p>
+        </article>
+        <article>
+          <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+          <h3>Proceso responsable</h3>
+          <p>{isRent ? "En arriendo, la aseguradora realiza el estudio de viabilidad del interesado y su deudor." : "En venta, las condiciones se validan con las partes antes de avanzar con documentos o visitas."}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="closing section-pad section-band section-band--white" aria-labelledby="closing-title">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2 id="closing-title">¿Te interesa este inmueble?</h2>
+        <p>Escríbenos con el código o enlace de la propiedad. Confirmamos disponibilidad, resolvemos dudas y te indicamos el siguiente paso según sea arriendo o venta.</p>
+      </div>
+      <a class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
+    </section>
+
+    <section class="faq section-pad section-band section-band--gray" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes sobre este inmueble</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        {
+          faqItems.map((item) => (
+            <article class="faq-item">
+              <button type="button" aria-expanded="false">
+                <span>{item.question}</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              </button>
+              <div class="faq-item__body">
+                <p>{item.answer}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <div class="gallery-modal" role="dialog" aria-modal="true" aria-label="Foto ampliada del inmueble" hidden data-gallery-modal>
+    <button class="gallery-modal__close" type="button" aria-label="Cerrar galería" data-gallery-close>
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+    </button>
+    <button class="gallery-modal__arrow gallery-modal__arrow--prev" type="button" aria-label="Ver foto anterior" data-modal-prev>
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <figure class="gallery-modal__stage">
+      <img src={property.gallery[0].src} alt={`${property.gallery[0].alt} ampliada`} data-gallery-modal-image />
+      <figcaption data-modal-count>1 / {property.gallery.length}</figcaption>
+    </figure>
+    <button class="gallery-modal__arrow gallery-modal__arrow--next" type="button" aria-label="Ver foto siguiente" data-modal-next>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <script>
+    import "../../scripts/detalle-inmueble.js";
+  </script>
+</BaseLayout>

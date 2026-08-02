@@ -11,6 +11,7 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   activePage: string;
+  disableReveal?: boolean;
 }
 
 const {
@@ -18,7 +19,8 @@ const {
   description,
   ogTitle = title,
   ogDescription = description,
-  activePage
+  activePage,
+  disableReveal = false
 } = Astro.props;
 ---
 
@@ -39,7 +41,7 @@ const {
     <link rel="stylesheet" href={fontAwesomeHref} />
     <slot name="head" />
   </head>
-  <body>
+  <body data-disable-reveal={disableReveal ? "true" : undefined}>
     <SiteHeader activePage={activePage} />
     <slot />
     <SiteFooter />

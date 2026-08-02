@@ -21,7 +21,18 @@ if (navToggle && nav) {
 document.querySelectorAll("[data-faq-list] .faq-item button").forEach((button) => {
   button.addEventListener("click", () => {
     const item = button.closest(".faq-item");
+    const faqList = button.closest("[data-faq-list]");
     const isOpen = button.getAttribute("aria-expanded") === "true";
+
+    faqList?.querySelectorAll(".faq-item").forEach((faqItem) => {
+      if (faqItem === item) {
+        return;
+      }
+
+      faqItem.classList.remove("is-open");
+      faqItem.querySelector("button")?.setAttribute("aria-expanded", "false");
+    });
+
     button.setAttribute("aria-expanded", String(!isOpen));
     item?.classList.toggle("is-open", !isOpen);
   });
@@ -31,7 +42,9 @@ const revealCandidates = document.querySelectorAll(
   ".hero__panel, .properties__visual, .route-card, .service-card, .referral-card, .timeline li, .faq-item, .role-grid article, .rules__cards article"
 );
 
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+if (document.body.dataset.disableReveal === "true") {
+  revealCandidates.forEach((item) => item.classList.remove("reveal", "is-visible"));
+} else if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
   revealCandidates.forEach((item, index) => {
     item.classList.add("reveal");
     item.style.setProperty("--reveal-delay", `${Math.min(index * 55, 360)}ms`);

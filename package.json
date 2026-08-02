@@ -9,7 +9,20 @@
     "preview": "astro preview --host 127.0.0.1"
   },
   "dependencies": {
-    "astro": "^5.12.8"
+    "@astrojs/react": "^6.0.2",
+    "@sanity/astro": "^3.5.0",
+    "@sanity/client": "^7.26.0",
+    "astro": "^5.12.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-is": "^19.2.8",
+    "sanity": "^6.8.0",
+    "sanity-plugin-cloudinary": "^2.0.16",
+    "styled-components": "^6.4.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@types/react-is": "^19.2.0"
+  }
 }

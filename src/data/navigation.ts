@@ -32,6 +32,12 @@ export const navigation = [
 		key: "arrendatarios",
 	},
 	{
+		label: "Inmuebles",
+		href: "/inmuebles/",
+		icon: "fa-solid fa-building",
+		key: "inmuebles",
+	},
+	{
 		label: "Referidos",
 		href: "/referidos/",
 		icon: "fa-solid fa-handshake-angle",

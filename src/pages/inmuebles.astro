@@ -1,0 +1,293 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+import { getPublishedProperties } from "../lib/properties";
+import {
+  formatCurrency,
+  getListingLocationFilterText,
+  getListingRoomsFilterText,
+  getListingSearchText,
+  getOperationLabel,
+  getPriceLabel,
+  getPropertyHref,
+  getPropertyPrice
+} from "../lib/property-utils";
+import "../styles/pages/inmuebles.css";
+
+const properties = await getPublishedProperties();
+const maxPrice = Math.max(...properties.map((property) => getPropertyPrice(property) ?? 0), 8000000);
+const faqItems = [
+  {
+    question: "¿Los inmuebles publicados están disponibles?",
+    answer: "La disponibilidad debe confirmarse por WhatsApp, porque puede cambiar según visitas, solicitudes y avances del proceso."
+  },
+  {
+    question: "¿Puedo filtrar por arriendo o venta?",
+    answer: "Sí. La página permite filtrar por operación para separar inmuebles en arriendo e inmuebles en venta."
+  },
+  {
+    question: "¿Puedo buscar por barrio o sector?",
+    answer: "Sí. El buscador permite encontrar inmuebles por ubicación, tipo de propiedad o características visibles."
+  },
+  {
+    question: "¿Qué hago si no encuentro un inmueble?",
+    answer: "Puedes limpiar los filtros o contactar a Amaru FS Inmobiliaria para contar qué estás buscando."
+  },
+  {
+    question: "¿Amaru FS Inmobiliaria publica todos los inmuebles que recibe?",
+    answer:
+      "No. Amaru FS Inmobiliaria publica después de validar información, registrar material visual, verificar ficha técnica y formalizar el acuerdo correspondiente con el propietario."
+  }
+];
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Inmuebles disponibles",
+  description: "Listado de inmuebles disponibles para arriendo o venta con Amaru FS Inmobiliaria.",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: properties.length,
+    itemListElement: properties.map((property, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: property.title,
+      url: `${site.baseUrl.replace(/\/$/, "")}${getPropertyHref(property)}`
+    }))
+  }
+};
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title="Inmuebles disponibles | Arriendo y venta con Amaru FS Inmobiliaria"
+  description="Explora inmuebles disponibles para arriendo o venta con Amaru FS Inmobiliaria. Filtra por tipo, operación, ubicación y consulta detalles por WhatsApp."
+  ogTitle="Inmuebles disponibles en Amaru FS Inmobiliaria"
+  ogDescription="Propiedades reales para arriendo o venta con fotos, características, filtros y atención directa."
+  activePage="inmuebles"
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <main id="inicio">
+    <section class="hero listings-hero">
+      <div class="hero__content">
+        <p class="eyebrow">Inmuebles disponibles</p>
+        <h1>Inmuebles disponibles para arriendo y venta</h1>
+        <p class="hero__lead">Consulta propiedades reales publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles.</p>
+        <div class="hero__actions" aria-label="Acciones principales">
+          <a class="btn btn--primary" href="#buscador"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar inmueble</a>
+          <a class="btn btn--light" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Tengo un inmueble para publicar</a>
+        </div>
+      </div>
+      <aside class="hero__panel" aria-labelledby="hero-panel-title">
+        <img src={site.logoVertical} alt="Amaru FS Inmobiliaria" width="216" height="216" />
+        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-list-check"></i></span>
+        <h2 id="hero-panel-title">Encuentra inmuebles con información clara y atención directa</h2>
+        <p>Revisa fotos reales, ubicación, características principales y acceso a consulta por WhatsApp antes de avanzar.</p>
+      </aside>
+    </section>
+
+    <section class="listings-board section-pad" id="buscador" aria-labelledby="results-title">
+      <button class="filters-fab" type="button" aria-label="Abrir filtros de inmuebles" aria-controls="filters-sidebar" aria-expanded="false" data-filter-toggle>
+        <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+        Filtros
+      </button>
+      <div class="filters-overlay" hidden data-filter-overlay></div>
+      <aside class="filters-sidebar" id="filters-sidebar" aria-labelledby="search-title" tabindex="-1" data-filters-sidebar>
+        <div class="filters-mobile-head">
+          <span><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtros</span>
+          <button type="button" aria-label="Cerrar filtros" data-filter-close>
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="section-heading">
+          <p class="eyebrow">Buscador y filtros</p>
+          <h2 id="search-title">Busca por palabra clave</h2>
+          <p>Escribe una ubicación, tipo de inmueble, barrio, característica o palabra relacionada con lo que necesitas.</p>
+        </div>
+        <form class="search-panel" data-listing-form>
+          <label class="search-field" for="property-search">
+            <span>Buscar inmueble</span>
+            <input id="property-search" name="search" type="search" placeholder="Buscar por barrio, tipo de inmueble o característica" data-search-input />
+          </label>
+          <div class="filter-grid" aria-label="Filtros de inmuebles">
+            <fieldset class="check-group" data-filter-group="operation">
+              <legend>Operación</legend>
+              <label><input type="checkbox" value="all" data-filter="operation" checked /> Todos</label>
+              <label><input type="checkbox" value="arriendo" data-filter="operation" /> Arriendo</label>
+              <label><input type="checkbox" value="venta" data-filter="operation" /> Venta</label>
+            </fieldset>
+            <fieldset class="check-group" data-filter-group="type">
+              <legend>Tipo</legend>
+              <label><input type="checkbox" value="all" data-filter="type" checked /> Todos</label>
+              <label><input type="checkbox" value="apartamento" data-filter="type" /> Apartamento</label>
+              <label><input type="checkbox" value="casa" data-filter="type" /> Casa</label>
+              <label><input type="checkbox" value="local" data-filter="type" /> Local</label>
+              <label><input type="checkbox" value="oficina" data-filter="type" /> Oficina</label>
+              <label><input type="checkbox" value="otro" data-filter="type" /> Otro</label>
+            </fieldset>
+            <fieldset class="check-group" data-filter-group="location">
+              <legend>Ubicación</legend>
+              <label><input type="checkbox" value="all" data-filter="location" checked /> Todas</label>
+              <label><input type="checkbox" value="bogota" data-filter="location" /> Bogotá</label>
+              <label><input type="checkbox" value="sabana" data-filter="location" /> Sabana</label>
+              <label><input type="checkbox" value="roble" data-filter="location" /> Roble</label>
+            </fieldset>
+            <fieldset class="check-group" data-filter-group="rooms">
+              <legend>Habitaciones</legend>
+              <label><input type="checkbox" value="all" data-filter="rooms" checked /> Todas</label>
+              <label><input type="checkbox" value="por-confirmar" data-filter="rooms" /> Por confirmar</label>
+              <label><input type="checkbox" value="1" data-filter="rooms" /> 1</label>
+              <label><input type="checkbox" value="2" data-filter="rooms" /> 2</label>
+              <label><input type="checkbox" value="3" data-filter="rooms" /> 3</label>
+              <label><input type="checkbox" value="4" data-filter="rooms" /> 4 o más</label>
+            </fieldset>
+            <fieldset class="price-range">
+              <legend>Rango de precio</legend>
+              <div class="price-range__head">
+                <span class="price-range__bubble">$0</span>
+                <span class="price-range__label">Precio</span>
+                <span class="price-range__bubble price-range__bubble--active" data-price-output>{formatCurrency(maxPrice)}</span>
+              </div>
+              <input id="price-range" name="price-range" type="range" min="0" max={maxPrice} step="50000" value={maxPrice} aria-label="Rango máximo de precio" data-price-range />
+            </fieldset>
+          </div>
+          <div class="filter-actions">
+            <button class="btn btn--primary" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar</button>
+            <button class="btn btn--ghost" type="button" data-clear-filters><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Limpiar filtros</button>
+          </div>
+        </form>
+      </aside>
+
+      <div class="results" aria-labelledby="results-title">
+        <div class="results__head">
+          <div>
+            <p class="eyebrow">Resultados disponibles</p>
+            <h2 id="results-title">Tarjetas de inmuebles</h2>
+            <p>Cada tarjeta muestra lo necesario para decidir si vale la pena abrir la ficha completa o contactar a Amaru FS Inmobiliaria.</p>
+          </div>
+          <p class="results-count" data-results-count>{properties.length === 1 ? "Mostrando 1 inmueble" : `Mostrando ${properties.length} inmuebles`}</p>
+        </div>
+
+        <div class="property-grid" data-property-grid>
+          {
+            properties.map((property) => {
+              const image = property.gallery[0];
+              const price = getPropertyPrice(property) ?? 0;
+              return (
+                <article
+                  class="property-card"
+                  data-property-card
+                  data-search={getListingSearchText(property)}
+                  data-operation={property.operation}
+                  data-type={property.propertyType.toLowerCase()}
+                  data-location={getListingLocationFilterText(property)}
+                  data-rooms={getListingRoomsFilterText(property)}
+                  data-price={price}
+                  data-card-link={getPropertyHref(property)}
+                  role="link"
+                  tabindex="0"
+                  aria-label={`Ver detalle de ${property.title}`}
+                >
+                  <figure class="property-card__media">
+                    <img src={image.src} alt={image.alt} width={image.width ?? 2000} height={image.height ?? 1500} loading="lazy" />
+                    <button class="property-card__favorite" type="button" aria-label={`Guardar ${property.title}`} aria-pressed="false" data-favorite-toggle>
+                      <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                    </button>
+                    <div class="property-card__meta">
+                      <span><i class={property.operation === "venta" ? "fa-solid fa-sign-hanging" : "fa-solid fa-door-open"} aria-hidden="true"></i> {getOperationLabel(property.operation)}</span>
+                      <span><i class="fa-solid fa-building" aria-hidden="true"></i> {property.propertyType}</span>
+                    </div>
+                    <span class="property-card__photos"><i class="fa-solid fa-camera" aria-hidden="true"></i> 1 / {property.gallery.length}</span>
+                  </figure>
+                  <div class="property-card__body">
+                    <h3>{property.title}</h3>
+                    <p class="property-card__location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {property.locationLabel}</p>
+                    <div class="property-features" aria-label="Características principales del inmueble">
+                      {property.features.slice(0, 6).map((feature) => (
+                        <span><i class={feature.icon} aria-hidden="true"></i> {feature.label}</span>
+                      ))}
+                    </div>
+                    <span class="property-card__notice"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Datos verificados para consulta</span>
+                    <div class="property-card__bottom">
+                      <div class="property-card__price">
+                        <span>{getPriceLabel(property.operation)}</span>
+                        <strong>{formatCurrency(price)}</strong>
+                      </div>
+                    </div>
+                    <span class="property-card__view"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Ver ficha del inmueble</span>
+                  </div>
+                </article>
+              );
+            })
+          }
+        </div>
+
+        <nav class="pagination" aria-label="Paginación de inmuebles" data-pagination></nav>
+
+        <div class="empty-state" data-empty-state hidden={properties.length > 0 ? true : undefined}>
+          <span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></span>
+          <h2>No encontramos inmuebles publicados</h2>
+          <p>El inventario visible puede ser limitado mientras Amaru FS valida información, fotos, precio y disponibilidad.</p>
+          <div class="empty-state__actions">
+            <button class="btn btn--primary" type="button" data-clear-filters><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Limpiar filtros</button>
+            <a class="btn btn--ghost" href={`https://wa.me/${site.whatsapp}?text=Hola%20Amaru%20FS%2C%20estoy%20buscando%20un%20inmueble.`} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="inventory-note section-pad" aria-labelledby="inventory-title">
+      <div class="trust__box">
+        <p class="eyebrow">Inventario real</p>
+        <h2 id="inventory-title">Estamos actualizando los inmuebles disponibles</h2>
+        <p>El inventario visible puede ser limitado. Amaru FS Inmobiliaria trabaja con propiedades reales y datos verificados, por eso solo mostramos inmuebles cuando la información está lista para consulta.</p>
+      </div>
+    </section>
+    <section class="referrals section-pad" aria-labelledby="owners-title">
+      <div>
+        <p class="eyebrow">Bloque para propietarios</p>
+        <h2 id="owners-title">¿Tienes un inmueble para vender o arrendar?</h2>
+        <p>Amaru FS Inmobiliaria valida tu inmueble, registra fotos y videos, verifica la ficha técnica y publica después del contrato con el propietario.</p>
+      </div>
+      <a class="btn btn--secondary" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Iniciar validación de mi inmueble</a>
+    </section>
+
+    <section class="faq section-pad" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Preguntas frecuentes sobre inmuebles disponibles</h2>
+      </div>
+      <div class="faq-list" data-faq-list>
+        {
+          faqItems.map((item) => (
+            <article class="faq-item">
+              <button type="button" aria-expanded="false">
+                <span>{item.question}</span>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+              </button>
+              <div class="faq-item__body">
+                <p>{item.answer}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import "../scripts/inmuebles.js";
+  </script>
+</BaseLayout>

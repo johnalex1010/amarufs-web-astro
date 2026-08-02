@@ -6,7 +6,7 @@ Sitio Astro para migrar de forma progresiva el mockup estático de `../web-mocku
 
 ## Estado actual
 
-Migración inicial desde `web-mockup` hacia Astro.
+Migración inicial desde `web-mockup` hacia Astro con integración base de Sanity Studio para inmuebles.
 
 Páginas migradas:
 
@@ -16,13 +16,11 @@ Páginas migradas:
 - Propietarios arriendo: `/propietarios/arriendo/`
 - Arrendatarios: `/arrendatarios/`
 - Referidos: `/referidos/`
+- Inmuebles: `/inmuebles/`
+- Detalle de inmueble: `/inmuebles/[slug]/`
+- Sanity Studio embebido: `/studio/`
 
-Páginas excluidas por decisión del proceso:
-
-- `inmuebles.html`
-- `detalle-inmueble.html`
-
-Estas páginas no se migran todavía. Su implementación futura debe hacerse con Sanity cuando se autorice explícitamente.
+Las rutas de inmuebles solo muestran documentos con estado `publicado` y campos obligatorios completos. Los estados reservado, vendido, arrendado e inactivo quedan por fuera del listado público, detalle indexable y sitemap.
 
 ## Stack tecnológico
 
@@ -33,6 +31,8 @@ Estas páginas no se migran todavía. Su implementación futura debe hacerse con
 - Font Awesome 6.5.2 por CDN.
 - Fuentes locales en `public/fonts`.
 - Imágenes reales de marca y apoyo en `public/images`.
+- Sanity Studio embebido con `@sanity/astro`.
+- Cloudinary integrado en Sanity Studio mediante `sanity-plugin-cloudinary`.
 
 ## Requisitos
 
@@ -44,6 +44,18 @@ Estas páginas no se migran todavía. Su implementación futura debe hacerse con
 ```bash
 npm install
 ```
+
+## Variables de entorno
+
+Copiar `.env.example` como `.env` cuando se necesite cambiar el proyecto o dataset localmente:
+
+```bash
+SANITY_PROJECT_ID=3yxhmalj
+SANITY_DATASET=production
+SANITY_API_VERSION=2026-08-01
+```
+
+Estos valores no son secretos. Los tokens de lectura no se usan para el build público; solo deben agregarse si en una fase posterior se activan previews, borradores, automatizaciones internas o endpoints privados.
 
 ## Scripts disponibles
 
@@ -59,7 +71,7 @@ npm run preview
 2. Mantener el contenido en español Colombia.
 3. Usar UTF-8.
 4. No modificar archivos generados en `dist` ni `.astro`.
-5. No crear rutas de inmuebles hasta ejecutar y validar la SPEC de Sanity.
+5. Las rutas de inmuebles deben conservar el contrato de `src/data/properties.ts` y el schema `property`.
 6. Mantener la configuración de despliegue en Vercel sincronizada con los cambios reales del proyecto.
 
 ## Estructura principal
@@ -73,8 +85,11 @@ web-astro/
     components/
       global/
     data/
+    lib/
     layouts/
     pages/
+      inmuebles/
+    sanity/
     scripts/
     styles/
       pages/
@@ -89,8 +104,8 @@ web-astro/
 - Los arrays y objetos solo deben usarse para datos realmente reutilizables o dinámicos, no para esconder HTML estático.
 - `tokens.css` concentra fuentes, `:root`, variables de marca, tokens de layout, estilos base de etiquetas nativas (`html`, `body`, `a`, `button`, `img`, `h1`, `h2`, `h3`, `p`) y estilos compartidos de header/footer.
 - Los CSS de página no deben redefinir `:root`, estilos base globales, header ni footer; solo deben contener layout, secciones y componentes propios de la página.
-- Ancho de contenido: las secciones y bloques principales usan `--content-max-width: 1700px`.
-- Header y footer conservan `--max-width: 1500px` para no estirar la navegación ni el cierre institucional.
+- Ancho global: todas las páginas, header, footer, secciones y bloques principales deben usar un ancho máximo de `1700px`.
+- Tokens de layout: `--max-width: 1700px` y `--content-max-width: 1700px`.
 - Colores de marca obligatorios:
   - `--color-primary: #1a3b89`
   - `--color-secondary: #00e1ad`
@@ -104,7 +119,27 @@ web-astro/
 
 ## Sanity
 
-Sanity será la fuente de contenido para crear y publicar inmuebles de forma controlada en Astro. La implementación debe hacerse con SPEC propia antes de instalar dependencias, definir schemas, crear rutas o conectar datos.
+Sanity es la fuente de contenido prevista para crear y publicar inmuebles de forma controlada en Astro.
+
+Configuración actual:
+
+- Proyecto Sanity: `3yxhmalj`.
+- Dataset asumido: `production`.
+- Studio embebido: `/studio/`.
+- Schema principal: `property`.
+- Plan B estático: `src/data/properties.ts`.
+- Lectura pública: solo documentos con estado `publicado`.
+- Token de lectura: no requerido para el build público.
+- Cloudinary: disponible en Studio mediante `sanity-plugin-cloudinary`.
+- Desarrollo local: usar `npm run dev` para ver inmuebles de Sanity en vivo. Si se usa un servidor estático sobre `dist`, hay que ejecutar `npm run build` después de publicar o actualizar un inmueble.
+
+Pendiente operativo:
+
+- Confirmar en Sanity que el dataset `production` existe.
+- Autorizar CORS para `http://localhost`, `http://127.0.0.1` y el dominio de Vercel/producción.
+- Configurar Cloudinary desde el Studio para conectar la cuenta y seleccionar assets ya subidos.
+- Las fotos se guardan como assets directos de Cloudinary en el arreglo `gallery`; el sitio usa el título del inmueble como texto alternativo base cuando Cloudinary no trae `alt`.
+- Crear el primer inmueble real como `publicado` para validar la ruta de detalle con contenido final.
 
 Contenido previsto:
 
@@ -196,6 +231,7 @@ Contenido previsto:
    - Validar preview deployment antes de producción.
    - Confirmar que los webhooks de Sanity hacia Vercel solo reconstruyen cuando cambia contenido público relevante.
    - Confirmar que las variables de Sanity, Cloudinary y Google Maps estén configuradas en Vercel antes del primer despliegue con inmuebles.
+   - Autorizar el dominio de Vercel en CORS de Sanity para solicitudes autenticadas del Studio.
 
 10. Rollback:
    - Revertir dependencias, cliente Sanity, schemas, rutas `/inmuebles/` y `/inmuebles/[slug]/`.
@@ -217,6 +253,14 @@ Configuración documentada:
 - Las variables de entorno deben gestionarse desde Vercel y no deben guardarse en el repositorio.
 
 Cuando se implemente Sanity, Vercel deberá recibir las variables necesarias del proyecto y, si aplica, un webhook de reconstrucción para publicar cambios de inmuebles validados.
+
+Variables sugeridas en Vercel:
+
+- `SANITY_PROJECT_ID`
+- `SANITY_DATASET`
+- `SANITY_API_VERSION`
+
+Si se mantienen los valores actuales, el proyecto también puede compilar sin variables porque `astro.config.mjs` y `sanity.config.ts` tienen valores fallback no secretos.
 
 ## SEO / GEO / AEO
 
@@ -241,15 +285,16 @@ Antes de cerrar cualquier cambio:
 - confirmar que no hay overflow horizontal
 - confirmar que el menú móvil abre y cierra
 - confirmar que las FAQs funcionan
-- confirmar que no se crearon rutas de `inmuebles` ni `detalle-inmueble`
+- confirmar que `/inmuebles/` carga estado vacío o inmuebles publicados
+- confirmar que `/studio/` monta Sanity Studio y muestra la pantalla de CORS/login cuando aplique
 - buscar `console.log`, `debugger`, `TODO` y `FIXME`
 
 ## Riesgos conocidos
 
-- Las páginas de inmuebles aún no existen en Astro por decisión de alcance.
-- Los CTAs relacionados con inmuebles apuntan temporalmente a WhatsApp para evitar rutas rotas.
-- Sanity aún no está implementado en Astro; requiere SPEC, schemas, variables y validación antes de crear rutas.
-- Vercel ya está configurado para despliegue, pero la integración futura con Sanity debe validar variables, previews y webhooks antes de producción.
+- No hay inmuebles públicos hasta crear documentos `property` con estado `publicado`.
+- La ruta de detalle depende de que exista al menos un inmueble publicado con slug, precio, descripción, ubicación y foto principal.
+- Sanity Studio requiere autorizar CORS para el origen local y el dominio de producción.
+- Vercel ya está configurado para despliegue, pero la integración con Sanity debe validar variables, previews y webhooks antes de producción.
 
 ## Rollback
 
