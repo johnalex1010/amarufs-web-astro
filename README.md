@@ -2,13 +2,15 @@
 
 ## Descripción
 
-Sitio Astro para migrar de forma progresiva el mockup estático de `../web-mockup` a una arquitectura modular, mantenible y preparada para crecer. Esta primera etapa migra las páginas institucionales y comerciales principales de Amaru FS Inmobiliaria, conservando el contenido aprobado, la marca visual, las rutas principales, la iconografía con Font Awesome y las interacciones sutiles existentes.
+Sitio Astro de Amaru FS Inmobiliaria, migrado desde `../web-mockup` hacia una arquitectura modular, estática y lista para desplegar en Vercel.
+
+El sitio conserva las rutas comerciales principales, el diseño base del mockup, las páginas de inmuebles, la ficha de detalle, la iconografía con Font Awesome, las fuentes locales y las interacciones de menú móvil y FAQ.
 
 ## Estado actual
 
-Migración inicial desde `web-mockup` hacia Astro con integración base de Sanity Studio para inmuebles.
+Sanity fue retirado del proyecto. La fuente actual de inmuebles es local y vive en `src/data/properties.ts`.
 
-Páginas migradas:
+Páginas activas:
 
 - Inicio: `/`
 - Propietarios: `/propietarios/`
@@ -18,21 +20,20 @@ Páginas migradas:
 - Referidos: `/referidos/`
 - Inmuebles: `/inmuebles/`
 - Detalle de inmueble: `/inmuebles/[slug]/`
-- Sanity Studio embebido: `/studio/`
 
-Las rutas de inmuebles solo muestran documentos con estado `publicado` y campos obligatorios completos. Los estados reservado, vendido, arrendado e inactivo quedan por fuera del listado público, detalle indexable y sitemap.
+Las rutas de inmuebles solo muestran registros con estado `publicado` y campos obligatorios completos. Los estados `reservado`, `vendido`, `arrendado` e `inactivo` quedan por fuera del listado público y del detalle indexable.
 
 ## Stack tecnológico
 
 - Astro.
-- HTML semántico renderizado como sitio estático.
-- CSS propio por página, migrado desde los archivos fuente de `web-mockup/style`.
-- JavaScript propio para menú móvil, FAQ y animaciones de entrada.
+- Sitio estático con `output: "static"`.
+- React integrado mediante `@astrojs/react`.
+- CSS propio por página.
+- JavaScript propio para menú móvil, FAQ, filtros y detalles de inmueble.
 - Font Awesome 6.5.2 por CDN.
 - Fuentes locales en `public/fonts`.
-- Imágenes reales de marca y apoyo en `public/images`.
-- Sanity Studio embebido con `@sanity/astro`.
-- Cloudinary integrado en Sanity Studio mediante `sanity-plugin-cloudinary`.
+- Imágenes locales en `public/images`.
+- Datos de inmuebles en TypeScript local.
 
 ## Requisitos
 
@@ -47,15 +48,9 @@ npm install
 
 ## Variables de entorno
 
-Copiar `.env.example` como `.env` cuando se necesite cambiar el proyecto o dataset localmente:
+No hay variables obligatorias para compilar el sitio actual.
 
-```bash
-SANITY_PROJECT_ID=3yxhmalj
-SANITY_DATASET=production
-SANITY_API_VERSION=2026-08-01
-```
-
-Estos valores no son secretos. Los tokens de lectura no se usan para el build público; solo deben agregarse si en una fase posterior se activan previews, borradores, automatizaciones internas o endpoints privados.
+No guardar secretos en el repositorio. Si en una fase posterior se agrega un gestor externo o un webhook, las variables deben configurarse en Vercel y documentarse aquí.
 
 ## Scripts disponibles
 
@@ -67,12 +62,13 @@ npm run preview
 
 ## Flujo de desarrollo
 
-1. Trabajar únicamente sobre `src`, `public`, `README.md`, `.gitignore` y configuración real del proyecto.
-2. Mantener el contenido en español Colombia.
-3. Usar UTF-8.
-4. No modificar archivos generados en `dist` ni `.astro`.
-5. Las rutas de inmuebles deben conservar el contrato de `src/data/properties.ts` y el schema `property`.
-6. Mantener la configuración de despliegue en Vercel sincronizada con los cambios reales del proyecto.
+1. Trabajar únicamente sobre archivos fuente.
+2. No modificar `dist`, `.astro` ni archivos generados.
+3. Mantener contenido en español Colombia.
+4. Mantener UTF-8.
+5. Mantener el ancho global de `1700px` para páginas, header, footer, secciones y bloques principales.
+6. Validar `npm run build` antes de desplegar.
+7. No enviar formularios sin autorización.
 
 ## Estructura principal
 
@@ -85,217 +81,209 @@ web-astro/
     components/
       global/
     data/
+      properties.ts
     lib/
+      properties.ts
+      property-utils.ts
     layouts/
     pages/
       inmuebles/
-    sanity/
     scripts/
     styles/
       pages/
 ```
 
-## Convenciones
+## Inmuebles Locales
 
-- Idioma: español Colombia.
-- Encoding: UTF-8.
-- Legibilidad primero: cada página debe escribirse como HTML/Astro estructurado, indentado y editable.
-- No usar `set:html`, strings gigantes, JSON o arrays para renderizar contenido de página cuando el marcado puede escribirse directamente.
-- Los arrays y objetos solo deben usarse para datos realmente reutilizables o dinámicos, no para esconder HTML estático.
-- `tokens.css` concentra fuentes, `:root`, variables de marca, tokens de layout, estilos base de etiquetas nativas (`html`, `body`, `a`, `button`, `img`, `h1`, `h2`, `h3`, `p`) y estilos compartidos de header/footer.
-- Los CSS de página no deben redefinir `:root`, estilos base globales, header ni footer; solo deben contener layout, secciones y componentes propios de la página.
-- Ancho global: todas las páginas, header, footer, secciones y bloques principales deben usar un ancho máximo de `1700px`.
-- Tokens de layout: `--max-width: 1700px` y `--content-max-width: 1700px`.
-- Colores de marca obligatorios:
-  - `--color-primary: #1a3b89`
-  - `--color-secondary: #00e1ad`
-  - `--color-text: #183153`
-  - `--color-bg: #f3f5f9`
-  - `--color-btn: #1a3b89`
-- Iconografía: Font Awesome.
-- Animaciones: sutiles, con `IntersectionObserver` y respeto por `prefers-reduced-motion`.
-- Formularios: no se envían sin autorización.
-- CTAs principales: WhatsApp, sin capturar datos personales en el sitio.
+La fuente actual de inmuebles es `src/data/properties.ts`.
 
-## Sanity
+Contrato principal:
 
-Sanity es la fuente de contenido prevista para crear y publicar inmuebles de forma controlada en Astro.
+- `title`
+- `seoTitle`
+- `slug`
+- `editorialStatus`
+- `operation`
+- `propertyType`
+- `saleValue` o `rentValue`
+- `locationLabel`
+- `googleMapsEmbed`
+- `description`
+- `summary`
+- `gallery`
+- `features`
+- `nearbyZones`
+- `youtubeShortUrl`
+- `internalCode`
+- `metaDescription`
 
-Configuración actual:
+Reglas obligatorias:
 
-- Proyecto Sanity: `3yxhmalj`.
-- Dataset asumido: `production`.
-- Studio embebido: `/studio/`.
-- Schema principal: `property`.
-- Plan B estático: `src/data/properties.ts`.
-- Lectura pública: solo documentos con estado `publicado`.
-- Token de lectura: no requerido para el build público.
-- Cloudinary: disponible en Studio mediante `sanity-plugin-cloudinary`.
-- Desarrollo local: usar `npm run dev` para ver inmuebles de Sanity en vivo. Si se usa un servidor estático sobre `dist`, hay que ejecutar `npm run build` después de publicar o actualizar un inmueble.
+- El precio debe existir y ser mayor que cero.
+- Para venta se usa `saleValue`; para arriendo se usa `rentValue`.
+- La galería debe tener al menos una imagen.
+- La galería no debe superar 10 fotos.
+- El slug debe ser único y formar la URL `/inmuebles/slug/`.
+- Solo `editorialStatus: "publicado"` aparece públicamente.
+- `reservado`, `vendido`, `arrendado` e `inactivo` quedan fuera del listado y del detalle público.
 
-Pendiente operativo:
+## Plan Local Para Crear Inmuebles
 
-- Confirmar en Sanity que el dataset `production` existe.
-- Autorizar CORS para `http://localhost`, `http://127.0.0.1` y el dominio de Vercel/producción.
-- Configurar Cloudinary desde el Studio para conectar la cuenta y seleccionar assets ya subidos.
-- Las fotos se guardan como assets directos de Cloudinary en el arreglo `gallery`; el sitio usa el título del inmueble como texto alternativo base cuando Cloudinary no trae `alt`.
-- Crear el primer inmueble real como `publicado` para validar la ruta de detalle con contenido final.
+Objetivo: crear un pequeño gestor local para cargar inmuebles sin depender de Sanity, generar datos compatibles con Astro y publicar después en Vercel.
 
-Contenido previsto:
+### Opción Recomendada: Gestor Local Ligero
 
-- listado de inmuebles
-- detalle de inmueble
-- galería de máximo 10 fotos con integración Cloudinary
-- estado de disponibilidad
-- datos comerciales confirmados
-- precio visible y obligatorio
-- operación venta/arriendo
-- ubicación del inmueble con mapa de Google Maps
-- video de YouTube Short
-- zonas aledañas
+Crear una herramienta local dentro del proyecto para administrar inmuebles y exportarlos a `src/data/properties.ts` o a archivos JSON versionables.
 
-### Plan de ejecución Sanity + Astro
+Propuesta:
 
-1. Levantamiento del modelo de datos:
-   - Definir los campos obligatorios alineados con `web-mockup/detalle-inmueble.html`: título, descripción, fotos, tipo de operación, valor, características, ubicación, video, zonas aledañas y estado editorial.
-   - Separar datos públicos de datos internos, propietarios, documentos y datos sensibles.
-   - Definir estados editoriales: borrador, en validación, publicado, reservado, vendido, arrendado e inactivo.
-   - Excluir de listado, detalle indexable y sitemap los estados reservado, vendido, arrendado e inactivo.
-   - Mantener precio siempre visible y obligatorio: valor en venta para inmuebles en venta o valor en arriendo para inmuebles en arriendo.
-   - Definir la estructura flexible de características para que cada inmueble pueda tener las que apliquen sin forzar campos irrelevantes.
+- Carpeta: `tools/property-manager/`.
+- Interfaz local: formulario web sencillo.
+- Persistencia: JSON local en `src/data/properties.local.json`.
+- Exportación: script que genera `src/data/properties.ts`.
+- Imágenes: seleccionar URLs de Cloudinary ya subidas o rutas locales en `public/images`.
+- Validaciones: campos obligatorios, precio visible, máximo 10 fotos, slug único, estado editorial.
+- Build: `npm run build` genera las páginas estáticas para subir a Vercel.
 
-2. Diseño de schemas en Sanity:
-   - Crear schema principal `property` para inmuebles.
-   - Crear schemas auxiliares solo si aportan mantenimiento real: ciudad, sector, tipo de inmueble, operación, amenidades o asesor.
-   - Definir slug único generado desde el título SEO para publicar en `/inmuebles/[titulo-seo-generado]/`.
-   - Definir título, título SEO, descripción, operación `Arriendo` o `Venta`, valor de venta, valor de arriendo, tipo de inmueble, características variables, galería, ubicación, mapa, video, zonas aledañas, destacados SEO y estado editorial.
-   - Limitar la galería a máximo 10 fotos y validar que exista al menos una foto principal.
-   - Validar que solo se diligencie el valor correspondiente a la operación seleccionada.
-   - Evitar almacenar documentos legales, datos personales o información sensible en campos públicos.
+Ventajas:
 
-3. Estrategia de imágenes y video:
-   - Integrar Cloudinary para la gestión y optimización de fotos desde Sanity Studio.
-   - Permitir seleccionar assets ya subidos en Cloudinary y subir nuevas fotos desde Studio cuando sea necesario.
-   - Definir imagen principal obligatoria y galería ordenable.
-   - Validar `alt`, dimensiones, peso, formatos, orden visual y máximo de 10 fotos.
-   - Guardar en Sanity las referencias necesarias de Cloudinary sin duplicar assets pesados en el repositorio.
-   - Aceptar video como URL de YouTube Short y normalizarlo en Astro para embeberlo de forma segura.
+- No requiere servidor externo.
+- No requiere login ni CORS.
+- No depende de servicios de terceros para editar.
+- Fácil de versionar con Git.
+- Compatible con Vercel como sitio estático.
 
-4. Conexión Astro:
-   - Instalar dependencias oficiales de Sanity solo después de aprobar la SPEC.
-   - Usar dataset público para lectura de inmuebles publicados, porque el sitio es estático y solo consumirá contenido público validado.
-   - No requerir token de lectura para el build público; reservar tokens únicamente para previews, borradores, automatizaciones internas o endpoints privados.
-   - Configurar variables de entorno para `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_VERSION` y Cloudinary.
-   - Crear cliente Sanity aislado en una utilidad reusable.
-   - Mantener el sitio como estático salvo que una necesidad real obligue a otro modo de rendering.
-   - Consultar únicamente inmuebles con estado `publicado` para las rutas indexables.
+Riesgos:
 
-5. Rutas de inmuebles:
-   - Crear `/inmuebles/` como listado público.
-   - Crear `/inmuebles/[slug]/` como detalle de inmueble.
-   - Generar páginas solo para inmuebles publicados con precio, operación, título SEO, descripción, ubicación y foto principal completos.
-   - Mantener la URL final como `dominio.com/inmuebles/titulo-seo-generado/`.
-   - Manejar estados vacíos, inmuebles inactivos y slugs inexistentes sin romper SEO ni navegación.
-   - Mantener reservado, vendido y arrendado por fuera del listado público, detalle indexable y sitemap.
+- No es multiusuario.
+- Si se edita desde otro equipo, hay que mover el JSON o usar Git.
+- No tiene media library real; Cloudinary seguiría siendo externo solo para almacenar imágenes.
 
-6. Automatización de creación:
-   - Crear inmuebles desde Sanity Studio como flujo principal.
-   - Definir validaciones editoriales en Studio para bloquear publicación si faltan campos obligatorios o si hay más de 10 fotos.
-   - Usar títulos SEO para generar slugs únicos y estables.
-   - Evitar duplicados con código interno o slug controlado.
-   - Plan B si Sanity Studio falla: mantener `src/data/properties.ts` como archivo fuente controlado, con el mismo contrato del schema para permitir build estático temporal sin cambiar las rutas públicas.
-   - Plan B para imágenes si Cloudinary falla: usar URLs ya publicadas y validadas como fallback temporal, sin subir fotos pesadas al repositorio.
-   - Registrar errores de creación o build sin exponer datos sensibles.
+### Opción Strapi Local
 
-7. SEO / GEO / AEO:
-   - Generar `title`, `description`, Open Graph, canonical y JSON-LD por inmueble.
-   - Usar el título SEO como base del slug y de la metadata, sin cambiar URLs ya publicadas salvo decisión explícita.
-   - Mantener contenido verificable, claro y escaneable.
-   - Evitar thin content en inmuebles con información incompleta.
-   - No indexar inmuebles reservados, vendidos, arrendados o inactivos.
-   - Incluir datos estructurados coherentes con el tipo de inmueble, operación, ubicación pública, precio y disponibilidad.
+Sí, con Strapi se puede crear un gestor de inmuebles local.
 
-8. Validación:
-   - Ejecutar `npm run build`.
-   - Probar listado y detalle en navegador.
-   - Validar desktop, tablet y móvil.
-   - Confirmar que no hay errores de consola ni overflow horizontal.
-   - Validar estados: sin inmuebles, inmueble publicado, inmueble reservado, vendido, arrendado, inactivo, galería incompleta, más de 10 fotos y precio faltante.
-   - Validar iframe/embed URL simple de Google Maps.
-   - Validar URLs de YouTube Short y Cloudinary.
-   - Confirmar que no se envían formularios sin autorización.
+Strapi permitiría:
 
-9. Despliegue:
-   - Configurar variables de entorno en Vercel, no en el repositorio.
-   - Validar build local antes de desplegar.
-   - Validar preview deployment antes de producción.
-   - Confirmar que los webhooks de Sanity hacia Vercel solo reconstruyen cuando cambia contenido público relevante.
-   - Confirmar que las variables de Sanity, Cloudinary y Google Maps estén configuradas en Vercel antes del primer despliegue con inmuebles.
-   - Autorizar el dominio de Vercel en CORS de Sanity para solicitudes autenticadas del Studio.
+- Crear un Content Type `Inmueble`.
+- Cargar campos obligatorios.
+- Manejar estados editoriales.
+- Subir imágenes localmente o configurar Cloudinary.
+- Exponer API local.
+- Generar páginas en Astro desde esa API durante el build.
 
-10. Rollback:
-   - Revertir dependencias, cliente Sanity, schemas, rutas `/inmuebles/` y `/inmuebles/[slug]/`.
-   - Desactivar variables o webhooks en Vercel si generan builds fallidos.
-   - Activar el plan B estático desde `src/data/properties.ts` si Sanity Studio no está disponible y se necesita publicar un inmueble urgente.
-   - Mantener WhatsApp como fallback temporal para CTAs de inmuebles.
+Flujo posible:
+
+1. Crear Strapi en una carpeta separada, por ejemplo `property-cms/`.
+2. Crear el content type `inmueble`.
+3. Cargar inmuebles desde el panel local de Strapi.
+4. Exportar datos a JSON o consumir la API local en build.
+5. Ejecutar `npm run build` en Astro.
+6. Subir `web-astro` a Vercel.
+
+Ventajas:
+
+- Panel administrativo más completo.
+- Validaciones visuales.
+- Mejor si más adelante se quiere crecer a CMS real.
+- Puede integrarse con Cloudinary.
+
+Riesgos:
+
+- Más pesado para algo local.
+- Requiere correr Strapi y Astro.
+- Requiere base de datos local, normalmente SQLite.
+- Si Vercel necesita construir desde Strapi, Strapi tendría que estar disponible públicamente o se debe exportar JSON antes del deploy.
+
+Conclusión: Strapi sirve, pero para este caso local y simple conviene más empezar con un gestor ligero que exporte datos estáticos. Strapi queda como segunda fase si el gestor local se queda corto.
+
+### Opción Intermedia: JSON + Editor Visual
+
+Crear un editor local que lea y escriba JSON, sin backend persistente.
+
+- Un script `npm run properties:manager` abre una interfaz local.
+- El formulario escribe un JSON.
+- Otro script valida y genera TypeScript.
+- Astro consume siempre datos ya generados.
+
+Esta opción mantiene bajo el riesgo y evita montar un CMS completo.
+
+## Plan de Ejecución Recomendado
+
+1. Definir el contrato final del inmueble local usando `src/data/properties.ts` como base.
+2. Crear `src/data/properties.local.json` como archivo editable.
+3. Crear un validador de datos:
+   - título obligatorio
+   - título SEO obligatorio
+   - slug obligatorio y único
+   - estado editorial obligatorio
+   - operación `arriendo` o `venta`
+   - precio correspondiente obligatorio
+   - descripción obligatoria
+   - mapa de Google Maps obligatorio
+   - máximo 10 fotos
+   - al menos una foto
+   - características variables
+   - zonas aledañas como lista
+   - YouTube Short opcional pero validado si existe
+4. Crear un generador que convierta JSON a `src/data/properties.ts`.
+5. Crear una interfaz local para capturar inmuebles.
+6. Validar que `/inmuebles/` y `/inmuebles/[slug]/` sigan funcionando sin cambios visuales.
+7. Ejecutar `npm run build`.
+8. Desplegar en Vercel.
 
 ## Vercel
 
-Vercel ya quedó configurado como plataforma de despliegue del sitio Astro.
+Vercel está configurado como plataforma de despliegue del sitio Astro.
 
-Configuración documentada:
+Configuración:
 
 - Framework: Astro.
 - Build command: `npm run build`.
 - Output directory: `dist`.
-- Rendering actual: sitio estático con `output: "static"` en `astro.config.mjs`.
-- Dominio canónico configurado en Astro: `https://www.amarufs.co/`.
-- Las variables de entorno deben gestionarse desde Vercel y no deben guardarse en el repositorio.
+- Rendering: sitio estático.
+- Dominio canónico en Astro: `https://www.amarufs.co/`.
 
-Cuando se implemente Sanity, Vercel deberá recibir las variables necesarias del proyecto y, si aplica, un webhook de reconstrucción para publicar cambios de inmuebles validados.
-
-Variables sugeridas en Vercel:
-
-- `SANITY_PROJECT_ID`
-- `SANITY_DATASET`
-- `SANITY_API_VERSION`
-
-Si se mantienen los valores actuales, el proyecto también puede compilar sin variables porque `astro.config.mjs` y `sanity.config.ts` tienen valores fallback no secretos.
+Si el gestor local genera archivos antes del deploy, Vercel no necesita acceso al gestor. Solo necesita recibir el repositorio con `src/data/properties.ts` o los JSON ya generados.
 
 ## SEO / GEO / AEO
 
-Cada página conserva:
+Cada página debe conservar:
 
 - `title`
 - `description`
 - Open Graph básico
+- canonical
 - jerarquía semántica
 - contenido escaneable
-- JSON-LD migrado desde el mockup
-- FAQs visibles cuando aplica
+- JSON-LD cuando aplique
+- FAQs visibles cuando aplique
 
-## Validación esperada
+Los inmuebles incompletos no deben publicarse ni indexarse.
+
+## Validación Esperada
 
 Antes de cerrar cualquier cambio:
 
 - ejecutar `npm run build`
-- revisar en navegador local
+- revisar navegador local
 - validar desktop, tablet y móvil
 - confirmar que no hay errores de consola
 - confirmar que no hay overflow horizontal
 - confirmar que el menú móvil abre y cierra
 - confirmar que las FAQs funcionan
-- confirmar que `/inmuebles/` carga estado vacío o inmuebles publicados
-- confirmar que `/studio/` monta Sanity Studio y muestra la pantalla de CORS/login cuando aplique
+- confirmar que `/inmuebles/` carga inmuebles publicados o estado vacío
+- confirmar que `/inmuebles/[slug]/` carga la ficha correcta
 - buscar `console.log`, `debugger`, `TODO` y `FIXME`
 
-## Riesgos conocidos
+## Riesgos Conocidos
 
-- No hay inmuebles públicos hasta crear documentos `property` con estado `publicado`.
-- La ruta de detalle depende de que exista al menos un inmueble publicado con slug, precio, descripción, ubicación y foto principal.
-- Sanity Studio requiere autorizar CORS para el origen local y el dominio de producción.
-- Vercel ya está configurado para despliegue, pero la integración con Sanity debe validar variables, previews y webhooks antes de producción.
+- La publicación de inmuebles depende de que `src/data/properties.ts` tenga registros completos.
+- Si se usa un gestor local, hay que ejecutar el generador antes de hacer build.
+- Si se usa Strapi solo local, Vercel no podrá consultar Strapi durante build salvo que los datos se exporten previamente.
 
 ## Rollback
 
-Para revertir esta etapa, restaurar o eliminar los archivos creados dentro de `web-astro`. La carpeta `web-mockup` queda como fuente de referencia y no debe eliminarse durante esta migración.
+Para revertir cambios de inmuebles locales, restaurar `src/data/properties.ts` desde Git.
+
+Para volver a un CMS externo en el futuro, crear una SPEC nueva y documentar dependencias, variables, cliente de datos, estrategia de build y rollback.
