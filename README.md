@@ -4,11 +4,19 @@
 
 Sitio Astro de Amaru FS Inmobiliaria, migrado desde `../web-mockup` hacia una arquitectura modular, estática y lista para desplegar en Vercel.
 
-El sitio conserva las rutas comerciales principales, el diseño base del mockup, las páginas de inmuebles, la ficha de detalle, la iconografía con Font Awesome, las fuentes locales y las interacciones de menú móvil y FAQ.
+El sitio conserva las rutas comerciales principales, el diseño base del mockup, las páginas de inmuebles, la ficha de detalle, la iconografía con Font Awesome, las fuentes locales y las interacciones de menú móvil, FAQ, filtros y detalle de inmueble.
 
-## Estado actual
+## Estado Actual
 
-Sanity fue retirado del proyecto. La fuente actual de inmuebles es local y vive en `src/data/properties.ts`.
+Sanity fue retirado del proyecto. El gestor elegido para inmuebles es Strapi local en `../property-cms`, conectado a Cloudinary para la galería de fotos.
+
+El sitio Astro no depende de Strapi en producción. El flujo correcto es:
+
+1. Crear o editar inmuebles en Strapi local.
+2. Gestionar fotos en la Media Library de Strapi usando Cloudinary.
+3. Exportar inmuebles desde Strapi hacia `src/data/properties.ts`.
+4. Ejecutar `npm run build`.
+5. Desplegar el sitio estático en Vercel.
 
 Páginas activas:
 
@@ -23,7 +31,7 @@ Páginas activas:
 
 Las rutas de inmuebles solo muestran registros con estado `publicado` y campos obligatorios completos. Los estados `reservado`, `vendido`, `arrendado` e `inactivo` quedan por fuera del listado público y del detalle indexable.
 
-## Stack tecnológico
+## Stack Tecnológico
 
 - Astro.
 - Sitio estático con `output: "static"`.
@@ -32,205 +40,185 @@ Las rutas de inmuebles solo muestran registros con estado `publicado` y campos o
 - JavaScript propio para menú móvil, FAQ, filtros y detalles de inmueble.
 - Font Awesome 6.5.2 por CDN.
 - Fuentes locales en `public/fonts`.
-- Imágenes locales en `public/images`.
-- Datos de inmuebles en TypeScript local.
+- Imágenes locales base en `public/images`.
+- Strapi 5 local como gestor de inmuebles.
+- Cloudinary como proveedor de media library en Strapi.
+- Exportación Strapi -> Astro mediante script local.
 
 ## Requisitos
 
 - Node.js.
 - npm.
+- Strapi local en `../property-cms`.
+- Cuenta Cloudinary con cloud name, API key y API secret.
 
 ## Instalación
 
+Sitio Astro:
+
 ```bash
+cd web-astro
 npm install
 ```
 
-## Variables de entorno
+Gestor Strapi:
 
-No hay variables obligatorias para compilar el sitio actual.
+```bash
+cd ../property-cms
+npm install
+```
 
-No guardar secretos en el repositorio. Si en una fase posterior se agrega un gestor externo o un webhook, las variables deben configurarse en Vercel y documentarse aquí.
+## Variables de Entorno
 
-## Scripts disponibles
+Astro usa variables locales solo para exportar inmuebles desde Strapi:
+
+```bash
+STRAPI_URL=http://127.0.0.1:1337
+STRAPI_API_TOKEN=
+```
+
+Strapi usa variables locales para Cloudinary:
+
+```bash
+CLOUDINARY_NAME=domose0dj
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+CLOUDINARY_FOLDER=amarufs/inmuebles
+```
+
+No guardar secretos en Git. `property-cms/.env` y `web-astro/.env.local` deben permanecer locales.
+
+## Scripts Disponibles
 
 ```bash
 npm run dev
 npm run build
 npm run preview
+npm run properties:pull
 ```
 
-## Flujo de desarrollo
+`npm run properties:pull` consulta `../property-cms` en local y genera `src/data/properties.ts` con los inmuebles de Strapi.
 
-1. Trabajar únicamente sobre archivos fuente.
-2. No modificar `dist`, `.astro` ni archivos generados.
-3. Mantener contenido en español Colombia.
-4. Mantener UTF-8.
-5. Mantener el ancho global de `1700px` para páginas, header, footer, secciones y bloques principales.
-6. Validar `npm run build` antes de desplegar.
-7. No enviar formularios sin autorización.
+## Flujo de Desarrollo
 
-## Estructura principal
+1. Levantar Strapi:
+   ```bash
+   cd property-cms
+   npm run develop
+   ```
+2. Crear o editar inmuebles en `http://127.0.0.1:1337/admin`.
+3. Subir o seleccionar fotos desde la Media Library de Strapi, respaldada por Cloudinary.
+4. En `web-astro`, exportar inmuebles:
+   ```bash
+   npm run properties:pull
+   ```
+5. Validar Astro:
+   ```bash
+   npm run build
+   npm run dev
+   ```
+6. Revisar `/inmuebles/` y `/inmuebles/[slug]/`.
+7. Desplegar en Vercel.
+
+## Estructura Principal
 
 ```text
-web-astro/
-  public/
-    fonts/
-    images/
-  src/
-    components/
-      global/
-    data/
-      properties.ts
-    lib/
-      properties.ts
-      property-utils.ts
-    layouts/
-    pages/
-      inmuebles/
-    scripts/
-    styles/
+amarufs/
+  property-cms/
+    config/
+    src/api/inmueble/
+  web-astro/
+    public/
+    src/
+      components/
+      data/
+        properties.ts
+      lib/
+      layouts/
       pages/
+        inmuebles/
+      scripts/
+      styles/
+    scripts/
+      pull-strapi-properties.mjs
 ```
 
-## Inmuebles Locales
+## Modelo de Inmueble en Strapi
 
-La fuente actual de inmuebles es `src/data/properties.ts`.
+Content Type: `Inmueble`.
 
-Contrato principal:
+Campos:
 
-- `title`
-- `seoTitle`
-- `slug`
-- `editorialStatus`
-- `operation`
-- `propertyType`
-- `saleValue` o `rentValue`
-- `locationLabel`
-- `googleMapsEmbed`
-- `description`
-- `summary`
-- `gallery`
-- `features`
-- `nearbyZones`
-- `youtubeShortUrl`
-- `internalCode`
-- `metaDescription`
+- `title`: título público.
+- `seoTitle`: título base para slug y metadata.
+- `slug`: UID generado desde `seoTitle`.
+- `editorialStatus`: `borrador`, `en-validacion`, `publicado`, `reservado`, `vendido`, `arrendado`, `inactivo`.
+- `operation`: `arriendo` o `venta`.
+- `propertyType`: tipo de inmueble.
+- `saleValue`: valor de venta.
+- `rentValue`: valor de arriendo.
+- `locationLabel`: ubicación pública resumida.
+- `googleMapsEmbed`: URL o iframe de Google Maps.
+- `description`: descripción del inmueble.
+- `summary`: resumen corto.
+- `gallery`: galería de imágenes desde Cloudinary, máximo 10 fotos.
+- `features`: JSON con características variables.
+- `nearbyZones`: JSON con zonas aledañas.
+- `youtubeShortUrl`: URL de YouTube Short.
+- `internalCode`: código interno.
+- `metaDescription`: descripción SEO.
 
-Reglas obligatorias:
+## Reglas Editoriales
 
-- El precio debe existir y ser mayor que cero.
-- Para venta se usa `saleValue`; para arriendo se usa `rentValue`.
-- La galería debe tener al menos una imagen.
-- La galería no debe superar 10 fotos.
-- El slug debe ser único y formar la URL `/inmuebles/slug/`.
 - Solo `editorialStatus: "publicado"` aparece públicamente.
-- `reservado`, `vendido`, `arrendado` e `inactivo` quedan fuera del listado y del detalle público.
+- Para `operation: "venta"` debe existir `saleValue`.
+- Para `operation: "arriendo"` debe existir `rentValue`.
+- El precio siempre debe ser visible.
+- Un inmueble publicado debe tener al menos una foto.
+- La galería no debe superar 10 fotos.
+- `features` debe ser una lista.
+- `nearbyZones` debe ser una lista.
+- El slug debe ser único.
+- El video, si existe, debe ser de YouTube Short o `youtu.be`.
 
-## Plan Local Para Crear Inmuebles
+## Formato de Features
 
-Objetivo: crear un pequeño gestor local para cargar inmuebles sin depender de Sanity, generar datos compatibles con Astro y publicar después en Vercel.
+En Strapi, `features` se edita como JSON:
 
-### Opción Recomendada: Gestor Local Ligero
+```json
+[
+  { "label": "2 Alcobas", "icon": "fa-solid fa-bed", "filterValue": "2" },
+  { "label": "1 Baño", "icon": "fa-solid fa-bath", "filterValue": "1" },
+  { "label": "1 Sala / Comedor", "icon": "fa-solid fa-couch" }
+]
+```
 
-Crear una herramienta local dentro del proyecto para administrar inmuebles y exportarlos a `src/data/properties.ts` o a archivos JSON versionables.
+## Formato de Zonas Aledañas
 
-Propuesta:
+En Strapi, `nearbyZones` se edita como JSON:
 
-- Carpeta: `tools/property-manager/`.
-- Interfaz local: formulario web sencillo.
-- Persistencia: JSON local en `src/data/properties.local.json`.
-- Exportación: script que genera `src/data/properties.ts`.
-- Imágenes: seleccionar URLs de Cloudinary ya subidas o rutas locales en `public/images`.
-- Validaciones: campos obligatorios, precio visible, máximo 10 fotos, slug único, estado editorial.
-- Build: `npm run build` genera las páginas estáticas para subir a Vercel.
+```json
+[
+  "Zona comercial",
+  "Parque",
+  "Autopista Norte",
+  "Centro Comercial Bima"
+]
+```
 
-Ventajas:
+## Cloudinary
 
-- No requiere servidor externo.
-- No requiere login ni CORS.
-- No depende de servicios de terceros para editar.
-- Fácil de versionar con Git.
-- Compatible con Vercel como sitio estático.
+Cloudinary queda conectado como provider del Upload plugin de Strapi.
 
-Riesgos:
+Archivos configurados:
 
-- No es multiusuario.
-- Si se edita desde otro equipo, hay que mover el JSON o usar Git.
-- No tiene media library real; Cloudinary seguiría siendo externo solo para almacenar imágenes.
+- `property-cms/config/plugins.ts`
+- `property-cms/config/middlewares.ts`
+- `property-cms/.env.example`
 
-### Opción Strapi Local
+Strapi sube y lee imágenes desde Cloudinary. Astro solo recibe las URLs finales exportadas en `src/data/properties.ts`.
 
-Sí, con Strapi se puede crear un gestor de inmuebles local.
-
-Strapi permitiría:
-
-- Crear un Content Type `Inmueble`.
-- Cargar campos obligatorios.
-- Manejar estados editoriales.
-- Subir imágenes localmente o configurar Cloudinary.
-- Exponer API local.
-- Generar páginas en Astro desde esa API durante el build.
-
-Flujo posible:
-
-1. Crear Strapi en una carpeta separada, por ejemplo `property-cms/`.
-2. Crear el content type `inmueble`.
-3. Cargar inmuebles desde el panel local de Strapi.
-4. Exportar datos a JSON o consumir la API local en build.
-5. Ejecutar `npm run build` en Astro.
-6. Subir `web-astro` a Vercel.
-
-Ventajas:
-
-- Panel administrativo más completo.
-- Validaciones visuales.
-- Mejor si más adelante se quiere crecer a CMS real.
-- Puede integrarse con Cloudinary.
-
-Riesgos:
-
-- Más pesado para algo local.
-- Requiere correr Strapi y Astro.
-- Requiere base de datos local, normalmente SQLite.
-- Si Vercel necesita construir desde Strapi, Strapi tendría que estar disponible públicamente o se debe exportar JSON antes del deploy.
-
-Conclusión: Strapi sirve, pero para este caso local y simple conviene más empezar con un gestor ligero que exporte datos estáticos. Strapi queda como segunda fase si el gestor local se queda corto.
-
-### Opción Intermedia: JSON + Editor Visual
-
-Crear un editor local que lea y escriba JSON, sin backend persistente.
-
-- Un script `npm run properties:manager` abre una interfaz local.
-- El formulario escribe un JSON.
-- Otro script valida y genera TypeScript.
-- Astro consume siempre datos ya generados.
-
-Esta opción mantiene bajo el riesgo y evita montar un CMS completo.
-
-## Plan de Ejecución Recomendado
-
-1. Definir el contrato final del inmueble local usando `src/data/properties.ts` como base.
-2. Crear `src/data/properties.local.json` como archivo editable.
-3. Crear un validador de datos:
-   - título obligatorio
-   - título SEO obligatorio
-   - slug obligatorio y único
-   - estado editorial obligatorio
-   - operación `arriendo` o `venta`
-   - precio correspondiente obligatorio
-   - descripción obligatoria
-   - mapa de Google Maps obligatorio
-   - máximo 10 fotos
-   - al menos una foto
-   - características variables
-   - zonas aledañas como lista
-   - YouTube Short opcional pero validado si existe
-4. Crear un generador que convierta JSON a `src/data/properties.ts`.
-5. Crear una interfaz local para capturar inmuebles.
-6. Validar que `/inmuebles/` y `/inmuebles/[slug]/` sigan funcionando sin cambios visuales.
-7. Ejecutar `npm run build`.
-8. Desplegar en Vercel.
+Esto evita subir fotos pesadas al repositorio y mantiene Vercel como sitio estático.
 
 ## Vercel
 
@@ -244,20 +232,22 @@ Configuración:
 - Rendering: sitio estático.
 - Dominio canónico en Astro: `https://www.amarufs.co/`.
 
-Si el gestor local genera archivos antes del deploy, Vercel no necesita acceso al gestor. Solo necesita recibir el repositorio con `src/data/properties.ts` o los JSON ya generados.
+Vercel no necesita conectarse a Strapi si los inmuebles se exportan antes del deploy. Si más adelante se quiere que Vercel consulte Strapi durante build, Strapi deberá estar publicado o accesible desde Vercel.
 
 ## SEO / GEO / AEO
 
-Cada página debe conservar:
+Cada inmueble debe conservar:
 
 - `title`
 - `description`
-- Open Graph básico
+- `metaDescription`
 - canonical
-- jerarquía semántica
-- contenido escaneable
+- Open Graph
 - JSON-LD cuando aplique
-- FAQs visibles cuando aplique
+- precio visible
+- operación visible
+- ubicación pública
+- contenido escaneable
 
 Los inmuebles incompletos no deben publicarse ni indexarse.
 
@@ -274,16 +264,18 @@ Antes de cerrar cualquier cambio:
 - confirmar que las FAQs funcionan
 - confirmar que `/inmuebles/` carga inmuebles publicados o estado vacío
 - confirmar que `/inmuebles/[slug]/` carga la ficha correcta
+- confirmar que `npm run properties:pull` genera datos válidos cuando Strapi está activo
 - buscar `console.log`, `debugger`, `TODO` y `FIXME`
 
 ## Riesgos Conocidos
 
-- La publicación de inmuebles depende de que `src/data/properties.ts` tenga registros completos.
-- Si se usa un gestor local, hay que ejecutar el generador antes de hacer build.
-- Si se usa Strapi solo local, Vercel no podrá consultar Strapi durante build salvo que los datos se exporten previamente.
+- Strapi local no estará disponible para Vercel salvo que se publique.
+- Si se editan inmuebles en Strapi, hay que ejecutar `npm run properties:pull` antes de `npm run build`.
+- Cloudinary requiere API key y API secret en `property-cms/.env`.
+- Las credenciales no deben subirse al repositorio.
 
 ## Rollback
 
-Para revertir cambios de inmuebles locales, restaurar `src/data/properties.ts` desde Git.
+Para revertir datos de inmuebles, restaurar `src/data/properties.ts` desde Git.
 
-Para volver a un CMS externo en el futuro, crear una SPEC nueva y documentar dependencias, variables, cliente de datos, estrategia de build y rollback.
+Para retirar Strapi en el futuro, eliminar `../property-cms`, quitar `npm run properties:pull` y volver a editar `src/data/properties.ts` manualmente.
