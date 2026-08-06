@@ -38,6 +38,33 @@ document.querySelectorAll("[data-faq-list] .faq-item button").forEach((button) =
   });
 });
 
+document.querySelectorAll("[data-modal-open]").forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    const modalId = trigger.getAttribute("data-modal-open");
+    const modal = modalId ? document.getElementById(modalId) : null;
+
+    if (modal instanceof HTMLDialogElement) {
+      modal.showModal();
+    }
+  });
+});
+
+document.querySelectorAll("[data-modal]").forEach((modal) => {
+  if (!(modal instanceof HTMLDialogElement)) {
+    return;
+  }
+
+  modal.querySelectorAll("[data-modal-close]").forEach((button) => {
+    button.addEventListener("click", () => modal.close());
+  });
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.close();
+    }
+  });
+});
+
 const revealCandidates = document.querySelectorAll(
   ".hero__panel, .properties__visual, .route-card, .service-card, .referral-card, .timeline li, .faq-item, .role-grid article, .rules__cards article"
 );

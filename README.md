@@ -149,53 +149,61 @@ Content Type: `Inmueble`.
 
 Campos:
 
-- `title`: título público.
-- `seoTitle`: título base para slug y metadata.
-- `slug`: UID generado desde `seoTitle`.
-- `editorialStatus`: `borrador`, `en-validacion`, `publicado`, `reservado`, `vendido`, `arrendado`, `inactivo`.
-- `operation`: `arriendo` o `venta`.
-- `propertyType`: tipo de inmueble.
-- `saleValue`: valor de venta.
-- `rentValue`: valor de arriendo.
-- `locationLabel`: ubicación pública resumida.
-- `googleMapsEmbed`: URL o iframe de Google Maps.
-- `description`: descripción del inmueble.
-- `summary`: resumen corto.
-- `gallery`: galería de imágenes desde Cloudinary, máximo 10 fotos.
-- `features`: JSON con características variables.
-- `nearbyZones`: JSON con zonas aledañas.
-- `youtubeShortUrl`: URL de YouTube Short.
-- `internalCode`: código interno.
-- `metaDescription`: descripción SEO.
+- `titulo`: título público.
+- `slug`: UID generado desde `titulo`.
+- `metaDescripcion`: descripción SEO. Reemplaza el resumen corto.
+- `estadoEditorial`: `borrador`, `en-validacion`, `publicado`, `reservado`, `vendido`, `arrendado`, `inactivo`.
+- `operacion`: `arriendo` o `venta`.
+- `tipoInmueble`: lista cerrada inicial: `apartamento`, `casa`, `garaje`, `lote`.
+- `valorVenta`: valor de venta, solo números, sin signo pesos ni puntos.
+- `valorArriendo`: valor del canon, solo números, sin signo pesos ni puntos.
+- `administracionIncluida`: indica si el canon de arriendo ya incluye administración.
+- `valorAdministracion`: valor de administración, solo si no está incluida.
+- `valorTotalArriendo`: total calculado para publicar en arriendo.
+- `ubicacion`: ciudad o municipio principal.
+- `barrio`: barrio o sector comercial opcional. Si existe, Astro lo muestra junto a la ubicación.
+- `mapaGoogle`: iframe completo de Google Maps.
+- `videoYoutubeShort`: URL de YouTube Short.
+- `imagenNotaTransparencia`: imagen opcional para acompañar la nota de transparencia en el detalle.
+- `descripcion`: descripción del inmueble.
+- `caracteristicas`: JSON con características variables.
+- `zonasAledanas`: JSON con zonas aledañas.
+- `codigoInterno`: código interno.
+- `fotos`: galería de imágenes desde Cloudinary, máximo 10 fotos.
 
 ## Reglas Editoriales
 
-- Solo `editorialStatus: "publicado"` aparece públicamente.
-- Para `operation: "venta"` debe existir `saleValue`.
-- Para `operation: "arriendo"` debe existir `rentValue`.
+- Solo `estadoEditorial: "publicado"` aparece públicamente.
+- Para `operacion: "venta"` debe existir `valorVenta`.
+- Para `operacion: "arriendo"` debe existir `valorArriendo`.
+- Si `administracionIncluida` es `false`, debe existir `valorAdministracion`.
+- `valorTotalArriendo` se calcula como `valorArriendo + valorAdministracion`, o solo `valorArriendo` si la administración está incluida.
 - El precio siempre debe ser visible.
 - Un inmueble publicado debe tener al menos una foto.
 - La galería no debe superar 10 fotos.
-- `features` debe ser una lista.
-- `nearbyZones` debe ser una lista.
+- `caracteristicas` debe ser una lista.
+- `zonasAledanas` debe ser una lista.
 - El slug debe ser único.
 - El video, si existe, debe ser de YouTube Short o `youtu.be`.
 
-## Formato de Features
+## Formato de Características
 
-En Strapi, `features` se edita como JSON:
+En Strapi, `caracteristicas` se edita como JSON:
 
 ```json
 [
-  { "label": "2 Alcobas", "icon": "fa-solid fa-bed", "filterValue": "2" },
-  { "label": "1 Baño", "icon": "fa-solid fa-bath", "filterValue": "1" },
-  { "label": "1 Sala / Comedor", "icon": "fa-solid fa-couch" }
+  { "label": "Alcobas", "value": "2", "icon": "bed" },
+  { "label": "Baños", "value": "1", "icon": "bath" },
+  { "label": "Sala / comedor", "value": "1", "icon": "sofa" },
+  { "label": "Área", "value": "48 m²", "icon": "area" }
 ]
 ```
 
+El exportador convierte ese formato a etiquetas visibles como `2 Alcobas` y clases Font Awesome para Astro.
+
 ## Formato de Zonas Aledañas
 
-En Strapi, `nearbyZones` se edita como JSON:
+En Strapi, `zonasAledanas` se edita como JSON:
 
 ```json
 [
@@ -220,6 +228,30 @@ Strapi sube y lee imágenes desde Cloudinary. Astro solo recibe las URLs finales
 
 Esto evita subir fotos pesadas al repositorio y mantiene Vercel como sitio estático.
 
+Para validar credenciales en el CMS local:
+
+```bash
+cd ../property-cms
+npm run cloudinary:check
+```
+
+Las fotos nuevas deben cargarse desde la Media Library de Strapi para que queden registradas en Strapi y almacenadas en Cloudinary. Los assets que ya existían en Cloudinary requieren importación o recarga desde Strapi antes de poder seleccionarse en el campo `fotos`.
+
+Para importar referencias existentes de Cloudinary a Strapi:
+
+```bash
+cd ../property-cms
+npm run cloudinary:list
+npm run cloudinary:import:all
+```
+
+Si el exportador de Astro responde `403 Forbidden`, habilitar lectura pública de `Inmueble` en Strapi local:
+
+```bash
+cd ../property-cms
+npm run inmuebles:public-read
+```
+
 ## Vercel
 
 Vercel está configurado como plataforma de despliegue del sitio Astro.
@@ -238,9 +270,9 @@ Vercel no necesita conectarse a Strapi si los inmuebles se exportan antes del de
 
 Cada inmueble debe conservar:
 
-- `title`
-- `description`
-- `metaDescription`
+- `titulo`
+- `descripcion`
+- `metaDescripcion`
 - canonical
 - Open Graph
 - JSON-LD cuando aplique

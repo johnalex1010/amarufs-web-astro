@@ -29,7 +29,7 @@
   }
 
   function formatCurrency(value) {
-    return `$${Number(value).toLocaleString("es-CO")}`;
+    return `$${Number(value).toLocaleString("es-CO")} COP`;
   }
 
   function updatePriceRange() {

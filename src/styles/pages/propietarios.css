@@ -26,6 +26,9 @@
 			rgba(0, 225, 173, 0.16),
 			rgba(242, 185, 80, 0.12)
 		);
+	background-position: center;
+	background-size: cover;
+	background-image: url("/images/banner-amarufs-propietarios.webp");
 	border-radius: var(--radius);
 	box-shadow: var(--shadow-soft);
 }
@@ -51,8 +54,9 @@
 .hero__panel {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
-	padding: 30px;
+	justify-content: center;
+	gap: 20px;
+	padding: 28px;
 	color: var(--color-white);
 	background: var(--color-primary);
 	border-radius: var(--radius);
@@ -60,21 +64,23 @@
 }
 
 .hero__panel img {
-	width: 150px;
-	margin-bottom: 24px;
+	width: 100%;
+	/* margin-bottom: 20px; */
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border-radius: var(--radius);
 }
-
 .hero__panel-icon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 52px;
-	height: 52px;
-	margin-bottom: auto;
+	width: 48px;
+	height: 48px;
+	/* margin-bottom: auto; */
 	color: var(--color-primary);
 	background: var(--color-secondary);
 	border-radius: 50%;
-	font-size: 23px;
+	font-size: 22px;
 }
 
 .hero__panel h2 {
@@ -341,38 +347,98 @@
 	color: var(--color-muted);
 }
 
-.checklist__grid {
+.checklist__groups {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 16px;
+	gap: 18px;
+}
+
+.checklist-group {
+	position: relative;
+	display: grid;
+	align-content: start;
+	gap: 18px;
+	min-height: 300px;
+	overflow: hidden;
+	padding: 28px;
+	background: var(--color-white);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius);
+	box-shadow: 0 14px 34px rgba(16, 26, 45, 0.05);
+}
+
+.checklist-group::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 5px;
+	background: var(--color-secondary);
+	content: "";
+}
+
+.checklist-group__heading {
+	display: grid;
+	grid-template-columns: auto 42px;
+	gap: 10px 14px;
+	align-items: center;
+}
+
+.checklist-group__heading i {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: 42px;
+	height: 42px;
+	color: var(--color-primary);
+	background: #dff9f1;
+	border-radius: 50%;
+	font-size: 17px;
+}
+
+.checklist-group__heading span {
+	color: var(--color-secondary);
+	font-family: "Bebas Neue", Impact, sans-serif;
+	font-size: 42px;
+	line-height: 0.9;
+}
+
+.checklist-group h3 {
+	grid-column: 1 / -1;
+	margin: 0;
+	color: var(--color-primary);
+	font-size: 34px;
+}
+
+.checklist-group p {
+	margin: 0;
+	color: var(--color-muted);
+}
+
+.checklist-group ul {
+	display: grid;
+	gap: 12px;
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 
-.checklist__grid li {
-	display: flex;
-	align-items: flex-start;
-	gap: 14px;
-	min-height: 92px;
-	padding: 22px;
-	background: var(--color-white);
-	border: 1px solid var(--color-line);
-	border-radius: var(--radius);
-	color: var(--color-text);
+.checklist-group li {
+	position: relative;
+	padding-left: 20px;
+	color: var(--color-muted);
 }
 
-.checklist__grid i {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex: 0 0 auto;
-	width: 34px;
-	height: 34px;
-	color: var(--color-primary);
-	background: #dff9f1;
+.checklist-group li::before {
+	position: absolute;
+	top: 0.7em;
+	left: 0;
+	width: 7px;
+	height: 7px;
+	background: var(--color-secondary);
 	border-radius: 50%;
-	font-size: 15px;
+	content: "";
 }
 
 .transparency {
@@ -558,7 +624,7 @@
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.checklist__grid {
+	.checklist__groups {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
@@ -566,12 +632,26 @@
 @media (max-width: 760px) {
 	.hero,
 	.section-pad {
-		width: min(100% - 32px, var(--content-max-width));
+		width: min(var(--content-max-width), calc(100% - 32px));
 	}
 
 	.hero {
+		width: calc(100vw - 32px);
+		max-width: calc(100vw - 32px);
 		padding-top: 26px;
 		gap: 18px;
+	}
+
+	.hero,
+	.hero__content {
+		min-width: 0;
+		max-width: 100%;
+		overflow: hidden;
+	}
+
+	.hero__content > * {
+		min-width: 0;
+		max-width: 100%;
 	}
 
 	.hero__panel {
@@ -587,8 +667,9 @@
 	}
 
 	.hero__content h1 {
-		font-size: 48px;
+		font-size: clamp(38px, 10.5vw, 42px);
 		overflow-wrap: anywhere;
+		word-break: break-word;
 	}
 
 	h2 {
@@ -597,17 +678,28 @@
 
 	.hero__lead {
 		font-size: 18px;
+		max-width: 100%;
+		overflow-wrap: anywhere;
 	}
 
 	.hero__actions,
 	.closing {
 		flex-direction: column;
 		align-items: stretch;
+		max-width: 100%;
+	}
+
+	.hero__actions .btn {
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+		overflow-wrap: anywhere;
+		white-space: normal;
 	}
 
 	.timeline,
 	.audience__summary,
-	.checklist__grid {
+	.checklist__groups {
 		grid-template-columns: 1fr;
 	}
 
@@ -618,7 +710,6 @@
 	.timeline li {
 		min-height: auto;
 	}
-
 }
 
 @media (prefers-reduced-motion: reduce) {

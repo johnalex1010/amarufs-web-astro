@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RentalRequirementsModal from "../../components/common/RentalRequirementsModal.astro";
 import { site } from "../../data/site";
 import { getPublishedProperties, getPublishedPropertyBySlug } from "../../lib/properties";
 import {
@@ -7,9 +8,12 @@ import {
   formatCurrency,
   getOperationLabel,
   getPriceLabel,
+  getPropertyLocationLabel,
   getPropertyPrice,
+  getPropertyTypeLabel,
   getPropertyWhatsappHref,
-  getYoutubeEmbedSrc
+  getYoutubeEmbedSrc,
+  renderRichText
 } from "../../lib/property-utils";
 import "../../styles/pages/detalle-inmueble.css";
 
@@ -29,15 +33,15 @@ if (!property) {
 
 const price = getPropertyPrice(property);
 const formattedPrice = formatCurrency(price);
+const descriptionHtml = renderRichText(property.description);
 const mapsSrc = extractGoogleMapsSrc(property.googleMapsEmbed);
 const youtubeSrc = getYoutubeEmbedSrc(property.youtubeShortUrl);
 const whatsappHref = getPropertyWhatsappHref(property);
 const isRent = property.operation === "arriendo";
 const operationLabel = getOperationLabel(property.operation);
 const priceLabel = getPriceLabel(property.operation);
-const totalLabel = isRent ? "Total mensual" : "Valor publicado";
 const processTitle = isRent
-  ? "Cómo avanzar si quieres arrendar este inmueble"
+  ? "Cómo avanzar si quieres tomar en arriendo este inmueble"
   : "Cómo avanzar si quieres comprar este inmueble";
 const processSteps = isRent
   ? [
@@ -54,7 +58,9 @@ const processSteps = isRent
       {
         icon: "fa-solid fa-list-check",
         title: "Solicita requisitos",
-        text: "Si el inmueble te interesa, te compartimos los requisitos necesarios para iniciar el proceso."
+        text: "Si el inmueble te interesa, te compartimos los requisitos necesarios para iniciar el proceso.",
+        modalId: "detail-requirements-modal",
+        actionLabel: "Ver requisitos"
       },
       {
         icon: "fa-solid fa-file-shield",
@@ -86,7 +92,9 @@ const processSteps = isRent
       {
         icon: "fa-solid fa-handshake",
         title: "Presenta interés",
-        text: "Si quieres avanzar, se revisan condiciones comerciales y pasos documentales."
+        text: "Si quieres avanzar, se revisan condiciones comerciales y pasos documentales.",
+        modalId: "sale-requirements-modal",
+        actionLabel: "Ver requisitos"
       },
       {
         icon: "fa-solid fa-file-signature",
@@ -130,7 +138,7 @@ const detailJsonLd = {
   description: property.description,
   address: {
     "@type": "PostalAddress",
-    addressLocality: property.locationLabel,
+    addressLocality: getPropertyLocationLabel(property),
     addressCountry: "CO"
   },
   provider: {
@@ -179,7 +187,7 @@ const faqJsonLd = {
           </button>
           <div class="detail-hero__tags" aria-label="Información rápida del inmueble">
             <span><i class={isRent ? "fa-solid fa-door-open" : "fa-solid fa-sign-hanging"} aria-hidden="true"></i> {operationLabel}</span>
-            <span><i class="fa-solid fa-building" aria-hidden="true"></i> {property.propertyType}</span>
+            <span><i class="fa-solid fa-building" aria-hidden="true"></i> {getPropertyTypeLabel(property.propertyType)}</span>
             <span><i class="fa-solid fa-camera" aria-hidden="true"></i> <b data-gallery-count>1 / {property.gallery.length}</b></span>
           </div>
         </figure>
@@ -209,38 +217,37 @@ const faqJsonLd = {
           </button>
         </div>
       </div>
-
-      <aside class="property-summary" aria-labelledby="property-title">
-        <p class="eyebrow">Ficha del inmueble</p>
-        <h1 id="property-title">{property.title}</h1>
-        <p class="summary-lead">{property.summary ?? property.description}</p>
-        <dl class="summary-list">
-          {property.internalCode && (
-            <div>
-              <dt>Código</dt>
-              <dd>{property.internalCode}</dd>
-            </div>
-          )}
-          <div>
-            <dt>Ubicación</dt>
-            <dd>{property.locationLabel}</dd>
-          </div>
-          <div>
-            <dt>Estado</dt>
-            <dd>Publicado</dd>
-          </div>
-          <div>
-            <dt>{priceLabel}</dt>
-            <dd>{formattedPrice}</dd>
-          </div>
-        </dl>
-        <div class="summary-actions">
-          <a class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
-          <a class="btn btn--ghost" href={`tel:+${site.whatsapp}`}><i class="fa-solid fa-phone" aria-hidden="true"></i> Llamar a un asesor</a>
-        </div>
-        <p class="summary-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Disponibilidad, precio y condiciones deben confirmarse por WhatsApp antes de agendar visita o solicitar requisitos.</p>
-      </aside>
     </section>
+
+    <aside class="property-summary" aria-labelledby="property-title">
+      <p class="eyebrow">Ficha del inmueble</p>
+      <h1 id="property-title">{property.title}</h1>
+      <dl class="summary-list">
+        {property.internalCode && (
+          <div>
+            <dt>Código</dt>
+            <dd>{property.internalCode}</dd>
+          </div>
+        )}
+        <div>
+          <dt>Ubicación</dt>
+          <dd>{getPropertyLocationLabel(property)}</dd>
+        </div>
+        <div>
+          <dt>Estado</dt>
+          <dd>Publicado</dd>
+        </div>
+        <div>
+          <dt>{priceLabel}</dt>
+          <dd>{formattedPrice}</dd>
+        </div>
+      </dl>
+      <div class="summary-actions">
+        <a class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
+        <a class="btn btn--ghost" href={`tel:+${site.whatsapp}`}><i class="fa-solid fa-phone" aria-hidden="true"></i> Llamar a un asesor</a>
+      </div>
+      <p class="summary-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Disponibilidad, precio y condiciones deben confirmarse por WhatsApp antes de agendar visita o solicitar requisitos.</p>
+    </aside>
 
     <section class="section-pad section-band section-band--white intro-block" aria-labelledby="intro-title">
       <div class="section-heading">
@@ -266,42 +273,14 @@ const faqJsonLd = {
       </div>
       <div class="description-box">
         <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
-        <p>{property.description}</p>
+        <div class="description-box__content" set:html={descriptionHtml}></div>
       </div>
     </section>
 
-    <section class="section-pad section-band section-band--white price-layout" aria-labelledby="price-title">
-      <div class="price-card">
-        <p class="eyebrow">Precio y operación</p>
-        <h2 id="price-title">Precio y condiciones comerciales</h2>
-        <div class="price-lines">
-          <div>
-            <span>{priceLabel}</span>
-            <strong>{formattedPrice}</strong>
-          </div>
-          <div>
-            <span>Administración</span>
-            <strong>Por confirmar</strong>
-          </div>
-          <div>
-            <span>{totalLabel}</span>
-            <strong>{formattedPrice}</strong>
-          </div>
-        </div>
-        <p>El valor publicado debe separar canon, administración y total mensual cuando esa información esté confirmada. Antes de avanzar, confirma disponibilidad, requisitos y condiciones por WhatsApp.</p>
-      </div>
-      <aside class="operation-card">
-        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-        <h3>Nota de transparencia</h3>
-        <p>Los valores pueden cambiar si el propietario actualiza condiciones o si el inmueble deja de estar disponible. Confirmar siempre por WhatsApp antes de avanzar.</p>
-      </aside>
-    </section>
-
-    <section class="section-pad section-band section-band--gray location-layout" aria-labelledby="location-title">
+    <section class="section-pad section-band section-band--white location-layout" aria-labelledby="location-title">
       <div>
         <p class="eyebrow">Ubicación</p>
         <h2 id="location-title">Ubicación del inmueble</h2>
-        <p>Revisa ciudad, sector y referencias generales del inmueble. La ubicación exacta o el punto de encuentro para visita deben confirmarse con Amaru FS Inmobiliaria, según seguridad, autorización y disponibilidad.</p>
       </div>
       <div class="map-card" aria-label={`Ubicación general de ${property.title}`}>
         {mapsSrc ? (
@@ -309,7 +288,7 @@ const faqJsonLd = {
         ) : (
           <>
             <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
-            <strong>{property.locationLabel}</strong>
+            <strong>{getPropertyLocationLabel(property)}</strong>
             <span>Mapa pendiente de validación</span>
           </>
         )}
@@ -356,6 +335,11 @@ const faqJsonLd = {
               <span><i class={step.icon} aria-hidden="true"></i> {String(index + 1).padStart(2, "0")}</span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
+              {step.modalId && (
+                <button class="timeline__link" type="button" data-modal-open={step.modalId}>
+                  {step.actionLabel} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </button>
+              )}
             </li>
           ))
         }
@@ -418,6 +402,25 @@ const faqJsonLd = {
       </div>
     </section>
   </main>
+
+  {isRent && <RentalRequirementsModal id="detail-requirements-modal" />}
+
+  {!isRent && (
+    <dialog class="advisor-modal" id="sale-requirements-modal" aria-labelledby="sale-requirements-modal-title" data-modal>
+      <div class="advisor-modal__card">
+        <button class="advisor-modal__close" type="button" aria-label="Cerrar requisitos" data-modal-close>
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+        <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
+        <p class="eyebrow">Requisitos</p>
+        <h2 id="sale-requirements-modal-title">Valida los requisitos con tu asesor</h2>
+        <p>Para avanzar con la compra de este inmueble, confirma directamente con tu asesor de Amaru FS Inmobiliaria los documentos, condiciones comerciales y pasos necesarios según el caso.</p>
+        <a class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Hablar con asesor
+        </a>
+      </div>
+    </dialog>
+  )}
 
   <div class="gallery-modal" role="dialog" aria-modal="true" aria-label="Foto ampliada del inmueble" hidden data-gallery-modal>
     <button class="gallery-modal__close" type="button" aria-label="Cerrar galería" data-gallery-close>

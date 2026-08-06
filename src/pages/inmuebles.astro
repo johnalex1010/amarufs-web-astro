@@ -10,7 +10,9 @@ import {
   getOperationLabel,
   getPriceLabel,
   getPropertyHref,
-  getPropertyPrice
+  getPropertyLocationLabel,
+  getPropertyPrice,
+  getPropertyTypeLabel
 } from "../lib/property-utils";
 import "../styles/pages/inmuebles.css";
 
@@ -73,7 +75,7 @@ const faqJsonLd = {
   title="Inmuebles disponibles | Arriendo y venta con Amaru FS Inmobiliaria"
   description="Explora inmuebles disponibles para arriendo o venta con Amaru FS Inmobiliaria. Filtra por tipo, operación, ubicación y consulta detalles por WhatsApp."
   ogTitle="Inmuebles disponibles en Amaru FS Inmobiliaria"
-  ogDescription="Propiedades reales para arriendo o venta con fotos, características, filtros y atención directa."
+  ogDescription="Propiedades para arriendo o venta con fotos, características, filtros y atención directa."
   activePage="inmuebles"
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
@@ -84,17 +86,17 @@ const faqJsonLd = {
       <div class="hero__content">
         <p class="eyebrow">Inmuebles disponibles</p>
         <h1>Inmuebles disponibles para arriendo y venta</h1>
-        <p class="hero__lead">Consulta propiedades reales publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles.</p>
+        <p class="hero__lead">Consulta propiedades publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles.</p>
         <div class="hero__actions" aria-label="Acciones principales">
           <a class="btn btn--primary" href="#buscador"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar inmueble</a>
           <a class="btn btn--light" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Tengo un inmueble para publicar</a>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src={site.logoVertical} alt="Amaru FS Inmobiliaria" width="216" height="216" />
+        <img src="/images/inmuebles-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216" />
         <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-list-check"></i></span>
         <h2 id="hero-panel-title">Encuentra inmuebles con información clara y atención directa</h2>
-        <p>Revisa fotos reales, ubicación, características principales y acceso a consulta por WhatsApp antes de avanzar.</p>
+        <p>Revisa fotos, ubicación, características principales y acceso a consulta por WhatsApp antes de avanzar.</p>
       </aside>
     </section>
 
@@ -185,6 +187,7 @@ const faqJsonLd = {
             properties.map((property) => {
               const image = property.gallery[0];
               const price = getPropertyPrice(property) ?? 0;
+              const visibleFeatures = property.features.slice(0, 6);
               return (
                 <article
                   class="property-card"
@@ -207,23 +210,25 @@ const faqJsonLd = {
                     </button>
                     <div class="property-card__meta">
                       <span><i class={property.operation === "venta" ? "fa-solid fa-sign-hanging" : "fa-solid fa-door-open"} aria-hidden="true"></i> {getOperationLabel(property.operation)}</span>
-                      <span><i class="fa-solid fa-building" aria-hidden="true"></i> {property.propertyType}</span>
+                      <span><i class="fa-solid fa-building" aria-hidden="true"></i> {getPropertyTypeLabel(property.propertyType)}</span>
                     </div>
                     <span class="property-card__photos"><i class="fa-solid fa-camera" aria-hidden="true"></i> 1 / {property.gallery.length}</span>
                   </figure>
                   <div class="property-card__body">
                     <h3>{property.title}</h3>
-                    <p class="property-card__location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {property.locationLabel}</p>
-                    <div class="property-features" aria-label="Características principales del inmueble">
-                      {property.features.slice(0, 6).map((feature) => (
+                    <p class="property-card__location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {getPropertyLocationLabel(property)}</p>
+                    <div class="property-features" data-feature-count={visibleFeatures.length} aria-label="Características principales del inmueble">
+                      {visibleFeatures.map((feature) => (
                         <span><i class={feature.icon} aria-hidden="true"></i> {feature.label}</span>
                       ))}
                     </div>
-                    <span class="property-card__notice"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Datos verificados para consulta</span>
                     <div class="property-card__bottom">
                       <div class="property-card__price">
                         <span>{getPriceLabel(property.operation)}</span>
                         <strong>{formatCurrency(price)}</strong>
+                        {property.operation === "arriendo" && property.administrationIncluded && (
+                          <small><i>con administración incluida*</i></small>
+                        )}
                       </div>
                     </div>
                     <span class="property-card__view"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Ver ficha del inmueble</span>

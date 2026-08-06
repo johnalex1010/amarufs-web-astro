@@ -56,6 +56,19 @@ function normalizeGallery(gallery, title) {
     .slice(0, 10);
 }
 
+function normalizeImage(value, title) {
+  const asset = getMediaItems(value)[0] || getEntityData(value);
+
+  if (!asset?.url) return undefined;
+
+  return {
+    src: absoluteMediaUrl(asset.url),
+    alt: asset.alternativeText || asset.caption || title,
+    width: asset.width,
+    height: asset.height,
+  };
+}
+
 function normalizeNumber(value) {
   if (value === null || value === undefined || value === "") return undefined;
   const numericValue = Number(value);
@@ -66,29 +79,64 @@ function normalizeArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
+const featureIconMap = {
+  area: "fa-solid fa-ruler-combined",
+  bath: "fa-solid fa-bath",
+  bed: "fa-solid fa-bed",
+  kitchen: "fa-solid fa-kitchen-set",
+  parking: "fa-solid fa-square-parking",
+  sofa: "fa-solid fa-couch",
+};
+
+function normalizeFeatures(value) {
+  return normalizeArray(value)
+    .map((feature) => {
+      if (!feature || typeof feature !== "object") return null;
+
+      const label = String(feature.label || "").trim();
+      const featureValue = feature.value === undefined || feature.value === null ? "" : String(feature.value).trim();
+      const iconKey = String(feature.icon || "").trim();
+      const icon = featureIconMap[iconKey] || iconKey || "fa-solid fa-circle-check";
+      const displayLabel = featureValue && label ? `${featureValue} ${label}` : label || featureValue;
+
+      if (!displayLabel) return null;
+
+      return {
+        label: displayLabel,
+        icon,
+        filterValue: feature.filterValue || featureValue || undefined,
+      };
+    })
+    .filter(Boolean);
+}
+
 function normalizeProperty(entry) {
   const property = getEntityData(entry);
-  const title = property.title || "";
+  const title = property.titulo || "";
 
   return {
     title,
-    seoTitle: property.seoTitle || title,
+    seoTitle: title,
     slug: typeof property.slug === "string" ? property.slug : property.slug?.current || "",
-    editorialStatus: property.editorialStatus || "borrador",
-    operation: property.operation,
-    propertyType: property.propertyType || "",
-    saleValue: normalizeNumber(property.saleValue),
-    rentValue: normalizeNumber(property.rentValue),
-    locationLabel: property.locationLabel || "",
-    googleMapsEmbed: property.googleMapsEmbed || "",
-    description: property.description || "",
-    summary: property.summary || undefined,
-    gallery: normalizeGallery(property.gallery, title),
-    features: normalizeArray(property.features),
-    nearbyZones: normalizeArray(property.nearbyZones),
-    youtubeShortUrl: property.youtubeShortUrl || undefined,
-    internalCode: property.internalCode || undefined,
-    metaDescription: property.metaDescription || "",
+    editorialStatus: property.estadoEditorial || "borrador",
+    operation: property.operacion,
+    propertyType: property.tipoInmueble || "",
+    saleValue: normalizeNumber(property.valorVenta),
+    rentBaseValue: normalizeNumber(property.valorArriendo),
+    administrationValue: normalizeNumber(property.valorAdministracion),
+    rentValue: normalizeNumber(property.valorTotalArriendo) || normalizeNumber(property.valorArriendo),
+    administrationIncluded: property.administracionIncluida === true,
+    locationLabel: property.ubicacion || "",
+    neighborhoodLabel: property.barrio || undefined,
+    googleMapsEmbed: property.mapaGoogle || "",
+    description: property.descripcion || "",
+    gallery: normalizeGallery(property.fotos, title),
+    features: normalizeFeatures(property.caracteristicas),
+    nearbyZones: normalizeArray(property.zonasAledanas),
+    youtubeShortUrl: property.videoYoutubeShort || undefined,
+    transparencyImage: normalizeImage(property.imagenNotaTransparencia, title),
+    internalCode: property.codigoInterno || undefined,
+    metaDescription: property.metaDescripcion || "",
   };
 }
 
@@ -145,8 +193,12 @@ export interface Property {
   operation: PropertyOperation;
   propertyType: string;
   saleValue?: number;
+  rentBaseValue?: number;
+  administrationValue?: number;
   rentValue?: number;
+  administrationIncluded?: boolean;
   locationLabel: string;
+  neighborhoodLabel?: string;
   googleMapsEmbed: string;
   description: string;
   summary?: string;
@@ -154,6 +206,7 @@ export interface Property {
   features: PropertyFeature[];
   nearbyZones: string[];
   youtubeShortUrl?: string;
+  transparencyImage?: PropertyPhoto;
   internalCode?: string;
   metaDescription: string;
 }
@@ -182,7 +235,8 @@ export function getVisibleProperties(properties: Property[]) {
 }
 
 const query = new URLSearchParams({
-  "populate[gallery]": "true",
+  "populate[fotos]": "true",
+  "populate[imagenNotaTransparencia]": "true",
   "pagination[pageSize]": "100",
   "sort[0]": "updatedAt:desc",
 });

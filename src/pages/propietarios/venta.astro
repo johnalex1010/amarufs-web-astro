@@ -5,9 +5,9 @@ import "../../styles/pages/propietarios-venta.css";
 
 <BaseLayout
   title="Vende tu inmueble con Amaru FS Inmobiliaria | Propietarios en Bogotá y Sabana"
-  description="Vende tu inmueble con acompañamiento de Amaru FS Inmobiliaria. Validamos la propiedad, registramos fotos y videos, verificamos la ficha técnica y publicamos después del contrato."
+  description="Vende tu inmueble con acompañamiento de Amaru FS Inmobiliaria. Validamos la propiedad, publicamos después del contrato y acompañamos la gestión comercial hasta el cierre."
   ogTitle="Vende tu inmueble con Amaru FS Inmobiliaria"
-  ogDescription="Proceso claro para propietarios que quieren vender inmuebles en Bogotá y Sabana."
+  ogDescription="Vende tu inmueble con acompañamiento de Amaru FS Inmobiliaria. Validamos la propiedad, registramos fotos y videos, verificamos la ficha técnica, publicamos después del contrato y acompañamos la gestión comercial hasta el cierre de venta."
   activePage="propietarios-venta"
 >
   <Fragment slot="head">
@@ -76,7 +76,7 @@ import "../../styles/pages/propietarios-venta.css";
                 "name": "¿Qué porcentaje cobra la inmobiliaria por vender?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "La información de comisión debe validarse internamente y quedar alineada con el contrato usado para propietarios vendedores."
+                  "text": "Amaru FS Inmobiliaria cobra el 3% sobre el valor de la venta. La comisión se calcula sobre el valor de venta y se paga al finalizar el proceso de venta."
                 }
               },
               {
@@ -105,7 +105,7 @@ import "../../styles/pages/propietarios-venta.css";
       <div class="hero__content">
         <p class="eyebrow">Propietarios vendedores en Bogotá y Sabana</p>
         <h1>Vende tu inmueble con acompañamiento inmobiliario en Bogotá y Sabana</h1>
-        <p class="hero__lead">En Amaru FS Inmobiliaria te acompañamos desde la primera conversación hasta la publicación formal del inmueble: aclaramos dudas, visitamos la propiedad, registramos fotos y videos, verificamos la ficha técnica y publicamos después del contrato con la inmobiliaria.</p>
+        <p class="hero__lead">En Amaru FS Inmobiliaria te acompañamos desde la primera conversación hasta el cierre de venta del inmueble: aclaramos dudas, visitamos la propiedad, registramos fotos y videos, verificamos la ficha técnica, publicamos después del contrato con la inmobiliaria y damos seguimiento a la gestión comercial.</p>
         <div class="hero__actions" aria-label="Acciones principales">
           <a class="btn btn--primary"
             href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20vender%20mi%20inmueble."
@@ -114,7 +114,7 @@ import "../../styles/pages/propietarios-venta.css";
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <img src="/images/banner-propietario-venta-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
         <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-sign-hanging"></i></span>
         <h2 id="hero-panel-title">Tu inmueble en venta necesita información clara y seguimiento comercial</h2>
         <p>Organizamos la información comercial para que los interesados entiendan ubicación, características, precio, disponibilidad y siguiente paso de contacto.</p>
@@ -153,78 +153,151 @@ import "../../styles/pages/propietarios-venta.css";
         <p class="eyebrow">Proceso de venta</p>
         <h2 id="process-title">Cómo vendemos tu inmueble</h2>
       </div>
-      <ol class="timeline timeline--sale">
-        <li>
-          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
-          <h3>Contacto inicial</h3>
-          <p>Nos escribes por WhatsApp o llamada y nos cuentas qué tipo de inmueble quieres vender, dónde está ubicado y cuál es tu objetivo.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
-          <h3>Aclaración de dudas</h3>
-          <p>Revisamos contigo el proceso, la información necesaria, las condiciones comerciales y los pasos antes de publicar.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
-          <h3>Visita al inmueble</h3>
-          <p>Amaru FS Inmobiliaria se acerca al inmueble para conocerlo, tomar fotos, grabar videos y validar características relevantes.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 04</span>
-          <h3>Ficha técnica</h3>
-          <p>Organizamos área, ubicación, distribución, estado, características, precio esperado, disponibilidad y condiciones de venta.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 05</span>
-          <h3>Contrato</h3>
-          <p>Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 06</span>
-          <h3>Publicación</h3>
-          <p>La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-handshake" aria-hidden="true"></i> 07</span>
-          <h3>Interesados reales</h3>
-          <p>Atendemos consultas, compartimos información del inmueble y coordinamos los siguientes pasos comerciales.</p>
-        </li>
-      </ol>
+      <div class="process-phases">
+        <article class="process-phase">
+          <div class="process-phase__heading">
+            <span>Fase 1</span>
+            <h3>Preparación</h3>
+          </div>
+          <ol class="timeline timeline--sale">
+            <li>
+              <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
+              <h4>Contacto inicial</h4>
+              <p>Nos escribes por WhatsApp o llamada y nos cuentas qué tipo de inmueble quieres vender, dónde está ubicado y cuál es tu objetivo.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
+              <h4>Aclaración de dudas</h4>
+              <p>Revisamos contigo el proceso, la información necesaria, las condiciones comerciales y los pasos antes de publicar.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
+              <h4>Visita al inmueble</h4>
+              <p>Amaru FS Inmobiliaria se acerca al inmueble para conocerlo, tomar fotos, grabar videos y validar características relevantes.</p>
+            </li>
+          </ol>
+        </article>
+
+        <article class="process-phase">
+          <div class="process-phase__heading">
+            <span>Fase 2</span>
+            <h3>Publicación</h3>
+          </div>
+          <ol class="timeline timeline--sale" start="4">
+            <li>
+              <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 04</span>
+              <h4>Ficha técnica</h4>
+              <p>Organizamos área, ubicación, distribución, estado, características, precio esperado, disponibilidad y condiciones de venta.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 05</span>
+              <h4>Contrato</h4>
+              <p>Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 06</span>
+              <h4>Promoción</h4>
+              <p>La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad.</p>
+            </li>
+          </ol>
+        </article>
+
+        <article class="process-phase process-phase--closing">
+          <div class="process-phase__heading">
+            <span>Fase 3</span>
+            <h3>Cierre</h3>
+          </div>
+          <ol class="timeline timeline--sale" start="7">
+            <li>
+              <span><i class="fa-solid fa-handshake" aria-hidden="true"></i> 07</span>
+              <h4>Interesados reales</h4>
+              <p>Atendemos consultas, compartimos información del inmueble y coordinamos los siguientes pasos comerciales.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 08</span>
+              <h4>Visitas y negociación</h4>
+              <p>Coordinamos visitas con interesados calificados, resolvemos dudas comerciales y acompañamos la revisión de ofertas.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-key" aria-hidden="true"></i> 09</span>
+              <h4>Cierre de venta</h4>
+              <p>Acompañamos el proceso comercial hasta el cierre de venta, según las condiciones pactadas entre las partes.</p>
+            </li>
+          </ol>
+        </article>
+      </div>
     </section>
 
     <section class="commission section-pad" aria-labelledby="commission-title">
-      <div class="commission__content">
-        <p class="eyebrow">Comisión inmobiliaria</p>
-        <h2 id="commission-title">Porcentajes y comisión por venta</h2>
-        <p>La comisión inmobiliaria y su distribución deben quedar claras antes de iniciar la publicación formal del inmueble. Esta información debe explicarse al propietario durante la conversación comercial y quedar soportada en el acuerdo correspondiente.</p>
+      <div class="commission-summary">
+        <div class="commission-summary__intro">
+          <p class="eyebrow">Comisión inmobiliaria</p>
+          <h2 id="commission-title">Comisión clara desde el inicio</h2>
+          <p>La comisión queda explicada antes de avanzar y debe estar soportada en el acuerdo correspondiente con el propietario.</p>
+        </div>
+        <div class="commission-summary__rate" aria-label="Comisión de venta">
+          <strong>3%</strong>
+          <p>sobre el valor de la venta</p>
+        </div>
+        <dl class="commission-summary__details">
+          <div>
+            <dt>Base de cálculo</dt>
+            <dd>Valor de la venta</dd>
+          </div>
+          <div>
+            <dt>Momento de pago</dt>
+            <dd>Al finalizar el proceso de venta</dd>
+          </div>
+        </dl>
       </div>
-      <aside class="commission__pending" aria-labelledby="commission-pending-title">
-        <h3 id="commission-pending-title">Pendiente por completar internamente</h3>
-        <ul>
-          <li>Porcentaje o comisión que cobra Amaru FS Inmobiliaria por venta: <span>3% sobre el valor de la venta.</span></li>
-          <li>Base sobre la que se calcula la comisión: <span>Valor de la venta.</span></li>
-          <li>Momento en que se causa o paga la comisión: <span>Al finalizar el proceso de venta.</span></li>
-        </ul>
-        <p>No publicar porcentajes como información definitiva hasta que estén aprobados por Amaru FS Inmobiliaria y alineados con el contrato usado para propietarios vendedores.</p>
-      </aside>
     </section>
 
     <section class="checklist section-pad" aria-labelledby="checklist-title">
       <div class="checklist__content">
         <p class="eyebrow">Antes de vender</p>
-        <h2 id="checklist-title">Información útil antes de vender</h2>
-        <p>Mientras más clara sea la información del inmueble, más fácil será presentar la propiedad, orientar a los interesados y avanzar con conversaciones comerciales serias.</p>
+        <h2 id="checklist-title">Antes de publicar, revisamos 3 frentes</h2>
+        <p>Esta información nos ayuda a validar el inmueble, preparar la ficha comercial y orientar mejor a los interesados desde el primer contacto.</p>
       </div>
-      <ul class="checklist__grid">
-        <li><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Tipo de inmueble.</li>
-        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ciudad, sector y referencias de ubicación.</li>
-        <li><i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> Área y distribución.</li>
-        <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Estado actual del inmueble.</li>
-        <li><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Precio esperado de venta.</li>
-        <li><i class="fa-solid fa-receipt" aria-hidden="true"></i> Administración, si aplica.</li>
-        <li><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Disponibilidad para fotos, videos y visitas.</li>
-        <li><i class="fa-solid fa-file-contract" aria-hidden="true"></i> Documentos o condiciones relevantes para avanzar.</li>
-      </ul>
+      <div class="checklist__groups">
+        <article class="checklist-group">
+          <div class="checklist-group__heading">
+            <span>01</span>
+            <i class="fa-solid fa-house-circle-check" aria-hidden="true"></i>
+            <h3>Inmueble</h3>
+          </div>
+          <p>Datos básicos para entender qué se va a vender y cómo debe presentarse.</p>
+          <ul>
+            <li>Tipo de inmueble.</li>
+            <li>Ciudad, sector y referencias de ubicación.</li>
+            <li>Área y distribución.</li>
+            <li>Estado actual del inmueble.</li>
+          </ul>
+        </article>
+        <article class="checklist-group">
+          <div class="checklist-group__heading">
+            <span>02</span>
+            <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+            <h3>Valor</h3>
+          </div>
+          <p>Información comercial para explicar precio y costos asociados con claridad.</p>
+          <ul>
+            <li>Precio esperado de venta.</li>
+            <li>Administración, si aplica.</li>
+          </ul>
+        </article>
+        <article class="checklist-group">
+          <div class="checklist-group__heading">
+            <span>03</span>
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            <h3>Agenda y soporte</h3>
+          </div>
+          <p>Condiciones prácticas para coordinar material, visitas y siguientes pasos.</p>
+          <ul>
+            <li>Disponibilidad para fotos, videos y visitas.</li>
+            <li>Documentos o condiciones relevantes para avanzar.</li>
+          </ul>
+        </article>
+      </div>
     </section>
 
     <section class="deliverables section-pad" aria-labelledby="deliverables-title">
@@ -241,7 +314,7 @@ import "../../styles/pages/propietarios-venta.css";
         <article class="service-card">
           <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-bullhorn"></i></span>
           <h3>Publicación y seguimiento</h3>
-          <p>Publicación con información verificada y atención directa de interesados para generar conversaciones comerciales de calidad.</p>
+          <p>Publicación con información verificada, atención de interesados, coordinación de visitas, revisión comercial de ofertas y seguimiento hasta el cierre de venta.</p>
         </article>
       </div>
     </section>
@@ -295,7 +368,7 @@ import "../../styles/pages/propietarios-venta.css";
             <i class="fa-solid fa-plus" aria-hidden="true"></i>
           </button>
           <div class="faq-item__body">
-            <p>El documento base indica 3% sobre el valor de la venta, pero esta información debe validarse internamente y quedar alineada con el contrato antes de publicarse como dato definitivo.</p>
+            <p>Amaru FS Inmobiliaria cobra el 3% sobre el valor de la venta. La comisión se calcula sobre el valor de venta y se paga al finalizar el proceso de venta.</p>
           </div>
         </article>
         <article class="faq-item">

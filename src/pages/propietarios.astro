@@ -91,7 +91,7 @@ import "../styles/pages/propietarios.css";
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <img src="/images/banner-propietario-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
         <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-camera-retro"></i></span>
         <h2 id="hero-panel-title">Tu inmueble necesita información clara, fotos reales y seguimiento</h2>
         <p>Organizamos la información, validamos características y acompañamos la publicación para que cada interesado
@@ -193,21 +193,51 @@ import "../styles/pages/propietarios.css";
     <section class="checklist section-pad" aria-labelledby="checklist-title">
       <div class="checklist__content">
         <p class="eyebrow">Antes de publicar</p>
-        <h2 id="checklist-title">Información que genera confianza</h2>
+        <h2 id="checklist-title">Antes de publicar, revisamos 3 frentes</h2>
         <p>Mientras más clara sea la información del inmueble, más fácil será orientar a los interesados y avanzar con
           conversaciones serias.</p>
       </div>
-      <ul class="checklist__grid">
-        <li><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Tipo de inmueble.</li>
-        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ciudad, sector y referencias de ubicación.</li>
-        <li><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Precio esperado o canon de arriendo.</li>
-        <li><i class="fa-solid fa-receipt" aria-hidden="true"></i> Administración, si aplica.</li>
-        <li><i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> Área, habitaciones, baños y parqueadero.</li>
-        <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Estado del inmueble.</li>
-        <li><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Disponibilidad para visita.</li>
-        <li><i class="fa-solid fa-camera" aria-hidden="true"></i> Fotos y videos reales.</li>
-        <li><i class="fa-solid fa-file-contract" aria-hidden="true"></i> Documentos o condiciones necesarias.</li>
-      </ul>
+      <div class="checklist__groups">
+        <article class="checklist-group">
+          <div class="checklist-group__heading">
+            <span>01</span>
+            <i class="fa-solid fa-house-circle-check" aria-hidden="true"></i>
+            <h3>Inmueble</h3>
+          </div>
+          <p>Datos básicos para entender qué inmueble se va a publicar y cómo debe presentarse.</p>
+          <ul>
+            <li>Tipo de inmueble.</li>
+            <li>Ciudad, sector y referencias de ubicación.</li>
+            <li>Área, habitaciones, baños y parqueadero.</li>
+            <li>Estado del inmueble.</li>
+          </ul>
+        </article>
+        <article class="checklist-group">
+          <div class="checklist-group__heading">
+            <span>02</span>
+            <i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>
+            <h3>Valor</h3>
+          </div>
+          <p>Información comercial para orientar el precio o canon y los costos asociados.</p>
+          <ul>
+            <li>Precio esperado o canon de arriendo.</li>
+            <li>Administración, si aplica.</li>
+          </ul>
+        </article>
+        <article class="checklist-group">
+          <div class="checklist-group__heading">
+            <span>03</span>
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            <h3>Agenda y soporte</h3>
+          </div>
+          <p>Condiciones prácticas para coordinar visitas, material visual y siguientes pasos.</p>
+          <ul>
+            <li>Disponibilidad para visita.</li>
+            <li>Fotos y videos reales.</li>
+            <li>Documentos o condiciones necesarias.</li>
+          </ul>
+        </article>
+      </div>
     </section>
 
     <section class="transparency section-pad" aria-labelledby="transparency-title">
