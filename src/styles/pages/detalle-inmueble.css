@@ -2,6 +2,10 @@ body.modal-open {
 	overflow-y: hidden;
 }
 
+.section-pad {
+	padding-block: var(--section-inner-y);
+}
+
 .detail-hero {
 	width: min(var(--content-max-width), calc(100% - 48px));
 	margin: 0 auto;

@@ -1,3 +1,9 @@
+.section-pad {
+	width: min(var(--content-max-width), calc(100% - 48px));
+	margin: 0 auto;
+	padding: 86px 0;
+}
+
 .hero {
 	display: grid;
 	grid-template-columns: var(--layout-main) var(--layout-aside);
@@ -346,7 +352,7 @@
 	transform: translateX(2px);
 }
 
-.process {
+.process.section-pad {
 	width: 100%;
 	max-width: none;
 	padding-right: max(24px, calc((100vw - var(--content-max-width)) / 2));
@@ -708,6 +714,11 @@
 }
 
 @media (max-width: 760px) {
+	.section-pad {
+		width: min(var(--content-max-width), calc(100% - 32px));
+		padding: 62px 0;
+	}
+
 	.hero {
 		width: min(var(--content-max-width), calc(100% - 32px));
 	}
