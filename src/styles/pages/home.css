@@ -152,18 +152,6 @@
 	background: rgba(255, 255, 255, 0.18);
 }
 
-.intro.section-pad,
-.routes.section-pad,
-.process.section-pad,
-.properties.section-pad,
-.trust.section-pad,
-.referrals.section-pad,
-.faq.section-pad {
-	width: min(var(--content-max-width), calc(100% - 48px));
-	margin: 0 auto;
-	padding: 82px 0;
-}
-
 .section-heading {
 	max-width: 720px;
 	margin-bottom: 34px;
@@ -576,8 +564,7 @@
 }
 
 @media (max-width: 760px) {
-	.hero,
-	.section-pad {
+	.hero {
 		width: min(var(--content-max-width), calc(100% - 32px));
 	}
 

@@ -164,12 +164,6 @@
 	background: rgba(255, 255, 255, 0.18);
 }
 
-.section-pad {
-	width: min(var(--max-width), calc(100% - 48px));
-	margin: 0 auto;
-	padding: 82px 0;
-}
-
 .section-heading {
 	max-width: 720px;
 	margin-bottom: 34px;
@@ -1255,8 +1249,7 @@
 }
 
 @media (max-width: 760px) {
-	.hero,
-	.section-pad {
+	.hero {
 		width: min(var(--max-width), calc(100% - 32px));
 	}
 

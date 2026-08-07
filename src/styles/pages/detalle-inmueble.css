@@ -2,14 +2,9 @@ body.modal-open {
 	overflow-y: hidden;
 }
 
-.section-pad,
 .detail-hero {
 	width: min(var(--content-max-width), calc(100% - 48px));
 	margin: 0 auto;
-}
-
-.section-pad {
-	padding: 0;
 }
 
 main {
@@ -1122,8 +1117,7 @@ main {
 		width: min(var(--content-max-width), calc(100% - 32px));
 	}
 
-	.detail-hero,
-	.section-pad {
+	.detail-hero {
 		width: 100%;
 	}
 
