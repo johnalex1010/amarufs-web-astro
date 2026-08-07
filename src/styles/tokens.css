@@ -52,6 +52,8 @@ body {
 	font-family: var(--font-body);
 	line-height: 1.6;
 	overflow-x: clip;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body.nav-open {
