@@ -394,7 +394,7 @@
 	color: rgba(255, 255, 255, 0.82);
 }
 
-.referrals {
+.referrals.section-pad {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -594,7 +594,7 @@
 	.hero__content,
 	.properties__content,
 	.trust__box,
-	.referrals {
+	.referrals.section-pad {
 		padding: 26px;
 	}
 
@@ -615,7 +615,7 @@
 	}
 
 	.hero__actions,
-	.referrals {
+	.referrals.section-pad {
 		flex-direction: column;
 		align-items: stretch;
 		max-width: 100%;

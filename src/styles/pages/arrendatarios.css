@@ -472,7 +472,7 @@
 	color: rgba(255, 255, 255, 0.82);
 }
 
-.closing {
+.closing.section-pad {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -659,7 +659,7 @@
 	.hero__content,
 	.question-group,
 	.trust__box,
-	.closing {
+	.closing.section-pad {
 		padding: 26px;
 	}
 
@@ -680,7 +680,7 @@
 	}
 
 	.hero__actions,
-	.closing {
+	.closing.section-pad {
 		flex-direction: column;
 		align-items: stretch;
 		max-width: 100%;

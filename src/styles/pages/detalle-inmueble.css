@@ -685,10 +685,6 @@ main {
 }
 
 .process {
-	width: 100%;
-	max-width: none;
-	padding-right: 0;
-	padding-left: 0;
 	background: var(--color-white);
 }
 
