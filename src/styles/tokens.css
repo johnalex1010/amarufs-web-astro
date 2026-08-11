@@ -72,6 +72,7 @@ a {
 
 a,
 button {
+	cursor: pointer;
 	transition:
 		color 180ms ease,
 		background 180ms ease,

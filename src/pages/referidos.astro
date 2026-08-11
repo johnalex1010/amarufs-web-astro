@@ -4,10 +4,10 @@ import "../styles/pages/referidos.css";
 ---
 
 <BaseLayout
-  title="Referidos Amaru FS Inmobiliaria | Recomienda propietarios y recibe recompensa por cierre"
-  description="Conoce el programa de referidos de Amaru FS Inmobiliaria. Recomienda propietarios con inmuebles para venta, arriendo o administración y participa por recompensa cuando haya cierre."
+  title="Referidos Amaru FS Inmobiliaria | Recomienda propietarios o interesados"
+  description="Conoce el programa de referidos de Amaru FS Inmobiliaria. Recomienda propietarios con inmuebles para venta o arriendo, o personas interesadas en comprar o arrendar, y participa por recompensa cuando haya cierre."
   ogTitle="Programa de referidos Amaru FS Inmobiliaria"
-  ogDescription="Recomienda propietarios con inmuebles reales en Bogotá o Sabana y participa por recompensa cuando el negocio cierre."
+  ogDescription="Recomienda propietarios o interesados reales en Bogotá y Sabana. La recompensa aplica cuando el negocio cierre según reglas internas."
   activePage="referidos"
 >
   <Fragment slot="head">
@@ -31,7 +31,7 @@ import "../styles/pages/referidos.css";
               "name": "Amaru FS Inmobiliaria"
             },
             "areaServed": ["Bogotá", "Sabana"],
-            "description": "Programa para referir propietarios con inmuebles reales para venta, arriendo o administración. La recompensa aplica por cierre documentado según reglas internas."
+            "description": "Programa para referir propietarios con inmuebles para venta o arriendo, y personas interesadas en comprar o arrendar. La recompensa aplica por cierre documentado según reglas internas."
           }
     </script>
     <script type="application/ld+json">
@@ -44,7 +44,7 @@ import "../styles/pages/referidos.css";
                 "name": "¿Qué se considera un referido válido?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Un propietario o contacto autorizado con un inmueble real para venta, arriendo o administración, ubicado inicialmente en Bogotá o Sabana y con datos mínimos verificables."
+                  "text": "Un referido válido puede ser un propietario o contacto autorizado con un inmueble para venta o arriendo, o una persona interesada en comprar o arrendar un inmueble. En ambos casos debe existir autorización de contacto y datos mínimos verificables."
                 }
               },
               {
@@ -60,12 +60,12 @@ import "../styles/pages/referidos.css";
                 "name": "¿Hay un valor definido de recompensa?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "El valor exacto debe aprobarse internamente antes de publicarse como promesa definitiva."
+                  "text": "Para arriendo, la recompensa es del 8% sobre el canon mensual y se paga una sola vez. Para venta, es el 8% sobre la comisión inmobiliaria, calculada como el 3% del valor de venta."
                 }
               },
               {
                 "@type": "Question",
-                "name": "¿Qué pasa si dos personas refieren el mismo inmueble?",
+                "name": "¿Qué pasa si dos personas refieren el mismo contacto?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Se reconoce el primer registro verificable, según la trazabilidad de Amaru FS Inmobiliaria."
@@ -73,10 +73,10 @@ import "../styles/pages/referidos.css";
               },
               {
                 "@type": "Question",
-                "name": "¿Puedo referir un inmueble para administración?",
+                "name": "¿Puedo referir a alguien que quiere comprar o arrendar?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Sí. El objetivo del referido puede ser venta, arriendo o administración, siempre que el contacto sea válido y autorizado."
+                  "text": "Sí. También puedes referir personas que buscan comprar o tomar en arriendo un inmueble, siempre que el contacto sea real y haya autorizado ser contactado."
                 }
               }
             ]
@@ -88,25 +88,21 @@ import "../styles/pages/referidos.css";
     <section class="hero">
       <div class="hero__content">
         <p class="eyebrow">Referidos inmobiliarios</p>
-        <h1>Refiere propietarios con inmuebles y participa por recompensa de cierre</h1>
-        <p class="hero__lead">Si conoces a alguien que quiere vender, arrendar o administrar un inmueble en Bogotá o
-          Sabana, puedes conectarlo con Amaru FS Inmobiliaria. Si el referido es válido y el negocio se cierra con
-          nosotros, puedes recibir una recompensa según las reglas del programa.</p>
+        <h1>Refiere propietarios o interesados y participa por recompensa de cierre</h1>
+        <p class="hero__lead">Si conoces a alguien que quiere vender o arrendar su inmueble, o a una persona que busca comprar o tomar en arriendo, puedes conectarlo con Amaru FS Inmobiliaria. Si el referido es válido y el negocio se cierra con nosotros, puedes recibir una recompensa según las reglas del programa.</p>
         <div class="hero__actions" aria-label="Acciones principales">
           <a class="btn btn--primary"
-            href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20enviar%20un%20referido%20inmobiliario."
-            target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Enviar referido por
-            WhatsApp</a>
-          <a class="btn btn--light" href="#reglas"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Ver reglas
+            href="#simulator-title"><i class="fa-solid fa-handshake-angle" aria-hidden="true"></i> Quiero
+            referir ahora</a>
+          <a class="btn btn--light" href="#valid-title"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Ver reglas
             del programa</a>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/logo-vertical-blanco.png" alt="Amaru FS Inmobiliaria" width="216" height="216">
+        <img src="/images/banner-referidos-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
         <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
         <h2 id="hero-panel-title">Tu contacto puede convertirse en una oportunidad real</h2>
-        <p>Recibimos referidos reales, con datos verificables y autorización para contactar al propietario. La recompensa
-          aplica únicamente por cierre documentado.</p>
+        <p>Recibimos referidos reales, con datos verificables y autorización para contactar al propietario o al interesado. La recompensa aplica únicamente por cierre documentado.</p>
       </aside>
     </section>
 
@@ -114,8 +110,7 @@ import "../styles/pages/referidos.css";
       <div class="section-heading">
         <p class="eyebrow">A quién puedes referir</p>
         <h2 id="valid-title">Referidos válidos para Amaru FS Inmobiliaria</h2>
-        <p>Puedes referir a un propietario o contacto autorizado que tenga un inmueble real para vender, arrendar o
-          administrar. El enfoque inicial está en Bogotá y Sabana, según viabilidad comercial y validación interna.</p>
+        <p>Puedes referir propietarios con inmuebles para venta o arriendo, y también personas que buscan comprar o tomar en arriendo. El enfoque inicial está en Bogotá y Sabana, según viabilidad comercial y validación interna.</p>
       </div>
       <div class="referral-grid">
         <article class="referral-card">
@@ -127,12 +122,12 @@ import "../styles/pages/referidos.css";
           <h3>Propietarios que quieren arrendar</h3>
         </article>
         <article class="referral-card">
-          <i class="fa-solid fa-building-user" aria-hidden="true"></i>
-          <h3>Propietarios que buscan administración inmobiliaria</h3>
+          <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+          <h3>Personas que quieren comprar</h3>
         </article>
         <article class="referral-card">
           <i class="fa-solid fa-user-check" aria-hidden="true"></i>
-          <h3>Contactos autorizados para hablar del inmueble</h3>
+          <h3>Personas que buscan arrendar</h3>
         </article>
         <article class="referral-card referral-card--accent">
           <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
@@ -150,22 +145,22 @@ import "../styles/pages/referidos.css";
         <li>
           <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
           <h3>Envías el referido</h3>
-          <p>Compartes los datos mínimos del propietario y del inmueble por WhatsApp.</p>
+          <p>Compartes los datos mínimos del propietario, interesado, inmueble o búsqueda por WhatsApp.</p>
         </li>
         <li>
           <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 02</span>
           <h3>Validamos la información</h3>
-          <p>Revisamos si el contacto es real, si el inmueble existe y si el propietario está dispuesto a conversar.</p>
+          <p>Revisamos si el contacto es real, si autorizó ser contactado y si la oportunidad puede avanzar.</p>
         </li>
         <li>
           <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 03</span>
           <h3>Inicia el proceso comercial</h3>
-          <p>Contactamos al propietario, aclaramos dudas y definimos si el inmueble puede avanzar.</p>
+          <p>Contactamos al propietario o interesado, aclaramos dudas y definimos el siguiente paso.</p>
         </li>
         <li>
           <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 04</span>
-          <h3>Se formaliza y publica</h3>
-          <p>Cuando corresponde, se realiza contrato y Amaru FS publica con información verificada.</p>
+          <h3>Se gestiona la oportunidad</h3>
+          <p>Si aplica, se publica el inmueble, se agenda visita o se avanza con requisitos y condiciones.</p>
         </li>
         <li>
           <span><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> 05</span>
@@ -176,67 +171,189 @@ import "../styles/pages/referidos.css";
     </section>
 
     <section class="checklist section-pad" aria-labelledby="data-title">
-      <div class="checklist__content">
+      <div class="section-heading">
         <p class="eyebrow">Datos mínimos</p>
         <h2 id="data-title">Qué información necesitamos</h2>
-        <p>Para conservar trazabilidad, el referido debe llegar con datos básicos que permitan verificar quién refiere,
-          quién es el propietario y cuál es el inmueble.</p>
+        <p>Para conservar trazabilidad, el registro debe separar quién refiere, quién es el contacto referido y cuál es la oportunidad inmobiliaria.</p>
       </div>
-      <ul class="checklist__grid">
-        <li><i class="fa-solid fa-id-card" aria-hidden="true"></i> Nombre del referidor.</li>
-        <li><i class="fa-solid fa-phone" aria-hidden="true"></i> Teléfono del referidor.</li>
-        <li><i class="fa-solid fa-user-tie" aria-hidden="true"></i> Nombre del propietario referido.</li>
-        <li><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i> Teléfono del propietario referido.</li>
-        <li><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Tipo de inmueble.</li>
-        <li><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ciudad y sector.</li>
-        <li><i class="fa-solid fa-bullseye" aria-hidden="true"></i> Objetivo: venta, arriendo o administración.</li>
-        <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Confirmación de autorización para contacto.</li>
-      </ul>
-    </section>
-
-    <section class="rules section-pad" id="reglas" aria-labelledby="rules-title">
-      <div class="rules__content">
-        <p class="eyebrow">Reglas básicas</p>
-        <h2 id="rules-title">Condiciones visibles del programa</h2>
-        <p>El referido debe ser verificable y corresponder a un propietario o contacto autorizado. Si dos personas
-          refieren el mismo inmueble, se reconoce el primer registro verificable. La recompensa no se paga por enviar
-          datos: aplica cuando el negocio se cierra con Amaru FS Inmobiliaria y cumple las condiciones internas.</p>
-      </div>
-      <div class="rules__cards" aria-label="Condiciones principales del programa de referidos">
-        <article>
-          <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
-          <h3>Trazabilidad</h3>
-          <p>El primer registro verificable define la prioridad del referido.</p>
+      <div class="info-phases">
+        <article class="info-phase">
+          <div class="info-phase__heading">
+            <span>Fase 1</span>
+            <h3>Referente</h3>
+          </div>
+          <ol class="info-timeline">
+            <li>
+              <span><i class="fa-solid fa-id-card" aria-hidden="true"></i> 01</span>
+              <h4>Nombre completo</h4>
+              <p>Identifica al referente y permite dejar trazabilidad del registro.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-address-book" aria-hidden="true"></i> 02</span>
+              <h4>Correo y teléfono</h4>
+              <p>Correo electrónico y teléfono del referente para confirmar el registro.</p>
+            </li>
+          </ol>
         </article>
-        <article>
-          <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
-          <h3>Cierre documentado</h3>
-          <p>La recompensa aplica por negocio cerrado, no por datos enviados.</p>
+
+        <article class="info-phase">
+          <div class="info-phase__heading">
+            <span>Fase 2</span>
+            <h3>Referido</h3>
+          </div>
+          <ol class="info-timeline" start="3">
+            <li>
+              <span><i class="fa-solid fa-user-check" aria-hidden="true"></i> 03</span>
+              <h4>Datos del contacto</h4>
+              <p>Nombre completo, número celular y correo electrónico de la persona referida.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-users-viewfinder" aria-hidden="true"></i> 04</span>
+              <h4>Tipo de referido</h4>
+              <p>Define si el contacto es propietario, vendedor o persona interesada.</p>
+            </li>
+          </ol>
+        </article>
+
+        <article class="info-phase info-phase--closing">
+          <div class="info-phase__heading">
+            <span>Fase 3</span>
+            <h3>Oportunidad</h3>
+          </div>
+          <ol class="info-timeline" start="5">
+            <li>
+              <span><i class="fa-solid fa-bullseye" aria-hidden="true"></i> 05</span>
+              <h4>Intención y ubicación</h4>
+              <p>Indica si quiere vender, arrendar, comprar o tomar en arriendo, junto con ciudad y sector.</p>
+            </li>
+            <li>
+              <span><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 06</span>
+              <h4>Autorización</h4>
+              <p>Confirma que la persona referida autorizó ser contactada para revisar la oportunidad.</p>
+            </li>
+          </ol>
         </article>
       </div>
     </section>
 
-    <section class="pending section-pad" aria-labelledby="pending-title">
-      <div class="pending__box">
-        <p class="eyebrow">Antes de publicación masiva</p>
-        <h2 id="pending-title">Condiciones que deben aprobarse internamente</h2>
-        <p>Antes de comunicar una promesa definitiva, Amaru FS Inmobiliaria debe aprobar el valor exacto de la
-          recompensa, el momento de pago, la evidencia requerida, el tratamiento de datos personales y el texto legal
-          final del programa.</p>
+    <section class="simulator section-pad" aria-labelledby="simulator-title">
+      <div class="section-heading">
+        <p class="eyebrow">Tarifas de negociación</p>
+        <h2 id="simulator-title">Registra tu referido y estima la recompensa</h2>
+        <p>Este espacio deja listo el flujo de inscripción y permite calcular un valor estimado según el tipo de oportunidad. La recompensa final aplica solo cuando el negocio se cierra con Amaru FS Inmobiliaria y queda documentado.</p>
       </div>
-    </section>
+      <div class="simulator__layout">
+        <article class="referral-intake" aria-labelledby="intake-title">
+          <p class="eyebrow">Inscripción del referido</p>
+          <h3 id="intake-title">Datos para iniciar el registro</h3>
+          <p class="referral-intake__intro">Base inicial para registrar el contacto antes de conectar el envío real.</p>
+          <form class="intake-wizard" data-intake-wizard aria-label="Formulario paso a paso para referidos" novalidate>
+            <div class="intake-progress" role="tablist" aria-label="Pasos del registro">
+              <button type="button" class="is-active" role="tab" aria-selected="true" aria-controls="intake-step-referrer" data-intake-tab="0">Referente</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="intake-step-referred" data-intake-tab="1">Referido</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="intake-step-conversion" data-intake-tab="2">Oportunidad</button>
+            </div>
+            <div class="intake-step is-active" id="intake-step-referrer" role="tabpanel" data-intake-step="0">
+              <p class="intake-step__meta">Paso 1 de 3</p>
+              <h4>Datos del referente</h4>
+              <div class="intake-fields">
+                <label>Nombre completo <input type="text" name="referenteNombre" placeholder="Nombre de quien refiere" autocomplete="name" data-validation="name" required></label>
+                <label>Correo electrónico <input type="email" name="referenteCorreo" placeholder="Correo del referente" autocomplete="email" data-validation="email" required></label>
+                <label>Teléfono <input type="tel" name="referenteTelefono" placeholder="Teléfono o WhatsApp" autocomplete="tel" inputmode="numeric" maxlength="10" data-validation="phone" required></label>
+              </div>
+            </div>
+            <div class="intake-step" id="intake-step-referred" role="tabpanel" hidden data-intake-step="1">
+              <p class="intake-step__meta">Paso 2 de 3</p>
+              <h4>Datos del referido</h4>
+              <div class="intake-fields">
+                <label>Nombre completo <input type="text" name="referidoNombre" placeholder="Nombre de la persona referida" data-validation="name" required></label>
+                <label>Número celular <input type="tel" name="referidoCelular" placeholder="Celular del contacto" inputmode="numeric" maxlength="10" data-validation="phone" required></label>
+                <label>Correo electrónico <input type="email" name="referidoCorreo" placeholder="Correo del referido" data-validation="email" required></label>
+                <label>Tipo de referido
+                  <select name="tipoReferido" data-validation="select" required>
+                    <option value="">Selecciona una opción</option>
+                    <option>Propietario</option>
+                    <option>Vendedor</option>
+                    <option>Persona interesada</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="intake-step" id="intake-step-conversion" role="tabpanel" hidden data-intake-step="2">
+              <p class="intake-step__meta">Paso 3 de 3</p>
+              <h4>Oportunidad inmobiliaria</h4>
+              <div class="intake-fields">
+                <label>¿Cuál es su intención?
+                  <select name="intencion" data-validation="select" required>
+                    <option value="">Selecciona una opción</option>
+                    <option>Vender</option>
+                    <option>Arrendar</option>
+                    <option>Comprar</option>
+                    <option>Tomar en arriendo</option>
+                  </select>
+                </label>
+                <label>Ciudad <input type="text" name="ciudad" placeholder="Ej: Bogotá" data-validation="name" required></label>
+                <label>Sector <input type="text" name="sector" placeholder="Ej: Alcalá Sur" data-validation="name" required></label>
+                <div class="intake-consent-group" aria-label="Autorizaciones del referido">
+                  <label class="intake-check"><input type="checkbox" name="autorizaContacto" data-validation="checkbox" required><span>Confirmo autorización para contactar al referido.</span></label>
+                  <label class="intake-check"><input type="checkbox" name="aceptaDatos" data-validation="checkbox" required><span>Acepto el tratamiento de datos personales. <a href="">ver más</a></span></label>
+                </div>
+              </div>
+            </div>
+            <div class="intake-actions">
+              <button type="button" class="btn btn--ghost" data-intake-prev disabled>Anterior</button>
+              <button type="button" class="btn btn--secondary" data-intake-next>Siguiente</button>
+            </div>
+            <p class="intake-status" data-intake-status aria-live="polite"></p>
+          </form>
+        </article>
 
-    <section class="closing section-pad" aria-labelledby="closing-title">
-      <div>
-        <p class="eyebrow">Siguiente paso</p>
-        <h2 id="closing-title">¿Conoces un propietario que quiere arrendar o vender?</h2>
-        <p>Envíanos los datos básicos y revisamos si el referido puede avanzar. La conversación inicial no garantiza
-          recompensa; la recompensa aplica por cierre documentado.</p>
+        <article class="simulator-panel" aria-labelledby="simulator-panel-title">
+          <div class="simulator-panel__top">
+            <div>
+              <p class="eyebrow">Calcula antes de enviar</p>
+              <h3 id="simulator-panel-title">Calcula la recompensa</h3>
+            </div>
+            <span class="simulator-panel__badge">Estimado</span>
+          </div>
+          <div class="simulator-tabs" role="tablist" aria-label="Tipo de negociación para simular">
+            <button type="button" class="is-active" id="tab-rent" role="tab" aria-selected="true" aria-controls="panel-rent" data-simulator-tab="rent">
+              <i class="fa-solid fa-key" aria-hidden="true"></i> Arriendo
+            </button>
+            <button type="button" id="tab-sale" role="tab" aria-selected="false" aria-controls="panel-sale" data-simulator-tab="sale">
+              <i class="fa-solid fa-sign-hanging" aria-hidden="true"></i> Venta
+            </button>
+          </div>
+          <div class="simulator-card is-active" id="panel-rent" role="tabpanel" aria-labelledby="tab-rent" data-referral-simulator="rent">
+            <h4>8% sobre el canon mensual</h4>
+            <p class="simulator-card__note">Pago único sobre el canon mensual. No se liquida mes a mes.</p>
+            <div class="simulator-detail">
+              <span>Base de cálculo</span>
+              <strong>Canon mensual informado</strong>
+            </div>
+            <label for="rent-canon">Canon mensual</label>
+            <input id="rent-canon" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej: 1000000" data-referral-input>
+            <div class="simulator-result" aria-live="polite">
+              <span>Recompensa estimada</span>
+              <strong data-referral-result>$0 COP</strong>
+            </div>
+          </div>
+          <div class="simulator-card" id="panel-sale" role="tabpanel" aria-labelledby="tab-sale" hidden data-referral-simulator="sale">
+            <h4>8% sobre la comisión</h4>
+            <p class="simulator-card__note">La comisión inmobiliaria se estima como el 3% del valor de venta.</p>
+            <label for="sale-value">Valor de venta</label>
+            <input id="sale-value" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej: 100000000" data-referral-input>
+            <div class="simulator-breakdown">
+              <span>Comisión inmobiliaria estimada</span>
+              <strong data-referral-commission>$0 COP</strong>
+            </div>
+            <div class="simulator-result" aria-live="polite">
+              <span>Recompensa estimada</span>
+              <strong data-referral-result>$0 COP</strong>
+            </div>
+          </div>
+        </article>
       </div>
-      <a class="btn btn--secondary"
-        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20enviar%20un%20referido%20inmobiliario.%20Tengo%20datos%20b%C3%A1sicos%20del%20propietario%20y%20del%20inmueble."
-        target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Enviar referido por
-        WhatsApp</a>
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
@@ -251,8 +368,7 @@ import "../styles/pages/referidos.css";
             <i class="fa-solid fa-plus" aria-hidden="true"></i>
           </button>
           <div class="faq-item__body">
-            <p>Un propietario o contacto autorizado con un inmueble real para venta, arriendo o administración, ubicado
-              inicialmente en Bogotá o Sabana y con datos mínimos verificables.</p>
+            <p>Un propietario o contacto autorizado con un inmueble para venta o arriendo, o una persona interesada en comprar o arrendar. El contacto debe ser real, verificable y haber autorizado ser contactado.</p>
           </div>
         </article>
         <article class="faq-item">
@@ -271,12 +387,12 @@ import "../styles/pages/referidos.css";
             <i class="fa-solid fa-plus" aria-hidden="true"></i>
           </button>
           <div class="faq-item__body">
-            <p>El valor exacto debe aprobarse internamente antes de publicarse como promesa definitiva.</p>
+            <p>Para arriendo, la recompensa es del 8% sobre el canon mensual y se paga una sola vez. Para venta, se calcula el 8% sobre la comisión inmobiliaria, que se estima como el 3% del valor de venta.</p>
           </div>
         </article>
         <article class="faq-item">
           <button type="button" aria-expanded="false">
-            <span>¿Qué pasa si dos personas refieren el mismo inmueble?</span>
+            <span>¿Qué pasa si dos personas refieren el mismo contacto?</span>
             <i class="fa-solid fa-plus" aria-hidden="true"></i>
           </button>
           <div class="faq-item__body">
@@ -285,15 +401,355 @@ import "../styles/pages/referidos.css";
         </article>
         <article class="faq-item">
           <button type="button" aria-expanded="false">
-            <span>¿Puedo referir un inmueble para administración?</span>
+            <span>¿Puedo referir a alguien que quiere comprar o arrendar?</span>
             <i class="fa-solid fa-plus" aria-hidden="true"></i>
           </button>
           <div class="faq-item__body">
-            <p>Sí. El objetivo del referido puede ser venta, arriendo o administración, siempre que el contacto sea
-              válido y autorizado.</p>
+            <p>Sí. Puedes referir personas que buscan comprar o tomar en arriendo un inmueble, siempre que el contacto sea válido y autorizado.</p>
           </div>
         </article>
       </div>
     </section>
+
+    <section class="closing section-pad" aria-labelledby="closing-title">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2 id="closing-title">¿Conoces a alguien con una necesidad inmobiliaria real?</h2>
+        <p>Envíanos los datos básicos del propietario o interesado y revisamos si el referido puede avanzar. La conversación inicial no garantiza recompensa; la recompensa aplica por cierre documentado.</p>
+      </div>
+      <a class="btn btn--secondary"
+        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20enviar%20un%20referido%20inmobiliario.%20Tengo%20datos%20b%C3%A1sicos%20de%20un%20propietario%20o%20interesado."
+        target="_blank" rel="noopener"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Quiero referir ahora</a>
+    </section>
+
+    <section class="pending section-pad" aria-labelledby="pending-title">
+      <div class="pending__box">
+        <p class="eyebrow">Antes de publicación masiva</p>
+        <h2 id="pending-title">Condiciones que deben aprobarse internamente</h2>
+        <p>Antes de comunicar una promesa definitiva, Amaru FS Inmobiliaria debe aprobar el valor exacto de la
+          recompensa final, el momento de pago, la evidencia requerida, el tratamiento de datos personales y el texto legal
+          final del programa.</p>
+      </div>
+    </section>
   </main>
+
+  <script>
+    const numberFormatter = new Intl.NumberFormat("es-CO", {
+      maximumFractionDigits: 0,
+    });
+
+    const cleanCurrencyValue = (value) => {
+      const numericValue = Number(String(value).replace(/[^\d]/g, ""));
+      return Number.isFinite(numericValue) ? numericValue : 0;
+    };
+
+    const formatCurrency = (value) => `$ ${numberFormatter.format(value)} COP`;
+
+    const GOOGLE_APPS_SCRIPT_URL = "";
+
+    document.querySelectorAll("[data-intake-wizard]").forEach((wizard) => {
+      const tabs = Array.from(wizard.querySelectorAll("[data-intake-tab]"));
+      const steps = Array.from(wizard.querySelectorAll("[data-intake-step]"));
+      const previousButton = wizard.querySelector("[data-intake-prev]");
+      const nextButton = wizard.querySelector("[data-intake-next]");
+      const statusMessage = wizard.querySelector("[data-intake-status]");
+      const fields = Array.from(wizard.querySelectorAll("input, select"));
+      const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+(?:[ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$/;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      const phonePattern = /^\d{10}$/;
+      let activeStep = 0;
+      let isSubmitting = false;
+
+      const setStatus = (message = "", type = "") => {
+        if (!statusMessage) {
+          return;
+        }
+
+        statusMessage.textContent = message;
+        statusMessage.classList.remove("is-loading", "is-success", "is-error");
+
+        if (type) {
+          statusMessage.classList.add(`is-${type}`);
+        }
+      };
+
+      const getErrorMessage = (field) => {
+        const value = field instanceof HTMLInputElement && field.type === "checkbox" ? field.checked : field.value.trim();
+        const validationType = field.getAttribute("data-validation");
+
+        if (validationType === "checkbox") {
+          return value ? "" : "Debes confirmar esta autorización.";
+        }
+
+        if (!value) {
+          return "Este campo es obligatorio.";
+        }
+
+        if (validationType === "name" && !namePattern.test(String(value))) {
+          return "Ingresa solo letras y espacios.";
+        }
+
+        if (validationType === "email" && !emailPattern.test(String(value))) {
+          return "Ingresa un correo electrónico válido.";
+        }
+
+        if (validationType === "phone" && !phonePattern.test(String(value))) {
+          return "Ingresa solo números, exactamente 10 dígitos.";
+        }
+
+        if (validationType === "select" && !field.value) {
+          return "Selecciona una opción.";
+        }
+
+        return "";
+      };
+
+      const getFieldContainer = (field) => field.closest(".intake-check") || field.closest("label");
+
+      const getErrorElement = (field) => {
+        const container = getFieldContainer(field);
+
+        if (!container) {
+          return null;
+        }
+
+        let errorElement = container.querySelector(".field-error");
+
+        if (!errorElement) {
+          errorElement = document.createElement("p");
+          errorElement.className = "field-error";
+          errorElement.id = `${field.name || "campo"}-error`;
+          container.appendChild(errorElement);
+        }
+
+        return errorElement;
+      };
+
+      const validateField = (field, shouldShowError = true) => {
+        const errorMessage = getErrorMessage(field);
+
+        if (!shouldShowError) {
+          return !errorMessage;
+        }
+
+        const errorElement = getErrorElement(field);
+        const container = getFieldContainer(field);
+
+        if (errorElement) {
+          errorElement.textContent = errorMessage;
+        }
+
+        field.classList.toggle("is-invalid", Boolean(errorMessage));
+        field.classList.toggle("is-valid", !errorMessage && (field instanceof HTMLInputElement && field.type === "checkbox" ? field.checked : field.value.trim() !== ""));
+        field.setAttribute("aria-invalid", String(Boolean(errorMessage)));
+
+        if (container) {
+          container.classList.toggle("is-invalid", Boolean(errorMessage));
+        }
+
+        if (errorElement) {
+          field.toggleAttribute("aria-describedby", Boolean(errorMessage));
+          if (errorMessage) {
+            field.setAttribute("aria-describedby", errorElement.id);
+          }
+        }
+
+        return !errorMessage;
+      };
+
+      const validateStep = (stepIndex, shouldShowError = true) => {
+        const step = steps[stepIndex];
+        const stepFields = Array.from(step.querySelectorAll("input, select"));
+
+        return stepFields
+          .map((field) => validateField(field, shouldShowError))
+          .every(Boolean);
+      };
+
+      const validateForm = (shouldShowError = false) => fields
+        .map((field) => validateField(field, shouldShowError))
+        .every(Boolean);
+
+      const updateButtons = () => {
+        const isLastStep = activeStep === steps.length - 1;
+        const isFormValid = validateForm(false);
+
+        if (previousButton instanceof HTMLButtonElement) {
+          previousButton.disabled = activeStep === 0 || isSubmitting;
+        }
+
+        if (nextButton instanceof HTMLButtonElement) {
+          nextButton.textContent = isLastStep ? "Finalizar" : "Siguiente";
+          nextButton.disabled = isSubmitting || (isLastStep && !isFormValid);
+        }
+      };
+
+      const showStep = (stepIndex) => {
+        activeStep = Math.max(0, Math.min(stepIndex, steps.length - 1));
+
+        tabs.forEach((tab, index) => {
+          const isActive = index === activeStep;
+          tab.classList.toggle("is-active", isActive);
+          tab.setAttribute("aria-selected", String(isActive));
+        });
+
+        steps.forEach((step, index) => {
+          const isActive = index === activeStep;
+          step.classList.toggle("is-active", isActive);
+          step.toggleAttribute("hidden", !isActive);
+        });
+
+        updateButtons();
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+          if (index <= activeStep) {
+            showStep(index);
+            return;
+          }
+
+          const canMoveForward = steps
+            .slice(0, index)
+            .every((_, stepIndex) => validateStep(stepIndex, true));
+
+          if (canMoveForward) {
+            showStep(index);
+          } else {
+            setStatus("Completa los campos obligatorios antes de avanzar.", "error");
+          }
+        });
+      });
+
+      previousButton?.addEventListener("click", () => showStep(activeStep - 1));
+
+      nextButton?.addEventListener("click", async () => {
+        setStatus("");
+
+        if (activeStep < steps.length - 1) {
+          if (validateStep(activeStep, true)) {
+            showStep(activeStep + 1);
+          } else {
+            setStatus("Revisa los campos marcados antes de continuar.", "error");
+          }
+
+          return;
+        }
+
+        if (!validateForm(true)) {
+          setStatus("Revisa los campos marcados antes de finalizar.", "error");
+          updateButtons();
+          return;
+        }
+
+        const formData = new FormData(wizard);
+        const payload = Object.fromEntries(formData.entries());
+        isSubmitting = true;
+        updateButtons();
+        setStatus("Cargando información...", "loading");
+
+        try {
+          if (GOOGLE_APPS_SCRIPT_URL) {
+            await fetch(GOOGLE_APPS_SCRIPT_URL, {
+              method: "POST",
+              mode: "no-cors",
+              headers: {
+                "Content-Type": "text/plain;charset=utf-8",
+              },
+              body: JSON.stringify({
+                ...payload,
+                fechaRegistro: new Date().toISOString(),
+                origen: "web-amarufs-referidos",
+              }),
+            });
+          } else {
+            await new Promise((resolve) => {
+              window.setTimeout(resolve, 900);
+            });
+          }
+
+          setStatus("Tu registro fue exitoso. Pronto nos comunicaremos contigo para dar seguimiento al proceso.", "success");
+        } catch {
+          setStatus("No pudimos registrar la información. Inténtalo de nuevo o comunícate por WhatsApp.", "error");
+        } finally {
+          isSubmitting = false;
+          updateButtons();
+        }
+      });
+
+      fields.forEach((field) => {
+        field.addEventListener("input", () => {
+          if (field.getAttribute("data-validation") === "phone" && field instanceof HTMLInputElement) {
+            field.value = field.value.replace(/\D/g, "").slice(0, 10);
+          }
+
+          validateField(field, true);
+          setStatus("");
+          updateButtons();
+        });
+
+        field.addEventListener("blur", () => {
+          validateField(field, true);
+          updateButtons();
+        });
+
+        field.addEventListener("change", () => {
+          validateField(field, true);
+          setStatus("");
+          updateButtons();
+        });
+      });
+
+      showStep(0);
+    });
+
+    const simulatorTabs = document.querySelectorAll("[data-simulator-tab]");
+
+    simulatorTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const selectedType = tab.getAttribute("data-simulator-tab");
+
+        simulatorTabs.forEach((currentTab) => {
+          const isSelected = currentTab === tab;
+          currentTab.classList.toggle("is-active", isSelected);
+          currentTab.setAttribute("aria-selected", String(isSelected));
+        });
+
+        document.querySelectorAll("[data-referral-simulator]").forEach((panel) => {
+          const isSelected = panel.getAttribute("data-referral-simulator") === selectedType;
+          panel.classList.toggle("is-active", isSelected);
+          panel.toggleAttribute("hidden", !isSelected);
+        });
+      });
+    });
+
+    document.querySelectorAll("[data-referral-simulator]").forEach((simulator) => {
+      const input = simulator.querySelector("[data-referral-input]");
+      const result = simulator.querySelector("[data-referral-result]");
+      const commission = simulator.querySelector("[data-referral-commission]");
+
+      if (!(input instanceof HTMLInputElement) || !result) {
+        return;
+      }
+
+      const simulatorType = simulator.getAttribute("data-referral-simulator");
+
+      const updateSimulator = () => {
+        const baseValue = cleanCurrencyValue(input.value);
+        const realEstateCommission = simulatorType === "sale" ? baseValue * 0.03 : 0;
+        const reward = simulatorType === "sale" ? realEstateCommission * 0.08 : baseValue * 0.08;
+
+        input.value = baseValue > 0 ? numberFormatter.format(baseValue) : "";
+
+        if (commission) {
+          commission.textContent = formatCurrency(realEstateCommission);
+        }
+
+        result.textContent = formatCurrency(reward);
+      };
+
+      input.addEventListener("input", updateSimulator);
+      input.addEventListener("blur", updateSimulator);
+    });
+  </script>
 </BaseLayout>
