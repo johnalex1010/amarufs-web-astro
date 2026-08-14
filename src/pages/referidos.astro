@@ -252,35 +252,35 @@ import "../styles/pages/referidos.css";
               <button type="button" class="is-active" role="tab" aria-selected="true" aria-controls="intake-step-referrer" data-intake-tab="0">Referente</button>
               <button type="button" role="tab" aria-selected="false" aria-controls="intake-step-referred" data-intake-tab="1">Referido</button>
               <button type="button" role="tab" aria-selected="false" aria-controls="intake-step-conversion" data-intake-tab="2">Oportunidad</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="intake-step-summary" data-intake-tab="3">Resumen</button>
             </div>
             <div class="intake-step is-active" id="intake-step-referrer" role="tabpanel" data-intake-step="0">
-              <p class="intake-step__meta">Paso 1 de 3</p>
+              <p class="intake-step__meta">Paso 1 de 4</p>
               <h4>Datos del referente</h4>
               <div class="intake-fields">
                 <label>Nombre completo <input type="text" name="referenteNombre" placeholder="Nombre de quien refiere" autocomplete="name" data-validation="name" required></label>
                 <label>Correo electrónico <input type="email" name="referenteCorreo" placeholder="Correo del referente" autocomplete="email" data-validation="email" required></label>
-                <label>Teléfono <input type="tel" name="referenteTelefono" placeholder="Teléfono o WhatsApp" autocomplete="tel" inputmode="numeric" maxlength="10" data-validation="phone" required></label>
+                <label>WhatsApp <input type="tel" name="referenteTelefono" placeholder="WhatsApp del referente" autocomplete="tel" inputmode="numeric" maxlength="10" data-validation="phone" required></label>
               </div>
             </div>
             <div class="intake-step" id="intake-step-referred" role="tabpanel" hidden data-intake-step="1">
-              <p class="intake-step__meta">Paso 2 de 3</p>
+              <p class="intake-step__meta">Paso 2 de 4</p>
               <h4>Datos del referido</h4>
               <div class="intake-fields">
                 <label>Nombre completo <input type="text" name="referidoNombre" placeholder="Nombre de la persona referida" data-validation="name" required></label>
-                <label>Número celular <input type="tel" name="referidoCelular" placeholder="Celular del contacto" inputmode="numeric" maxlength="10" data-validation="phone" required></label>
                 <label>Correo electrónico <input type="email" name="referidoCorreo" placeholder="Correo del referido" data-validation="email" required></label>
+                <label>WhatsApp <input type="tel" name="referidoWhatsapp" placeholder="WhatsApp del contacto" inputmode="numeric" maxlength="10" data-validation="phone" required></label>
                 <label>Tipo de referido
                   <select name="tipoReferido" data-validation="select" required>
                     <option value="">Selecciona una opción</option>
                     <option>Propietario</option>
-                    <option>Vendedor</option>
-                    <option>Persona interesada</option>
+                    <option>Arrendatario</option>
                   </select>
                 </label>
               </div>
             </div>
             <div class="intake-step" id="intake-step-conversion" role="tabpanel" hidden data-intake-step="2">
-              <p class="intake-step__meta">Paso 3 de 3</p>
+              <p class="intake-step__meta">Paso 3 de 4</p>
               <h4>Oportunidad inmobiliaria</h4>
               <div class="intake-fields">
                 <label>¿Cuál es su intención?
@@ -292,8 +292,32 @@ import "../styles/pages/referidos.css";
                     <option>Tomar en arriendo</option>
                   </select>
                 </label>
-                <label>Ciudad <input type="text" name="ciudad" placeholder="Ej: Bogotá" data-validation="name" required></label>
-                <label>Sector <input type="text" name="sector" placeholder="Ej: Alcalá Sur" data-validation="name" required></label>
+                <label>Ciudad <input type="text" name="ciudad" placeholder="Ej: Bogotá" data-validation="text" required></label>
+                <label>Sector <input type="text" name="sector" placeholder="Ej: Alcalá Sur" data-validation="text" required></label>
+              </div>
+            </div>
+            <div class="intake-step" id="intake-step-summary" role="tabpanel" hidden data-intake-step="3">
+              <p class="intake-step__meta">Paso 4 de 4</p>
+              <h4>Resumen del registro</h4>
+              <div class="intake-fields">
+                <div class="intake-summary" aria-labelledby="intake-summary-title">
+                  <div class="intake-summary__heading">
+                    <span>Resumen</span>
+                    <h5 id="intake-summary-title">Información que se enviará</h5>
+                  </div>
+                  <dl>
+                    <div><dt>Referente</dt><dd data-intake-summary="referenteNombre">[dato pendiente]</dd></div>
+                    <div><dt>Correo referente</dt><dd data-intake-summary="referenteCorreo">[dato pendiente]</dd></div>
+                    <div><dt>WhatsApp referente</dt><dd data-intake-summary="referenteTelefono">[dato pendiente]</dd></div>
+                    <div><dt>Referido</dt><dd data-intake-summary="referidoNombre">[dato pendiente]</dd></div>
+                    <div><dt>Correo referido</dt><dd data-intake-summary="referidoCorreo">[dato pendiente]</dd></div>
+                    <div><dt>WhatsApp referido</dt><dd data-intake-summary="referidoWhatsapp">[dato pendiente]</dd></div>
+                    <div><dt>Tipo de referido</dt><dd data-intake-summary="tipoReferido">[dato pendiente]</dd></div>
+                    <div><dt>Intención</dt><dd data-intake-summary="intencion">[dato pendiente]</dd></div>
+                    <div><dt>Ciudad</dt><dd data-intake-summary="ciudad">[dato pendiente]</dd></div>
+                    <div><dt>Sector</dt><dd data-intake-summary="sector">[dato pendiente]</dd></div>
+                  </dl>
+                </div>
                 <div class="intake-consent-group" aria-label="Autorizaciones del referido">
                   <label class="intake-check"><input type="checkbox" name="autorizaContacto" data-validation="checkbox" required><span>Confirmo autorización para contactar al referido.</span></label>
                   <label class="intake-check"><input type="checkbox" name="aceptaDatos" data-validation="checkbox" required><span>Acepto el tratamiento de datos personales. <a href="">ver más</a></span></label>
@@ -343,10 +367,6 @@ import "../styles/pages/referidos.css";
             <p class="simulator-card__note">La comisión inmobiliaria se estima como el 3% del valor de venta.</p>
             <label for="sale-value">Valor de venta</label>
             <input id="sale-value" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej: 100000000" data-referral-input>
-            <div class="simulator-breakdown">
-              <span>Comisión inmobiliaria estimada</span>
-              <strong data-referral-commission>$0 COP</strong>
-            </div>
             <div class="simulator-result" aria-live="polite">
               <span>Recompensa estimada</span>
               <strong data-referral-result>$0 COP</strong>
@@ -411,26 +431,6 @@ import "../styles/pages/referidos.css";
       </div>
     </section>
 
-    <section class="closing section-pad" aria-labelledby="closing-title">
-      <div>
-        <p class="eyebrow">Siguiente paso</p>
-        <h2 id="closing-title">¿Conoces a alguien con una necesidad inmobiliaria real?</h2>
-        <p>Envíanos los datos básicos del propietario o interesado y revisamos si el referido puede avanzar. La conversación inicial no garantiza recompensa; la recompensa aplica por cierre documentado.</p>
-      </div>
-      <a class="btn btn--secondary"
-        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20enviar%20un%20referido%20inmobiliario.%20Tengo%20datos%20b%C3%A1sicos%20de%20un%20propietario%20o%20interesado."
-        target="_blank" rel="noopener"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Quiero referir ahora</a>
-    </section>
-
-    <section class="pending section-pad" aria-labelledby="pending-title">
-      <div class="pending__box">
-        <p class="eyebrow">Antes de publicación masiva</p>
-        <h2 id="pending-title">Condiciones que deben aprobarse internamente</h2>
-        <p>Antes de comunicar una promesa definitiva, Amaru FS Inmobiliaria debe aprobar el valor exacto de la
-          recompensa final, el momento de pago, la evidencia requerida, el tratamiento de datos personales y el texto legal
-          final del programa.</p>
-      </div>
-    </section>
   </main>
 
   <script>
@@ -454,6 +454,7 @@ import "../styles/pages/referidos.css";
       const nextButton = wizard.querySelector("[data-intake-next]");
       const statusMessage = wizard.querySelector("[data-intake-status]");
       const fields = Array.from(wizard.querySelectorAll("input, select"));
+      const summaryItems = Array.from(wizard.querySelectorAll("[data-intake-summary]"));
       const namePattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+(?:[ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$/;
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       const phonePattern = /^\d{10}$/;
@@ -487,6 +488,10 @@ import "../styles/pages/referidos.css";
 
         if (validationType === "name" && !namePattern.test(String(value))) {
           return "Ingresa solo letras y espacios.";
+        }
+
+        if (validationType === "text" && String(value).length < 2) {
+          return "Ingresa mínimo 2 caracteres.";
         }
 
         if (validationType === "email" && !emailPattern.test(String(value))) {
@@ -570,6 +575,17 @@ import "../styles/pages/referidos.css";
         .map((field) => validateField(field, shouldShowError))
         .every(Boolean);
 
+      const updateSummary = () => {
+        summaryItems.forEach((item) => {
+          const fieldName = item.getAttribute("data-intake-summary");
+          const field = fieldName ? wizard.elements.namedItem(fieldName) : null;
+
+          if (field instanceof HTMLInputElement || field instanceof HTMLSelectElement) {
+            item.textContent = field.value.trim() || "[dato pendiente]";
+          }
+        });
+      };
+
       const updateButtons = () => {
         const isLastStep = activeStep === steps.length - 1;
         const isFormValid = validateForm(false);
@@ -579,7 +595,7 @@ import "../styles/pages/referidos.css";
         }
 
         if (nextButton instanceof HTMLButtonElement) {
-          nextButton.textContent = isLastStep ? "Finalizar" : "Siguiente";
+          nextButton.textContent = isLastStep ? "Enviar referido" : "Siguiente";
           nextButton.disabled = isSubmitting || (isLastStep && !isFormValid);
         }
       };
@@ -590,6 +606,7 @@ import "../styles/pages/referidos.css";
         tabs.forEach((tab, index) => {
           const isActive = index === activeStep;
           tab.classList.toggle("is-active", isActive);
+          tab.classList.toggle("is-complete", index < activeStep);
           tab.setAttribute("aria-selected", String(isActive));
         });
 
@@ -599,6 +616,7 @@ import "../styles/pages/referidos.css";
           step.toggleAttribute("hidden", !isActive);
         });
 
+        updateSummary();
         updateButtons();
       };
 
@@ -683,23 +701,27 @@ import "../styles/pages/referidos.css";
             field.value = field.value.replace(/\D/g, "").slice(0, 10);
           }
 
+          updateSummary();
           validateField(field, true);
           setStatus("");
           updateButtons();
         });
 
         field.addEventListener("blur", () => {
+          updateSummary();
           validateField(field, true);
           updateButtons();
         });
 
         field.addEventListener("change", () => {
+          updateSummary();
           validateField(field, true);
           setStatus("");
           updateButtons();
         });
       });
 
+      updateSummary();
       showStep(0);
     });
 
@@ -726,7 +748,6 @@ import "../styles/pages/referidos.css";
     document.querySelectorAll("[data-referral-simulator]").forEach((simulator) => {
       const input = simulator.querySelector("[data-referral-input]");
       const result = simulator.querySelector("[data-referral-result]");
-      const commission = simulator.querySelector("[data-referral-commission]");
 
       if (!(input instanceof HTMLInputElement) || !result) {
         return;
@@ -740,10 +761,6 @@ import "../styles/pages/referidos.css";
         const reward = simulatorType === "sale" ? realEstateCommission * 0.08 : baseValue * 0.08;
 
         input.value = baseValue > 0 ? numberFormatter.format(baseValue) : "";
-
-        if (commission) {
-          commission.textContent = formatCurrency(realEstateCommission);
-        }
 
         result.textContent = formatCurrency(reward);
       };
