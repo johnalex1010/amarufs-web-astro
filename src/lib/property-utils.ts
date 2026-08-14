@@ -78,6 +78,34 @@ export function getPropertyWhatsappHref(property: Property) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
+export function getFeatureIconClass(icon?: string) {
+  const normalizedIcon = String(icon || "").trim();
+  const iconAliases: Record<string, string> = {
+    area: "ruler-combined",
+    bath: "bath",
+    bed: "bed",
+    kitchen: "kitchen-set",
+    parking: "square-parking",
+    sofa: "couch",
+  };
+
+  if (!normalizedIcon) {
+    return "fa-solid fa-circle-check";
+  }
+
+  if (normalizedIcon.split(/\s+/).some((className) => /^fa-(solid|regular|brands|light|duotone|thin|sharp)$/.test(className))) {
+    return normalizedIcon;
+  }
+
+  const iconName = iconAliases[normalizedIcon] || normalizedIcon;
+
+  if (/^[a-z0-9-]+$/.test(iconName)) {
+    return `fa-solid fa-${iconName}`;
+  }
+
+  return "fa-solid fa-circle-check";
+}
+
 export function extractGoogleMapsSrc(value: string) {
   const match = value.match(/src=["']([^"']+)["']/i);
   const rawSrc = match?.[1] ?? value;

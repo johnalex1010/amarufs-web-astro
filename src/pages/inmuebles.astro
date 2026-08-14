@@ -8,6 +8,7 @@ import {
   getListingRoomsFilterText,
   getListingSearchText,
   getOperationLabel,
+  getFeatureIconClass,
   getPriceLabel,
   getPropertyHref,
   getPropertyLocationLabel,
@@ -219,7 +220,7 @@ const faqJsonLd = {
                     <p class="property-card__location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {getPropertyLocationLabel(property)}</p>
                     <div class="property-features" data-feature-count={visibleFeatures.length} aria-label="Características principales del inmueble">
                       {visibleFeatures.map((feature) => (
-                        <span><i class={feature.icon} aria-hidden="true"></i> {feature.label}</span>
+                        <span><i class={getFeatureIconClass(feature.icon)} aria-hidden="true"></i> {feature.label}</span>
                       ))}
                     </div>
                     <div class="property-card__bottom">

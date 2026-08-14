@@ -6,6 +6,7 @@ import { getPublishedProperties, getPublishedPropertyBySlug } from "../../lib/pr
 import {
   extractGoogleMapsSrc,
   formatCurrency,
+  getFeatureIconClass,
   getOperationLabel,
   getPriceLabel,
   getPropertyLocationLabel,
@@ -258,7 +259,7 @@ const faqJsonLd = {
       <div class="quick-grid">
         {property.features.map((feature) => (
           <article>
-            <i class={feature.icon} aria-hidden="true"></i>
+            <i class={getFeatureIconClass(feature.icon)} aria-hidden="true"></i>
             <span>{feature.label}</span>
           </article>
         ))}

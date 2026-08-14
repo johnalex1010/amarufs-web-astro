@@ -80,13 +80,24 @@ function normalizeArray(value) {
 }
 
 const featureIconMap = {
-  area: "fa-solid fa-ruler-combined",
-  bath: "fa-solid fa-bath",
-  bed: "fa-solid fa-bed",
-  kitchen: "fa-solid fa-kitchen-set",
-  parking: "fa-solid fa-square-parking",
-  sofa: "fa-solid fa-couch",
+  area: "ruler-combined",
+  bath: "bath",
+  bed: "bed",
+  kitchen: "kitchen-set",
+  parking: "square-parking",
+  sofa: "couch",
 };
+
+function normalizeFeatureIcon(icon) {
+  const iconKey = String(icon || "").trim();
+
+  if (!iconKey) return "circle-check";
+  if (iconKey.split(/\s+/).some((className) => /^fa-(solid|regular|brands|light|duotone|thin|sharp)$/.test(className))) {
+    return iconKey;
+  }
+
+  return featureIconMap[iconKey] || iconKey;
+}
 
 function normalizeFeatures(value) {
   return normalizeArray(value)
@@ -95,8 +106,7 @@ function normalizeFeatures(value) {
 
       const label = String(feature.label || "").trim();
       const featureValue = feature.value === undefined || feature.value === null ? "" : String(feature.value).trim();
-      const iconKey = String(feature.icon || "").trim();
-      const icon = featureIconMap[iconKey] || iconKey || "fa-solid fa-circle-check";
+      const icon = normalizeFeatureIcon(feature.icon);
       const displayLabel = featureValue && label ? `${featureValue} ${label}` : label || featureValue;
 
       if (!displayLabel) return null;
