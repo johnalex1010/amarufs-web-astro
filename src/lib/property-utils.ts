@@ -160,7 +160,7 @@ export function getListingSearchText(property: Property) {
 }
 
 export function getListingLocationFilterText(property: Property) {
-  return normalizeFilterText([property.locationLabel, property.neighborhoodLabel, ...property.nearbyZones].join(" "));
+  return normalizeFilterText([property.title, property.locationLabel, property.neighborhoodLabel, ...property.nearbyZones].join(" "));
 }
 
 export function getListingRoomsFilterText(property: Property) {

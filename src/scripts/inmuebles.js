@@ -66,7 +66,10 @@
       return true;
     }
 
-    return normalize(card.dataset[filterName] || "").split(" ").includes(normalize(selectedValue));
+    const filterText = normalize(card.dataset[filterName] || "");
+    const filterValue = normalize(selectedValue);
+
+    return filterText.split(" ").includes(filterValue) || filterText.includes(filterValue);
   }
 
   function getSelectedFilters() {

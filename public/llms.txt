@@ -1,0 +1,19 @@
+# Amaru FS Inmobiliaria
+> Inmobiliaria en Colombia enfocada en arriendo, venta y publicación de inmuebles con información validada, fotos reales y atención directa por WhatsApp.
+
+## Páginas principales
+- [Inicio](https://www.amarufs.co/): Resumen de servicios para propietarios, arrendatarios y compradores.
+- [Inmuebles disponibles](https://www.amarufs.co/inmuebles/): Listado de propiedades publicadas para arriendo y venta.
+- [Propietarios](https://www.amarufs.co/propietarios/): Proceso para publicar, vender o arrendar un inmueble con Amaru FS Inmobiliaria.
+- [Propietarios venta](https://www.amarufs.co/propietarios/venta/): Información para propietarios que quieren vender un inmueble.
+- [Propietarios arriendo](https://www.amarufs.co/propietarios/arriendo/): Información para propietarios que quieren arrendar un inmueble.
+- [Arrendatarios](https://www.amarufs.co/arrendatarios/): Requisitos y pasos para consultar inmuebles en arriendo.
+
+## Información clave
+- Marca: Amaru FS Inmobiliaria.
+- País: Colombia.
+- Zonas visibles en el inventario actual: Bogotá, Tocancipá, Villavicencio y Mesitas del Colegio.
+- Contacto principal: WhatsApp +57 315 877 4545.
+- El inventario visible se publica con datos validados, fotos, características, ubicación general y precio.
+- La disponibilidad y condiciones de cada inmueble deben confirmarse por WhatsApp antes de avanzar.
+- En procesos de arriendo, la aseguradora realiza el estudio de viabilidad del interesado y su deudor.

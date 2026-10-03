@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { activePage } = Astro.props;
-const whatsappHref = `https://wa.me/${site.whatsapp}?text=Hola%20Amaru%20FS%2C%20quiero%20recibir%20informaci%C3%B3n.`;
+const whatsappMessage = "Quiero conocer más del proceso de arrendamiento o venta";
+const whatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 const isActive = (key: string) => activePage === key || (activePage.startsWith("propietarios-") && key === "propietarios");
 ---
 

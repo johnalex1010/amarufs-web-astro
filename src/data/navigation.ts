@@ -37,10 +37,4 @@ export const navigation = [
 		icon: "fa-solid fa-building",
 		key: "inmuebles",
 	},
-	{
-		label: "Referidos",
-		href: "/referidos/",
-		icon: "fa-solid fa-handshake-angle",
-		key: "referidos",
-	},
 ];

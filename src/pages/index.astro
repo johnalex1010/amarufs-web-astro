@@ -7,7 +7,7 @@ import "../styles/pages/home.css";
   title="Amaru FS Inmobiliaria | Arriendo y venta de inmuebles en Bogotá y Sabana"
   description="Arrienda, vende o encuentra inmuebles con Amaru FS Inmobiliaria. Acompañamiento directo, fotos reales, ficha clara, seguimiento por WhatsApp y proceso validado en Bogotá y Sabana."
   ogTitle="Amaru FS Inmobiliaria en Bogotá y Sabana"
-  ogDescription="Inmuebles reales, atención directa y acompañamiento para propietarios, arrendatarios y referidos."
+  ogDescription="Inmuebles reales, atención directa y acompañamiento para propietarios y arrendatarios."
   activePage="inicio"
 >
   <Fragment slot="head">
@@ -15,11 +15,15 @@ import "../styles/pages/home.css";
       {
             "@context": "https://schema.org",
             "@type": "RealEstateAgent",
+            "@id": "https://www.amarufs.co/#real-estate-agent",
             "name": "Amaru FS Inmobiliaria",
-            "areaServed": ["Bogotá", "Sabana"],
+            "description": "Inmobiliaria en Bogotá y Sabana que acompaña procesos de arriendo, venta y publicación de inmuebles con información validada.",
+            "areaServed": ["Bogotá", "Tocancipá", "Villavicencio", "Mesitas del Colegio"],
             "telephone": "+57 315 877 4545",
             "url": "https://www.amarufs.co/",
-            "logo": "/images/logo-horizontal-fondo-blanco.png",
+            "logo": "https://www.amarufs.co/images/logo-horizontal-fondo-blanco.png",
+            "image": "https://www.amarufs.co/images/logo-horizontal-fondo-blanco.png",
+            "priceRange": "$$",
             "sameAs": []
           }
     </script>
@@ -130,16 +134,6 @@ import "../styles/pages/home.css";
                 aria-hidden="true"></i></a>
           </div>
         </article>
-        <article class="route-card">
-          <img src="/images/banner-referidos-lateral.webp" alt="Referidos inmobiliarios con información clara y material visual real" width="720" height="420" loading="lazy">
-          <div class="route-card__body">
-            <span class="route-card__icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
-            <h3>Referidos</h3>
-            <p>Conoces a alguien que quiere vender o arrendar un inmueble. Registra el referido y participa
-              en la recompensa por cierre.</p>
-            <a href="/referidos/">Referir un propietario <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-          </div>
-        </article>
       </div>
     </section>
 
@@ -169,20 +163,6 @@ import "../styles/pages/home.css";
           contenido verificable. No competimos por prometer volumen: trabajamos para que cada inmueble publicado tenga
           información útil y seguimiento comercial.</p>
       </div>
-    </section>
-
-    <section class="referrals section-pad" id="referidos" aria-labelledby="referrals-title">
-      <div>
-        <p class="eyebrow">Programa de referidos</p>
-        <h2 id="referrals-title">¿Conoces un propietario que quiere arrendar o vender?</h2>
-        <p>Puedes ayudarnos a conectar con propietarios en Bogotá y Sabana. El programa de referidos funciona con
-          recompensa por cierre: el referido debe ser verificable y el negocio debe cerrarse con Amaru FS Inmobiliaria
-          según las reglas internas del programa.</p>
-      </div>
-      <a class="btn btn--secondary"
-        href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20conocer%20el%20programa%20de%20referidos."
-        target="_blank" rel="noopener"><i class="fa-solid fa-handshake" aria-hidden="true"></i> Conocer programa de
-        referidos</a>
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
