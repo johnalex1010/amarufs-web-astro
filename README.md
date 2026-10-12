@@ -33,9 +33,10 @@ Las rutas de inmuebles solo muestran registros con estado `publicado` y campos o
 
 ## Stack Tecnológico
 
-- Astro.
+- Astro 5.
 - Sitio estático con `output: "static"`.
 - React integrado mediante `@astrojs/react`.
+- npm con `package-lock.json`.
 - CSS propio por página.
 - JavaScript propio para menú móvil, FAQ, filtros y detalles de inmueble.
 - Font Awesome 6.5.2 por CDN.
@@ -268,6 +269,15 @@ Vercel no necesita conectarse a Strapi si los inmuebles se exportan antes del de
 
 ## SEO / GEO / AEO
 
+Archivos y rutas de descubrimiento:
+
+- `src/pages/sitemap.xml.ts`: genera `/sitemap.xml` con URLs públicas, canónicas e indexables.
+- `public/robots.txt`: permite rastreo general y declara el sitemap y archivos LLM.
+- `public/llms.txt`: guía principal para modelos de lenguaje y buscadores con IA.
+- `public/llm.txt`: alias de compatibilidad para agentes que consulten la variante singular.
+
+`/referidos/` se mantiene fuera del sitemap porque no debe tratarse como ruta indexable comercial principal.
+
 Cada inmueble debe conservar:
 
 - `titulo`
@@ -283,11 +293,79 @@ Cada inmueble debe conservar:
 
 Los inmuebles incompletos no deben publicarse ni indexarse.
 
+### SEO técnico de página completa
+
+Cada página pública debe validar:
+
+- Un H1 único, claro y coherente con la intención de búsqueda.
+- `title` y `description` únicos, escritos en Español Colombia.
+- Canonical absoluto basado en `https://www.amarufs.co/`.
+- Open Graph y Twitter Card cuando aplique.
+- Jerarquía semántica H1-H2-H3 sin saltos incoherentes.
+- Contenido útil, verificable y suficiente para propietarios, arrendatarios o compradores.
+- Enlaces internos hacia rutas comerciales relevantes.
+- Exclusión de rutas no indexables o experimentales del sitemap.
+- Ausencia de contenido duplicado, thin content o promesas comerciales no verificables.
+
+### GEO y AEO
+
+Para buscadores con IA y respuestas directas:
+
+- Mantener entidades claras: Amaru FS Inmobiliaria, Colombia, Bogotá, Sabana, propietarios, arrendatarios e inmuebles.
+- Usar bloques de contenido escaneables que respondan preguntas frecuentes reales.
+- Mantener `llms.txt` como índice principal para modelos de lenguaje.
+- Mantener `llm.txt` como alias de compatibilidad.
+- Evitar textos ambiguos, claims sin evidencia o información que dependa de disponibilidad no confirmada.
+- Confirmar que datos de contacto, zonas, servicios y condiciones estén alineados con el contenido visible.
+
+## Seguridad
+
+Principios obligatorios para todo el sitio:
+
+- No guardar secretos en Git.
+- No exponer tokens, API keys, credenciales de Strapi, Cloudinary, Vercel o proveedores externos en frontend.
+- Mantener `.env`, `.env.*`, dumps, backups y llaves privadas fuera del repositorio.
+- Tratar datos de Strapi, JSON, formularios, query params, iframes, imágenes y servicios externos como datos no confiables.
+- Sanitizar o validar datos antes de exportarlos o renderizarlos.
+- Evitar `innerHTML` y cualquier inyección de HTML no controlada.
+- Usar `rel="noopener noreferrer"` en enlaces externos con `target="_blank"`.
+- Revisar iframes de Google Maps o videos para evitar HTML libre o proveedores inesperados.
+- No enviar formularios, WhatsApp, CRM, correos ni integraciones reales sin autorización explícita.
+- Usar datos simulados durante QA de formularios, filtros o búsquedas.
+
+## Buenas Prácticas de Desarrollo
+
+- Trabajar primero sobre archivos fuente, nunca sobre `dist/`.
+- Mantener cambios pequeños, reversibles y alineados con la arquitectura existente.
+- Reutilizar componentes, utilidades y estilos actuales antes de crear nuevos patrones.
+- Mantener HTML semántico, accesibilidad y responsive desde el inicio.
+- Validar existencia de nodos antes de ejecutar JavaScript.
+- Evitar listeners globales innecesarios o inicializaciones duplicadas.
+- Mantener imágenes con `alt`, dimensiones razonables y carga diferida cuando aplique.
+- No agregar dependencias, CDNs o scripts de terceros sin justificar seguridad, performance y SEO.
+- Mantener copy en Español Colombia, con tono profesional, claro y comercialmente responsable.
+
+## Auditorías
+
+Auditoría recomendada para cambios de página completa, SEO, seguridad, performance o despliegue:
+
+- Técnica: `npm run build`, rutas generadas, assets públicos, errores 404 y enlaces internos.
+- SEO: title, description, canonical, robots, sitemap, JSON-LD, H1, contenido duplicado y rutas no indexables.
+- GEO/AEO: `llms.txt`, `llm.txt`, entidades, FAQs, respuestas escaneables y claridad de contexto.
+- Seguridad: secretos, variables, enlaces externos, iframes, formularios, dependencias y exposición de datos.
+- Accesibilidad: landmarks, foco, teclado, contraste, labels, `alt` y jerarquía de encabezados.
+- Responsive: mobile, tablet y desktop sin overflow horizontal.
+- Performance: peso de imágenes, JS no crítico, CLS, LCP, INP y recursos externos.
+- Contenido: ortografía, gramática, tono, precisión, disponibilidad y ausencia de promesas no verificadas.
+
+Si una auditoría no incluye Lighthouse, Search Console, CrUX, producción, DataForSEO o herramientas externas, reportar esa limitación explícitamente.
+
 ## Validación Esperada
 
 Antes de cerrar cualquier cambio:
 
 - ejecutar `npm run build`
+- confirmar que `dist/sitemap.xml`, `dist/robots.txt`, `dist/llms.txt` y `dist/llm.txt` se generan cuando el cambio toca SEO/GEO
 - revisar navegador local
 - validar desktop, tablet y móvil
 - confirmar que no hay errores de consola
@@ -298,6 +376,44 @@ Antes de cerrar cualquier cambio:
 - confirmar que `/inmuebles/[slug]/` carga la ficha correcta
 - confirmar que `npm run properties:pull` genera datos válidos cuando Strapi está activo
 - buscar `console.log`, `debugger`, `TODO` y `FIXME`
+- confirmar que no se editó `dist/` manualmente
+
+## DDoD y DoD
+
+Definition of Done documental:
+
+- SPEC proporcional definida.
+- Alcance y exclusiones claros.
+- Riesgos identificados.
+- Acceptance Criteria verificables.
+- README actualizado cuando el cambio afecta operación, arquitectura, build, SEO, seguridad o QA.
+- Rollback documentado.
+
+Definition of Done técnico:
+
+- Build completado con `npm run build`.
+- Página o ruta afectada revisada en navegador local cuando aplica.
+- Sin errores de consola relevantes.
+- Sin overflow horizontal en vistas principales cuando aplica.
+- SEO/GEO/AEO no degradado.
+- Accesibilidad básica no degradada.
+- Seguridad no degradada.
+- Performance no degradada de forma evidente.
+- No quedan logs, debugging, secretos, mocks accidentales ni código muerto.
+- No hay edición manual de archivos generados.
+
+## Gobernanza para Agentes
+
+`AGENTS.md` define las reglas locales para asistentes de desarrollo y sistemas automatizados que trabajen dentro de `web-astro`.
+
+Resumen operativo:
+
+- trabajar con SPEC proporcional al cambio
+- modificar archivos fuente, no artefactos generados
+- mantener Español Colombia (`es-CO`) y UTF-8
+- no enviar formularios sin autorización explícita
+- usar datos simulados en pruebas de formularios, filtros y búsquedas
+- actualizar este `README.md` cuando cambien arquitectura, comandos, dependencias, build, despliegue o reglas operativas
 
 ## Riesgos Conocidos
 

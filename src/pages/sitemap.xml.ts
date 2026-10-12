@@ -3,12 +3,12 @@ import { getPublishedProperties } from "../lib/properties";
 import { getPropertyHref } from "../lib/property-utils";
 
 const staticPages = [
-  { path: "/", priority: "1.0", changefreq: "weekly" },
-  { path: "/propietarios/", priority: "0.8", changefreq: "monthly" },
-  { path: "/propietarios/venta/", priority: "0.8", changefreq: "monthly" },
-  { path: "/propietarios/arriendo/", priority: "0.8", changefreq: "monthly" },
-  { path: "/arrendatarios/", priority: "0.8", changefreq: "monthly" },
-  { path: "/inmuebles/", priority: "0.9", changefreq: "daily" }
+  { path: "/" },
+  { path: "/propietarios/" },
+  { path: "/propietarios/venta/" },
+  { path: "/propietarios/arriendo/" },
+  { path: "/arrendatarios/" },
+  { path: "/inmuebles/" }
 ];
 
 function absoluteUrl(path: string) {
@@ -29,9 +29,7 @@ export async function GET() {
   const urls = [
     ...staticPages,
     ...properties.map((property) => ({
-      path: getPropertyHref(property),
-      priority: "0.7",
-      changefreq: "weekly"
+      path: getPropertyHref(property)
     }))
   ];
 
@@ -41,8 +39,6 @@ ${urls
   .map(
     (url) => `  <url>
     <loc>${escapeXml(absoluteUrl(url.path))}</loc>
-    <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>
   </url>`
   )
   .join("\n")}

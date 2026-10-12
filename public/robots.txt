@@ -17,3 +17,5 @@ User-agent: PerplexityBot
 Allow: /
 
 Sitemap: https://www.amarufs.co/sitemap.xml
+LLMs: https://www.amarufs.co/llms.txt
+LLM: https://www.amarufs.co/llm.txt

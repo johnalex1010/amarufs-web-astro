@@ -1,0 +1,6 @@
+# Amaru FS Inmobiliaria
+> Archivo de compatibilidad para agentes que consulten /llm.txt. La guía principal para modelos de lenguaje está en /llms.txt.
+
+## Guía principal
+- [llms.txt](https://www.amarufs.co/llms.txt): Índice GEO/AEO con páginas públicas, datos de contacto y contexto clave de Amaru FS Inmobiliaria.
+
