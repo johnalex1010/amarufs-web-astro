@@ -89,8 +89,8 @@ const faqJsonLd = {
         <h1>Inmuebles disponibles para arriendo y venta</h1>
         <p class="hero__lead">Consulta propiedades publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles.</p>
         <div class="hero__actions" aria-label="Acciones principales">
-          <a class="btn btn--primary" href="#buscador"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar inmueble</a>
-          <a class="btn btn--light" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Tengo un inmueble para publicar</a>
+          <a id="inmuebles-buscar" class="btn btn--primary" href="#buscador"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar inmueble</a>
+          <a id="inmuebles-publicar" class="btn btn--light" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Tengo un inmueble para publicar</a>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
@@ -266,7 +266,7 @@ const faqJsonLd = {
         <h2 id="owners-title">¿Tienes un inmueble para vender o arrendar?</h2>
         <p>Amaru FS Inmobiliaria valida tu inmueble, registra fotos y videos, verifica la ficha técnica y publica después del contrato con el propietario.</p>
       </div>
-      <a class="btn btn--secondary" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Iniciar validación de mi inmueble</a>
+      <a id="inmuebles-publicar-iniciar" class="btn btn--secondary" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Iniciar validación de mi inmueble</a>
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
