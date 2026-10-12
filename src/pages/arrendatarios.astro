@@ -79,8 +79,8 @@ import "../styles/pages/arrendatarios.css";
         <h1>Encuentra inmuebles en arriendo con información clara y atención directa</h1>
         <p class="hero__lead">Si te interesa un inmueble publicado por Amaru FS Inmobiliaria, te compartimos características, fotos, videos y requisitos. Cuando el proceso avanza, la aseguradora realiza el estudio de viabilidad del interesado y su deudor. Una vez aprobados, generamos el contrato de arrendamiento.</p>
         <div class="hero__actions" aria-label="Acciones principales">
-          <a class="btn btn--primary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." target="_blank" rel="noopener"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
-          <a class="btn btn--light" href="#informacion"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Más información</a>
+          <a id="arrendatarios-ver-inmuebles" class="btn btn--primary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." target="_blank" rel="noopener"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
+          <a id="arrendatarios-mas-informacion" class="btn btn--light" href="#informacion"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Más información</a>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
@@ -107,13 +107,13 @@ import "../styles/pages/arrendatarios.css";
               <span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 01</span>
               <h4>Elige un inmueble disponible</h4>
               <p>Revisa las características, fotos, ubicación y precio publicado.</p>
-              <a class="timeline__link" href="/inmuebles/">Ver inmuebles disponibles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a id="fase-1-arrendatarios-ver-inmuebles" class="timeline__link" href="/inmuebles/">Ver inmuebles disponibles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </li>
             <li>
               <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 02</span>
               <h4>Escríbenos por WhatsApp</h4>
               <p>Indica cuál inmueble te interesa para confirmar disponibilidad y resolver dudas.</p>
-              <a class="timeline__link" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20me%20interesa%20un%20inmueble%20en%20arriendo.%20Quiero%20confirmar%20disponibilidad%20y%20recibir%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a id="fase-1-arrendatarios-escribir-whatsapp" class="timeline__link" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20me%20interesa%20un%20inmueble%20en%20arriendo.%20Quiero%20confirmar%20disponibilidad%20y%20recibir%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </li>
           </ol>
         </article>
@@ -133,7 +133,7 @@ import "../styles/pages/arrendatarios.css";
               <span><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 04</span>
               <h4>Revisa requisitos</h4>
               <p>Si sigues interesado, te compartimos los requisitos necesarios para iniciar el proceso con la aseguradora.</p>
-              <button class="timeline__link timeline__link--button" type="button" data-modal-open="requirements-modal">Ver requisitos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+              <button id="fase-2-arrendatarios-ver-requisitos" class="timeline__link timeline__link--button" type="button" data-modal-open="requirements-modal">Ver requisitos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
             </li>
           </ol>
         </article>
@@ -240,7 +240,7 @@ import "../styles/pages/arrendatarios.css";
         <h2 id="closing-title">¿Ya viste un inmueble que te interesa?</h2>
         <p>Escríbenos por WhatsApp con el nombre o enlace del inmueble. Confirmamos información disponible, te compartimos requisitos y te indicamos el paso siguiente para avanzar con aseguradora.</p>
       </div>
-      <a class="btn btn--secondary" href="/inmuebles/"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
+      <a id="arrendatarios-ver-inmuebles-iniciar" class="btn btn--secondary" href="/inmuebles/"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
