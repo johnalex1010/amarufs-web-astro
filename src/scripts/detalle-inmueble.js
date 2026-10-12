@@ -45,7 +45,7 @@
 
     if (galleryModalImage) {
       galleryModalImage.src = src;
-      galleryModalImage.alt = `${alt} ampliada`;
+      galleryModalImage.alt = alt;
     }
 
     if (galleryModalCount) {

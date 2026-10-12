@@ -41,6 +41,7 @@ const whatsappHref = getPropertyWhatsappHref(property);
 const isRent = property.operation === "arriendo";
 const operationLabel = getOperationLabel(property.operation);
 const priceLabel = getPriceLabel(property.operation);
+const getGalleryImageAlt = (index: number) => `${property.title} -${index + 1}`;
 const processTitle = isRent
   ? "Cómo avanzar si quieres tomar en arriendo este inmueble"
   : "Cómo avanzar si quieres comprar este inmueble";
@@ -183,7 +184,7 @@ const faqJsonLd = {
     <section class="detail-hero">
       <div class="property-gallery" data-property-gallery>
         <figure class="property-gallery__stage">
-          <img src={property.gallery[0].src} alt={`${property.gallery[0].alt} de la galería`} width={property.gallery[0].width ?? 2000} height={property.gallery[0].height ?? 1500} data-gallery-main />
+          <img src={property.gallery[0].src} alt={getGalleryImageAlt(0)} width={property.gallery[0].width ?? 2000} height={property.gallery[0].height ?? 1500} data-gallery-main />
           <button class="property-gallery__zoom" type="button" aria-label="Ampliar foto actual" data-gallery-open>
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
           </button>
@@ -199,19 +200,23 @@ const faqJsonLd = {
           </button>
           <div class="property-gallery__thumbs" role="list">
             {
-              property.gallery.map((photo, index) => (
-                <button
-                  class:list={{ "property-gallery__thumb": true, "is-active": index === 0 }}
-                  type="button"
-                  aria-label={`Ver imagen ${index + 1} del inmueble`}
-                  aria-current={index === 0 ? "true" : "false"}
-                  data-gallery-thumb
-                  data-gallery-src={photo.src}
-                  data-gallery-alt={photo.alt}
-                >
-                  <img src={photo.src} alt="" width="220" height="165" loading="lazy" />
-                </button>
-              ))
+              property.gallery.map((photo, index) => {
+                const imageAlt = getGalleryImageAlt(index);
+
+                return (
+                  <button
+                    class:list={{ "property-gallery__thumb": true, "is-active": index === 0 }}
+                    type="button"
+                    aria-label={`Ver imagen ${index + 1} del inmueble`}
+                    aria-current={index === 0 ? "true" : "false"}
+                    data-gallery-thumb
+                    data-gallery-src={photo.src}
+                    data-gallery-alt={imageAlt}
+                  >
+                    <img src={photo.src} alt={imageAlt} width="220" height="165" loading="lazy" />
+                  </button>
+                );
+              })
             }
           </div>
           <button class="property-gallery__arrow" type="button" aria-label="Ver foto siguiente" data-gallery-next>
@@ -432,7 +437,7 @@ const faqJsonLd = {
       <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
     <figure class="gallery-modal__stage">
-      <img src={property.gallery[0].src} alt={`${property.gallery[0].alt} ampliada`} data-gallery-modal-image />
+      <img src={property.gallery[0].src} alt={getGalleryImageAlt(0)} data-gallery-modal-image />
       <figcaption data-modal-count>1 / {property.gallery.length}</figcaption>
     </figure>
     <button class="gallery-modal__arrow gallery-modal__arrow--next" type="button" aria-label="Ver foto siguiente" data-modal-next>
