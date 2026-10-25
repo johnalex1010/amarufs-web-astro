@@ -38,7 +38,7 @@ const isActive = (key: string) => activePage === key || (activePage.startsWith("
             </a>
             <div class="submenu" aria-label="Submenú de propietarios">
               {item.children.map((child) => (
-                <a class:list={{ "is-active": activePage === child.key }} href={child.href} aria-current={activePage === child.key ? "page" : undefined}>
+                <a class:list={{ "is-active": activePage === child.key }} href={child.href} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined} aria-current={activePage === child.key ? "page" : undefined}>
                   <i class={child.icon} aria-hidden="true"></i> {child.label}
                 </a>
               ))}

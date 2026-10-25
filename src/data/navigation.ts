@@ -23,6 +23,13 @@ export const navigation = [
 				icon: "fa-solid fa-door-open",
 				key: "propietarios-arriendo",
 			},
+			{
+				label: "Portal de clientes",
+				href: "https://panel.amarufs.co",
+				icon: "fa-solid fa-user-group",
+				key: "portal-clientes",
+				target: "_blank",
+			},
 		],
 	},
 	{
