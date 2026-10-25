@@ -25,7 +25,7 @@ export const navigation = [
 			},
 			{
 				label: "Portal de clientes",
-				href: "https://panel.amarufs.co",
+				href: "https://panel.amarufs.co/login",
 				icon: "fa-solid fa-user-group",
 				key: "portal-clientes",
 				target: "_blank",
