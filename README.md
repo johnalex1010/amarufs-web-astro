@@ -33,9 +33,9 @@ Las rutas de inmuebles solo muestran registros con estado `publicado` y campos o
 
 ## Stack Tecnológico
 
-- Astro 5.
+- Astro 7.4.2.
 - Sitio estático con `output: "static"`.
-- React integrado mediante `@astrojs/react`.
+- React integrado mediante `@astrojs/react` 7.1.1.
 - npm con `package-lock.json`.
 - CSS propio por página.
 - JavaScript propio para menú móvil, FAQ, filtros y detalles de inmueble.
@@ -48,7 +48,7 @@ Las rutas de inmuebles solo muestran registros con estado `publicado` y campos o
 
 ## Requisitos
 
-- Node.js.
+- Node.js 22.12.0 o superior.
 - npm.
 - Strapi local en `../property-cms`.
 - Cuenta Cloudinary con cloud name, API key y API secret.

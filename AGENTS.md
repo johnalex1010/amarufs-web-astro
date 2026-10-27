@@ -8,7 +8,7 @@ Este archivo es la referencia principal dentro de `web-astro`. Si existe una con
 
 ## Stack verificado
 
-- Framework: Astro 5.
+- Framework: Astro 7.4.2.
 - Rendering: sitio estático (`output: "static"`).
 - Integración: React mediante `@astrojs/react`.
 - Package manager: npm con `package-lock.json`.
