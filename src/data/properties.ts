@@ -50,114 +50,14 @@ export interface Property {
 
 export const fallbackProperties: Property[] = [
   {
-    "title": "Se arrienda Apartamento en Tocancipá - Álamo",
-    "seoTitle": "Se arrienda Apartamento en Tocancipá - Álamo",
-    "slug": "se-arrienda-apartamento-en-tocancipa-alamo",
-    "editorialStatus": "publicado",
-    "operation": "arriendo",
-    "propertyType": "apartamento",
-    "rentBaseValue": 1000000,
-    "rentValue": 1000000,
-    "administrationIncluded": true,
-    "locationLabel": "Cundinamarca",
-    "neighborhoodLabel": "Álamo",
-    "googleMapsEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3974.8865158169347!2d-73.93590052418632!3d4.958527839366802!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4073ea6f8f6e33%3A0xa971107b85e05cb1!2sConjunto%20Residencial%20%C3%81LAMO%20-%20Los%20Maderos!5e0!3m2!1ses-419!2sco!4v1784933838097!5m2!1ses-419!2sco\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
-    "description": "Ubicado en un conjunto residencial con Club House, este inmueble es ideal para familias, parejas y profesionales que buscan calidad de vida, seguridad y una excelente ubicación.\n\n      Características del apartamento:\n      3 habitaciones amplias y bien iluminadas.\n      2 baños modernos con divisiones en vidrio templado.\n      Cocina integral equipada con estufa.\n      Sala y comedor con excelente distribución y aprovechamiento del espacio.\n      Estudio abierto, ideal para home office, sala de lectura o zona de entretenimiento.\n      Vista exterior que proporciona mayor iluminación y ventilación natural.\n      Ubicado en quinto piso.\n\n      Zonas comunes del conjunto residencial:\n      Club House, piscina para adultos y niños, parque infantil y amplias zonas para el entretenimiento y la integración familiar.\n\n      Este apartamento ofrece equilibrio entre confort, funcionalidad y espacios recreativos. Contáctanos para conocerlo y recibir acompañamiento durante el proceso.",
-    "gallery": [
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934133/IMG_20260711_075439_779_qaqlzg.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934134/IMG_20260711_075346_326_yfgxxg.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934134/IMG_20260711_075332_338_gy72ur.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934137/IMG_20260711_075353_540_mlxwx8.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934138/IMG_20260711_075359_438_ifjxsg.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934140/IMG_20260711_075417_238_tteuad.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934140/IMG_20260711_075411_913_hjpxdu.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      },
-      {
-        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934142/IMG_20260711_075425_639_ssi0r9.webp",
-        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
-        "width": 1500,
-        "height": 1125
-      }
-    ],
-    "features": [
-      {
-        "label": "3 Alcobas",
-        "icon": "bed",
-        "filterValue": "3"
-      },
-      {
-        "label": "2 Baños",
-        "icon": "bath",
-        "filterValue": "2"
-      },
-      {
-        "label": "1 Cocina",
-        "icon": "kitchen-set",
-        "filterValue": "1"
-      },
-      {
-        "label": "1 Sala / Comedor",
-        "icon": "couch",
-        "filterValue": "1"
-      },
-      {
-        "label": "61 mts2 Área",
-        "icon": "ruler-combined",
-        "filterValue": "61 mts2"
-      }
-    ],
-    "nearbyZones": [
-      "Colegio",
-      "Zona comercial",
-      "Parque"
-    ],
-    "youtubeShortUrl": "https://youtube.com/shorts/IILsK0egibI?si=bWcxAr13TuLi07ES",
-    "internalCode": "AA_1018",
-    "metaDescription": "Apartamento en arriendo en Tocancipá con 3 habitaciones, 2 baños, Club House, piscina y zonas comunes."
-  },
-  {
     "title": "Arriendo apartamento en Puertas del Sol 2",
     "seoTitle": "Arriendo apartamento en Puertas del Sol 2",
     "slug": "arriendo-apartamento-puertas-del-sol-2-tocancipa",
     "editorialStatus": "publicado",
     "operation": "arriendo",
     "propertyType": "apartamento",
-    "rentBaseValue": 1100000,
-    "rentValue": 1100000,
+    "rentBaseValue": 1000000,
+    "rentValue": 1000000,
     "administrationIncluded": true,
     "locationLabel": "Tocancipá",
     "neighborhoodLabel": "Puertas del Sol 2",
@@ -270,6 +170,106 @@ export const fallbackProperties: Property[] = [
     "youtubeShortUrl": "https://youtube.com/shorts/2q_vht1TE-I?si=gul52rPsU8GgCmb7",
     "internalCode": "AA_1017",
     "metaDescription": "Apartamento en arriendo en Puertas del Sol 2, Tocancipá, con 3 alcobas, 2 baños y administración incluida."
+  },
+  {
+    "title": "Se arrienda Apartamento en Tocancipá - Álamo",
+    "seoTitle": "Se arrienda Apartamento en Tocancipá - Álamo",
+    "slug": "se-arrienda-apartamento-en-tocancipa-alamo",
+    "editorialStatus": "publicado",
+    "operation": "arriendo",
+    "propertyType": "apartamento",
+    "rentBaseValue": 1000000,
+    "rentValue": 1000000,
+    "administrationIncluded": true,
+    "locationLabel": "Cundinamarca",
+    "neighborhoodLabel": "Álamo",
+    "googleMapsEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3974.8865158169347!2d-73.93590052418632!3d4.958527839366802!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4073ea6f8f6e33%3A0xa971107b85e05cb1!2sConjunto%20Residencial%20%C3%81LAMO%20-%20Los%20Maderos!5e0!3m2!1ses-419!2sco!4v1784933838097!5m2!1ses-419!2sco\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
+    "description": "Ubicado en un conjunto residencial con Club House, este inmueble es ideal para familias, parejas y profesionales que buscan calidad de vida, seguridad y una excelente ubicación.\n\n      Características del apartamento:\n      3 habitaciones amplias y bien iluminadas.\n      2 baños modernos con divisiones en vidrio templado.\n      Cocina integral equipada con estufa.\n      Sala y comedor con excelente distribución y aprovechamiento del espacio.\n      Estudio abierto, ideal para home office, sala de lectura o zona de entretenimiento.\n      Vista exterior que proporciona mayor iluminación y ventilación natural.\n      Ubicado en quinto piso.\n\n      Zonas comunes del conjunto residencial:\n      Club House, piscina para adultos y niños, parque infantil y amplias zonas para el entretenimiento y la integración familiar.\n\n      Este apartamento ofrece equilibrio entre confort, funcionalidad y espacios recreativos. Contáctanos para conocerlo y recibir acompañamiento durante el proceso.",
+    "gallery": [
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934133/IMG_20260711_075439_779_qaqlzg.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934134/IMG_20260711_075346_326_yfgxxg.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934134/IMG_20260711_075332_338_gy72ur.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934137/IMG_20260711_075353_540_mlxwx8.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934138/IMG_20260711_075359_438_ifjxsg.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934140/IMG_20260711_075417_238_tteuad.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934140/IMG_20260711_075411_913_hjpxdu.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1784934142/IMG_20260711_075425_639_ssi0r9.webp",
+        "alt": "Se arrienda Apartamento en Tocancipá - Álamo",
+        "width": 1500,
+        "height": 1125
+      }
+    ],
+    "features": [
+      {
+        "label": "3 Alcobas",
+        "icon": "bed",
+        "filterValue": "3"
+      },
+      {
+        "label": "2 Baños",
+        "icon": "bath",
+        "filterValue": "2"
+      },
+      {
+        "label": "1 Cocina",
+        "icon": "kitchen-set",
+        "filterValue": "1"
+      },
+      {
+        "label": "1 Sala / Comedor",
+        "icon": "couch",
+        "filterValue": "1"
+      },
+      {
+        "label": "61 mts2 Área",
+        "icon": "ruler-combined",
+        "filterValue": "61 mts2"
+      }
+    ],
+    "nearbyZones": [
+      "Colegio",
+      "Zona comercial",
+      "Parque"
+    ],
+    "youtubeShortUrl": "https://youtube.com/shorts/IILsK0egibI?si=bWcxAr13TuLi07ES",
+    "internalCode": "AA_1018",
+    "metaDescription": "Apartamento en arriendo en Tocancipá con 3 habitaciones, 2 baños, Club House, piscina y zonas comunes."
   },
   {
     "title": "Venta Apartamento en USME",
