@@ -1,0 +1,44 @@
+---
+import { site } from "../../data/site";
+
+export interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+const trail: BreadcrumbItem[] = [{ name: "Inicio", path: "/" }, ...items];
+const currentUrl = new URL(trail.at(-1)?.path ?? "/", site.baseUrl).toString();
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": `${currentUrl}#migas`,
+  itemListElement: trail.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    item: new URL(item.path, site.baseUrl).toString()
+  }))
+};
+---
+
+<nav class="breadcrumbs" aria-label="Ruta de navegación">
+  <ol>
+    {
+      trail.map((item, index) =>
+        index === trail.length - 1 ? (
+          <li aria-current="page">{item.name}</li>
+        ) : (
+          <li>
+            <a href={item.path}>{item.name}</a>
+          </li>
+        )
+      )
+    }
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />

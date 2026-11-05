@@ -55,7 +55,7 @@ Este archivo es la referencia principal dentro de `web-astro`. Si existe una con
 - Mantener `site.baseUrl` como fuente canónica del dominio.
 - Conservar canonical, metadatos sociales, robots y JSON-LD cuando aplique.
 - Excluir rutas no indexables del sitemap, especialmente `/referidos/`.
-- Mantener `public/robots.txt`, `public/llms.txt`, `public/llm.txt` y `src/pages/sitemap.xml.ts` coherentes entre sí.
+- Mantener `public/robots.txt`, `src/pages/llms.txt.ts`, `public/llm.txt` y `src/pages/sitemap.xml.ts` coherentes entre sí.
 - El sitemap debe publicar únicamente URLs canónicas, públicas e indexables.
 - Cada página pública debe tener un H1 único, title, description, canonical y contenido suficiente para responder la intención de búsqueda.
 - Las páginas de inmueble deben publicar precio, operación, ubicación, fotos, descripción, características y estado comercial verificable.
@@ -110,7 +110,7 @@ Definition of Done técnico:
 ## Rollback
 
 - Cambios de documentación: revertir `AGENTS.md` o `README.md`.
-- Cambios SEO/GEO: revertir `public/robots.txt`, `public/llms.txt`, `public/llm.txt` o `src/pages/sitemap.xml.ts` y reconstruir.
+- Cambios SEO/GEO: revertir `public/robots.txt`, `src/pages/llms.txt.ts`, `public/llm.txt` o `src/pages/sitemap.xml.ts` y reconstruir.
 - Cambios de datos: restaurar `src/data/properties.ts` desde Git o volver a ejecutar `npm run properties:pull` con Strapi validado.
 - Cambios visuales o funcionales: revertir únicamente los archivos fuente afectados y ejecutar build.
 

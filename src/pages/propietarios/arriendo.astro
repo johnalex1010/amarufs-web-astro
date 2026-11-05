@@ -10,34 +10,9 @@ import "../../styles/pages/propietarios-arriendo.css";
   ogDescription="Proceso claro para propietarios que quieren arrendar inmuebles en Bogotá y Sabana."
   ogImage="/images/propietarios-arriendo.webp"
   activePage="propietarios-arriendo"
+  breadcrumbs={[{ name: "Propietarios", path: "/propietarios/" }, { name: "Arriendo", path: "/propietarios/arriendo/" }]}
 >
   <Fragment slot="head">
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Inicio",
-                "item": "https://www.amarufs.co/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Propietarios",
-                "item": "https://www.amarufs.co/propietarios/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Arriendo",
-                "item": "https://www.amarufs.co/propietarios/arriendo/"
-              }
-            ]
-          }
-    </script>
     <script type="application/ld+json">
       {
             "@context": "https://schema.org",

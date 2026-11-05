@@ -9,6 +9,9 @@ import {
   getListingSearchText,
   getOperationLabel,
   getFeatureIconClass,
+  getImageSrcset,
+  getOptimizedImageUrl,
+  getPhotoAlt,
   getPriceLabel,
   getPropertyHref,
   getPropertyLocationLabel,
@@ -79,6 +82,7 @@ const faqJsonLd = {
   ogDescription="Propiedades para arriendo o venta con fotos, características, filtros y atención directa."
   ogImage="/images/Inmuebles.webp"
   activePage="inmuebles"
+  breadcrumbs={[{ name: "Inmuebles", path: "/inmuebles/" }]}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
@@ -178,7 +182,6 @@ const faqJsonLd = {
           <div>
             <p class="eyebrow">Resultados disponibles</p>
             <h2 id="results-title">Tarjetas de inmuebles</h2>
-            <p>Cada tarjeta muestra lo necesario para decidir si vale la pena abrir la ficha completa o contactar a Amaru FS Inmobiliaria.</p>
           </div>
           <p class="results-count" data-results-count>{properties.length === 1 ? "Mostrando 1 inmueble" : `Mostrando ${properties.length} inmuebles`}</p>
         </div>
@@ -199,13 +202,18 @@ const faqJsonLd = {
                   data-location={getListingLocationFilterText(property)}
                   data-rooms={getListingRoomsFilterText(property)}
                   data-price={price}
-                  data-card-link={getPropertyHref(property)}
-                  role="link"
-                  tabindex="0"
-                  aria-label={`Ver detalle de ${property.title}`}
                 >
                   <figure class="property-card__media">
-                    <img src={image.src} alt={image.alt} width={image.width ?? 2000} height={image.height ?? 1500} loading="lazy" />
+                    <img
+                      src={getOptimizedImageUrl(image.src, 640)}
+                      srcset={getImageSrcset(image.src, [400, 640, 960])}
+                      sizes="(max-width: 760px) 100vw, 360px"
+                      alt={getPhotoAlt(property, image, 0)}
+                      width={image.width ?? 2000}
+                      height={image.height ?? 1500}
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <button class="property-card__favorite" type="button" aria-label={`Guardar ${property.title}`} aria-pressed="false" data-favorite-toggle>
                       <i class="fa-regular fa-heart" aria-hidden="true"></i>
                     </button>
@@ -216,7 +224,7 @@ const faqJsonLd = {
                     <span class="property-card__photos"><i class="fa-solid fa-camera" aria-hidden="true"></i> 1 / {property.gallery.length}</span>
                   </figure>
                   <div class="property-card__body">
-                    <h3>{property.title}</h3>
+                    <h3><a class="property-card__link" href={getPropertyHref(property)}>{property.title}</a></h3>
                     <p class="property-card__location"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {getPropertyLocationLabel(property)}</p>
                     <div class="property-features" data-feature-count={visibleFeatures.length} aria-label="Características principales del inmueble">
                       {visibleFeatures.map((feature) => (
@@ -232,7 +240,7 @@ const faqJsonLd = {
                         )}
                       </div>
                     </div>
-                    <span class="property-card__view"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Ver ficha del inmueble</span>
+                    <span class="property-card__view" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver ficha del inmueble</span>
                   </div>
                 </article>
               );

@@ -106,3 +106,51 @@
     transform: none;
   }
 }
+
+/* Migas de pan */
+.breadcrumbs {
+	width: min(var(--content-max-width), calc(100% - 48px));
+	margin: 20px auto 14px;
+	font-size: 14px;
+}
+
+.breadcrumbs ol {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: var(--color-muted);
+}
+
+.breadcrumbs li:not(:last-child)::after {
+	content: "/";
+	margin-left: 6px;
+	color: var(--color-line);
+}
+
+.breadcrumbs a {
+	color: var(--color-muted);
+	text-decoration: none;
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus-visible {
+	color: var(--color-primary);
+	text-decoration: underline;
+}
+
+.breadcrumbs [aria-current="page"] {
+	color: var(--color-primary);
+	font-weight: 700;
+	overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+	.breadcrumbs {
+		width: min(var(--content-max-width), calc(100% - 32px));
+		margin: 16px auto 0;
+		font-size: 13px;
+	}
+}

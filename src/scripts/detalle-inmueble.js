@@ -38,13 +38,20 @@
     currentGalleryIndex = (index + galleryThumbs.length) % galleryThumbs.length;
     const activeThumb = galleryThumbs[currentGalleryIndex];
     const src = activeThumb.dataset.gallerySrc;
+    const srcset = activeThumb.dataset.gallerySrcset;
+    const modalSrc = activeThumb.dataset.galleryModalSrc || src;
     const alt = activeThumb.dataset.galleryAlt;
 
+    if (srcset) {
+      galleryMain.srcset = srcset;
+    } else {
+      galleryMain.removeAttribute("srcset");
+    }
     galleryMain.src = src;
     galleryMain.alt = alt;
 
     if (galleryModalImage) {
-      galleryModalImage.src = src;
+      galleryModalImage.src = modalSrc;
       galleryModalImage.alt = alt;
     }
 

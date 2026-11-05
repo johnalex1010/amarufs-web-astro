@@ -273,7 +273,7 @@ Archivos y rutas de descubrimiento:
 
 - `src/pages/sitemap.xml.ts`: genera `/sitemap.xml` con URLs públicas, canónicas e indexables.
 - `public/robots.txt`: permite rastreo general y declara el sitemap y archivos LLM.
-- `public/llms.txt`: guía principal para modelos de lenguaje y buscadores con IA.
+- `src/pages/llms.txt.ts`: genera `/llms.txt`, guía principal para modelos de lenguaje y buscadores con IA. Incluye automáticamente el inventario publicado (título, URL, resumen con precio y código).
 - `public/llm.txt`: alias de compatibilidad para agentes que consulten la variante singular.
 
 `/referidos/` se mantiene fuera del sitemap porque no debe tratarse como ruta indexable comercial principal.
@@ -292,6 +292,26 @@ Cada inmueble debe conservar:
 - contenido escaneable
 
 Los inmuebles incompletos no deben publicarse ni indexarse.
+
+### Migas de pan
+
+`src/components/global/Breadcrumbs.astro` muestra la ruta de navegación y publica su JSON-LD `BreadcrumbList` (`@id` = URL de la página + `#migas`). Se activa con la prop `breadcrumbs` de `BaseLayout` (sin incluir "Inicio", que se agrega solo). El home no la pasa, por lo que no muestra migas. Las páginas nuevas deben declarar su ruta con esa prop en lugar de escribir un `BreadcrumbList` manual.
+
+### Plantilla de ficha de inmueble
+
+`src/pages/inmuebles/[slug].astro` genera automáticamente, a partir de los datos de Strapi:
+
+- JSON-LD en `@graph`: `RealEstateListing` + `Apartment` / `SingleFamilyResidence` / `Place` (lote) + `Offer` (`LeaseOut` o `Sell`, canon mensual con `UnitPriceSpecification`) + `RealEstateAgent` + `BreadcrumbList`.
+- Coordenadas (`geo`) extraídas del embed de Google Maps (mapa o Street View); área, alcobas y baños extraídos de las características.
+- `addressLocality` / `addressRegion` desde `ubicacion` y `barrio`. Si `ubicacion` es un departamento (Cundinamarca, Meta), `barrio` debe ser el municipio.
+- Bloque "Otros inmuebles que te pueden interesar" y barra fija de contacto en móvil (IDs `inmueble-barra-movil-whatsapp` e `inmueble-barra-movil-llamar` para GTM).
+- Resumen autocontenido (tipo, ubicación, espacios, área y precio) bajo el H2 de características.
+- Texto alternativo por foto: usa `alternativeText` o `caption` de la Media Library si es propio de la foto; si solo repite el título, genera "Tipo en operación en ubicación, foto N de M". Para SEO de imágenes, describir cada foto en Strapi (fachada, cocina, etc.).
+- Imágenes de Cloudinary con `f_auto,q_auto,c_limit,w_…`, `srcset` y `fetchpriority="high"` en la foto principal; imagen Open Graph recortada a 1200×630 en JPG.
+
+`npm run properties:pull` exporta `publishedAt` y `updatedAt`; el sitemap usa `updatedAt` como `<lastmod>` y el JSON-LD como `datePosted` / `dateModified`.
+
+En `/inmuebles/` cada tarjeta enlaza a su ficha con un `<a href>` rastreable en el título (cubre toda la tarjeta); `data-search` ya no incluye la descripción completa.
 
 ### SEO técnico de página completa
 

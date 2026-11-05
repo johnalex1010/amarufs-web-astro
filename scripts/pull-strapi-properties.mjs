@@ -75,6 +75,12 @@ function normalizeNumber(value) {
   return Number.isFinite(numericValue) ? numericValue : undefined;
 }
 
+function normalizeDate(value) {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}
+
 function normalizeArray(value) {
   return Array.isArray(value) ? value : [];
 }
@@ -147,6 +153,8 @@ function normalizeProperty(entry) {
     transparencyImage: normalizeImage(property.imagenNotaTransparencia, title),
     internalCode: property.codigoInterno || undefined,
     metaDescription: property.metaDescripcion || "",
+    publishedAt: normalizeDate(property.publishedAt),
+    updatedAt: normalizeDate(property.updatedAt),
   };
 }
 
@@ -219,6 +227,8 @@ export interface Property {
   transparencyImage?: PropertyPhoto;
   internalCode?: string;
   metaDescription: string;
+  publishedAt?: string;
+  updatedAt?: string;
 }
 
 export const fallbackProperties: Property[] = ${JSON.stringify(properties, null, 2)};

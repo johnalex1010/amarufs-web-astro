@@ -26,10 +26,20 @@ function escapeXml(value: string) {
 
 export async function GET() {
   const properties = await getPublishedProperties();
-  const urls = [
-    ...staticPages,
+  const propertyDates = properties
+    .map((property) => property.updatedAt)
+    .filter((value): value is string => Boolean(value))
+    .sort();
+  const latestPropertyUpdate = propertyDates.at(-1);
+  const urls: { path: string; lastmod?: string }[] = [
+    ...staticPages.map((page) => ({
+      ...page,
+      // El listado cambia cuando cambia cualquier inmueble publicado.
+      lastmod: page.path === "/inmuebles/" ? latestPropertyUpdate : undefined
+    })),
     ...properties.map((property) => ({
-      path: getPropertyHref(property)
+      path: getPropertyHref(property),
+      lastmod: property.updatedAt
     }))
   ];
 
@@ -38,7 +48,8 @@ export async function GET() {
 ${urls
   .map(
     (url) => `  <url>
-    <loc>${escapeXml(absoluteUrl(url.path))}</loc>
+    <loc>${escapeXml(absoluteUrl(url.path))}</loc>${url.lastmod ? `
+    <lastmod>${escapeXml(url.lastmod)}</lastmod>` : ""}
   </url>`
   )
   .join("\n")}

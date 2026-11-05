@@ -7,12 +7,25 @@ import {
   extractGoogleMapsSrc,
   formatCurrency,
   getFeatureIconClass,
+  getImageSrcset,
+  getMapCoordinates,
+  getOptimizedImageUrl,
   getOperationLabel,
+  getPhotoAlt,
   getPriceLabel,
+  getPropertyAnswerSummary,
+  getPropertyFacts,
+  getPropertyHeading,
+  getPropertyHref,
   getPropertyLocationLabel,
+  getPropertyPlaceLabel,
+  getPropertyPostalAddress,
   getPropertyPrice,
   getPropertyTypeLabel,
+  getPropertyUrl,
   getPropertyWhatsappHref,
+  getRelatedProperties,
+  getSocialImageUrl,
   getYoutubeEmbedSrc,
   renderRichText
 } from "../../lib/property-utils";
@@ -27,6 +40,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const property = slug ? await getPublishedPropertyBySlug(slug) : undefined;
+const allProperties = await getPublishedProperties();
 
 if (!property) {
   return Astro.redirect("/inmuebles/");
@@ -41,7 +55,27 @@ const whatsappHref = getPropertyWhatsappHref(property);
 const isRent = property.operation === "arriendo";
 const operationLabel = getOperationLabel(property.operation);
 const priceLabel = getPriceLabel(property.operation);
-const getGalleryImageAlt = (index: number) => `${property.title} -${index + 1}`;
+const getGalleryImageAlt = (index: number) => getPhotoAlt(property, property.gallery[index], index);
+const galleryWidths = [480, 768, 1080, 1440];
+const gallerySizes = "(max-width: 1180px) 100vw, 66vw";
+const galleryImages = property.gallery.map((photo, index) => ({
+  ...photo,
+  alt: getGalleryImageAlt(index),
+  mainSrc: getOptimizedImageUrl(photo.src, 1080),
+  srcset: getImageSrcset(photo.src, galleryWidths),
+  thumbSrc: getOptimizedImageUrl(photo.src, 440),
+  modalSrc: getOptimizedImageUrl(photo.src, 1600)
+}));
+const mainImage = galleryImages[0];
+const propertyUrl = getPropertyUrl(property);
+const propertyHeading = getPropertyHeading(property);
+const answerSummary = getPropertyAnswerSummary(property);
+const propertyTypeLabel = getPropertyTypeLabel(property.propertyType);
+const typeArticle = ["casa", "bodega", "oficina", "finca"].includes(property.propertyType.toLowerCase()) ? "de la" : "del";
+const featuresTitle = `Características ${typeArticle} ${propertyTypeLabel.toLowerCase()} en ${getPropertyPlaceLabel(property)}`;
+const relatedProperties = getRelatedProperties(property, allProperties);
+const facts = getPropertyFacts(property);
+const coordinates = getMapCoordinates(mapsSrc);
 const processTitle = isRent
   ? "Cómo avanzar si quieres tomar en arriendo este inmueble"
   : "Cómo avanzar si quieres comprar este inmueble";
@@ -132,27 +166,81 @@ const faqItems = [
       "Envía el nombre o enlace del inmueble, tu interés principal y las dudas que quieras resolver antes de avanzar."
   }
 ];
+const schemaTypeByProperty: Record<string, string> = {
+  apartamento: "Apartment",
+  casa: "SingleFamilyResidence",
+  lote: "Place"
+};
+const residenceType = schemaTypeByProperty[property.propertyType.toLowerCase()] ?? "Accommodation";
+const isAccommodation = residenceType !== "Place";
+const organizationId = `${site.baseUrl}#organizacion`;
 const detailJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Accommodation",
-  name: property.title,
-  image: property.gallery.map((photo) => photo.src),
-  description: property.description,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: getPropertyLocationLabel(property),
-    addressCountry: "CO"
-  },
-  provider: {
-    "@type": "RealEstateAgent",
-    name: site.name
-  },
-  offers: {
-    "@type": "Offer",
-    price,
-    priceCurrency: "COP",
-    availability: "https://schema.org/InStock"
-  }
+  "@graph": [
+    {
+      "@type": "RealEstateListing",
+      "@id": `${propertyUrl}#anuncio`,
+      url: propertyUrl,
+      name: property.title,
+      description: property.metaDescription || answerSummary,
+      inLanguage: site.locale,
+      image: galleryImages.map((photo) => photo.modalSrc),
+      ...(property.publishedAt ? { datePosted: property.publishedAt } : {}),
+      ...(property.updatedAt ? { dateModified: property.updatedAt } : {}),
+      about: { "@id": `${propertyUrl}#inmueble` },
+      mainEntity: { "@id": `${propertyUrl}#oferta` },
+      breadcrumb: { "@id": `${propertyUrl}#migas` },
+      ...(property.internalCode ? { identifier: property.internalCode } : {})
+    },
+    {
+      "@type": residenceType,
+      "@id": `${propertyUrl}#inmueble`,
+      name: propertyHeading,
+      description: property.description,
+      image: mainImage.modalSrc,
+      address: getPropertyPostalAddress(property),
+      ...(coordinates ? { geo: { "@type": "GeoCoordinates", ...coordinates } } : {}),
+      ...(isAccommodation && facts.area
+        ? { floorSize: { "@type": "QuantitativeValue", value: facts.area, unitCode: "MTK", unitText: "m²" } }
+        : {}),
+      ...(!isAccommodation && facts.area
+        ? { additionalProperty: { "@type": "PropertyValue", name: "Área del lote", value: facts.area, unitCode: "MTK", unitText: "m²" } }
+        : {}),
+      ...(isAccommodation && facts.bedrooms ? { numberOfBedrooms: facts.bedrooms } : {}),
+      ...(isAccommodation && facts.bathrooms ? { numberOfBathroomsTotal: facts.bathrooms } : {})
+    },
+    {
+      "@type": "Offer",
+      "@id": `${propertyUrl}#oferta`,
+      url: propertyUrl,
+      price,
+      priceCurrency: "COP",
+      availability: "https://schema.org/InStock",
+      businessFunction: isRent ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
+      ...(isRent
+        ? {
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price,
+              priceCurrency: "COP",
+              unitCode: "MON",
+              unitText: "mes",
+              ...(property.administrationIncluded ? { description: "Administración incluida" } : {})
+            }
+          }
+        : {}),
+      itemOffered: { "@id": `${propertyUrl}#inmueble` },
+      offeredBy: { "@id": organizationId }
+    },
+    {
+      "@type": "RealEstateAgent",
+      "@id": organizationId,
+      name: site.name,
+      url: site.baseUrl,
+      telephone: `+${site.whatsapp}`,
+      image: new URL(site.logoHorizontal, site.baseUrl).toString()
+    }
+  ]
 };
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -173,8 +261,12 @@ const faqJsonLd = {
   description={property.metaDescription}
   ogTitle={property.title}
   ogDescription={property.summary ?? property.metaDescription}
-  ogImage={property.gallery[0].src}
+  ogImage={getSocialImageUrl(property.gallery[0].src)}
   activePage="inmuebles"
+  breadcrumbs={[
+    { name: "Inmuebles", path: "/inmuebles/" },
+    { name: property.title, path: getPropertyHref(property) }
+  ]}
   disableReveal
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(detailJsonLd)} />
@@ -184,13 +276,23 @@ const faqJsonLd = {
     <section class="detail-hero">
       <div class="property-gallery" data-property-gallery>
         <figure class="property-gallery__stage">
-          <img src={property.gallery[0].src} alt={getGalleryImageAlt(0)} width={property.gallery[0].width ?? 2000} height={property.gallery[0].height ?? 1500} data-gallery-main />
+          <img
+            src={mainImage.mainSrc}
+            srcset={mainImage.srcset}
+            sizes={mainImage.srcset ? gallerySizes : undefined}
+            alt={mainImage.alt}
+            width={mainImage.width ?? 2000}
+            height={mainImage.height ?? 1500}
+            fetchpriority="high"
+            decoding="async"
+            data-gallery-main
+          />
           <button class="property-gallery__zoom" type="button" aria-label="Ampliar foto actual" data-gallery-open>
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
           </button>
           <div class="detail-hero__tags" aria-label="Información rápida del inmueble">
             <span><i class={isRent ? "fa-solid fa-door-open" : "fa-solid fa-sign-hanging"} aria-hidden="true"></i> {operationLabel}</span>
-            <span><i class="fa-solid fa-building" aria-hidden="true"></i> {getPropertyTypeLabel(property.propertyType)}</span>
+            <span><i class="fa-solid fa-building" aria-hidden="true"></i> {propertyTypeLabel}</span>
             <span><i class="fa-solid fa-camera" aria-hidden="true"></i> <b data-gallery-count>1 / {property.gallery.length}</b></span>
           </div>
         </figure>
@@ -200,8 +302,8 @@ const faqJsonLd = {
           </button>
           <div class="property-gallery__thumbs" role="list">
             {
-              property.gallery.map((photo, index) => {
-                const imageAlt = getGalleryImageAlt(index);
+              galleryImages.map((photo, index) => {
+                const imageAlt = photo.alt;
 
                 return (
                   <button
@@ -210,10 +312,12 @@ const faqJsonLd = {
                     aria-label={`Ver imagen ${index + 1} del inmueble`}
                     aria-current={index === 0 ? "true" : "false"}
                     data-gallery-thumb
-                    data-gallery-src={photo.src}
+                    data-gallery-src={photo.mainSrc}
+                    data-gallery-srcset={photo.srcset}
+                    data-gallery-modal-src={photo.modalSrc}
                     data-gallery-alt={imageAlt}
                   >
-                    <img src={photo.src} alt={imageAlt} width="220" height="165" loading="lazy" />
+                    <img src={photo.thumbSrc} alt="" width="220" height="165" loading="lazy" decoding="async" />
                   </button>
                 );
               })
@@ -241,8 +345,8 @@ const faqJsonLd = {
           <dd>{getPropertyLocationLabel(property)}</dd>
         </div>
         <div>
-          <dt>Estado</dt>
-          <dd>Publicado</dd>
+          <dt>Tipo</dt>
+          <dd>{propertyTypeLabel} en {operationLabel.toLowerCase()}</dd>
         </div>
         <div>
           <dt>{priceLabel}</dt>
@@ -250,17 +354,17 @@ const faqJsonLd = {
         </div>
       </dl>
       <div class="summary-actions">
-        <a id="inmueble-consultar-disponibilidad" class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
+        <a id="inmueble-consultar-disponibilidad" class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
         <a id="inmueble-llamar-asesor" class="btn btn--ghost" href={`tel:+${site.whatsapp}`}><i class="fa-solid fa-phone" aria-hidden="true"></i> Llamar a un asesor</a>
       </div>
-      <p class="summary-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Disponibilidad, precio y condiciones deben confirmarse por WhatsApp antes de agendar visita o solicitar requisitos.</p>
+      <p class="summary-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Escríbenos con el código del inmueble y te confirmamos disponibilidad, condiciones y fecha de visita.</p>
     </aside>
 
     <section class="section-pad section-band section-band--white intro-block" aria-labelledby="intro-title">
       <div class="section-heading">
         <p class="eyebrow">Información principal</p>
-        <h2 id="intro-title">{property.title}</h2>
-        <p>Revisa la información principal de este inmueble y confirma disponibilidad con Amaru FS Inmobiliaria. Los datos publicados deben estar verificados antes de recibir visitas o solicitudes.</p>
+        <h2 id="intro-title">{featuresTitle}</h2>
+        <p>{answerSummary}</p>
       </div>
       <div class="quick-grid">
         {property.features.map((feature) => (
@@ -276,7 +380,6 @@ const faqJsonLd = {
       <div class="section-heading">
         <p class="eyebrow">Descripción</p>
         <h2 id="description-title">Descripción del inmueble</h2>
-        <p>La descripción final debe explicar distribución, estado, espacios principales, iluminación, acceso, características destacadas y condiciones relevantes. Si algún dato necesita confirmación, Amaru FS lo valida antes de avanzar.</p>
       </div>
       <div class="description-box">
         <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
@@ -306,7 +409,7 @@ const faqJsonLd = {
       <div>
         <p class="eyebrow">Zonas aledañas</p>
         <h2 id="nearby-title">Referencias cercanas</h2>
-        <p>Estas referencias ayudan a entender el entorno general del inmueble sin exponer datos privados.</p>
+        <p>Puntos de referencia del sector para ubicar el inmueble.</p>
       </div>
       <ul class="nearby-list">
         {property.nearbyZones.map((zone) => (
@@ -357,7 +460,7 @@ const faqJsonLd = {
       <div class="section-heading">
         <p class="eyebrow">Confianza</p>
         <h2 id="trust-title">Información verificada antes de avanzar</h2>
-        <p>Amaru FS Inmobiliaria trabaja con información real del inmueble, fotos autorizadas y características revisadas. Si algún dato necesita confirmación, lo validamos antes de agendar visitas o avanzar con requisitos.</p>
+        <p>Amaru FS Inmobiliaria trabaja con información real del inmueble, fotos autorizadas y características revisadas.</p>
       </div>
       <div class="trust-cards">
         <article>
@@ -382,9 +485,9 @@ const faqJsonLd = {
       <div>
         <p class="eyebrow">Siguiente paso</p>
         <h2 id="closing-title">¿Te interesa este inmueble?</h2>
-        <p>Escríbenos con el código o enlace de la propiedad. Confirmamos disponibilidad, resolvemos dudas y te indicamos el siguiente paso según sea arriendo o venta.</p>
+        <p>Escríbenos y te indicamos el siguiente paso para {isRent ? "tomarlo en arriendo" : "visitarlo y presentar tu oferta"}.</p>
       </div>
-      <a id="inmueble-consultar-por-whatsapp" class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
+      <a id="inmueble-consultar-por-whatsapp" class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
     </section>
 
     <section class="faq section-pad section-band section-band--gray" aria-labelledby="faq-title">
@@ -408,7 +511,50 @@ const faqJsonLd = {
         }
       </div>
     </section>
+
+    {relatedProperties.length > 0 && (
+      <section class="related section-pad section-band section-band--white" aria-labelledby="related-title">
+        <div class="section-heading">
+          <p class="eyebrow">Más opciones</p>
+          <h2 id="related-title">Otros inmuebles que te pueden interesar</h2>
+        </div>
+        <ul class="related-grid">
+          {relatedProperties.map((item) => (
+            <li class="related-card">
+              <img
+                src={getOptimizedImageUrl(item.gallery[0].src, 480)}
+                alt=""
+                width="480"
+                height="360"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="related-card__body">
+                <span class="related-card__meta">{getOperationLabel(item.operation)} · {getPropertyTypeLabel(item.propertyType)}</span>
+                <h3><a href={getPropertyHref(item)}>{item.title}</a></h3>
+                <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {getPropertyLocationLabel(item)}</p>
+                <strong>{formatCurrency(getPropertyPrice(item))}</strong>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a class="related__all" href="/inmuebles/">Ver todos los inmuebles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </section>
+    )}
   </main>
+
+  <div class="mobile-cta" role="region" aria-label="Contacto rápido sobre este inmueble">
+    <div class="mobile-cta__price">
+      <span>{priceLabel}{isRent ? " mensual" : ""}</span>
+      <strong>{formattedPrice.replace(/\s*COP$/, "")}</strong>
+    </div>
+    <a id="inmueble-barra-movil-whatsapp" class="mobile-cta__whatsapp" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+      <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+    </a>
+    <a id="inmueble-barra-movil-llamar" class="mobile-cta__call" href={`tel:+${site.whatsapp}`} aria-label="Llamar a un asesor">
+      <i class="fa-solid fa-phone" aria-hidden="true"></i>
+    </a>
+  </div>
 
   {isRent && <RentalRequirementsModal id="detail-requirements-modal" />}
 
@@ -422,7 +568,7 @@ const faqJsonLd = {
         <p class="eyebrow">Requisitos</p>
         <h2 id="sale-requirements-modal-title">Valida los requisitos con tu asesor</h2>
         <p>Para avanzar con la compra de este inmueble, confirma directamente con tu asesor de Amaru FS Inmobiliaria los documentos, condiciones comerciales y pasos necesarios según el caso.</p>
-        <a class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener">
+        <a class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Hablar con asesor
         </a>
       </div>
@@ -437,7 +583,7 @@ const faqJsonLd = {
       <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
     <figure class="gallery-modal__stage">
-      <img src={property.gallery[0].src} alt={getGalleryImageAlt(0)} data-gallery-modal-image />
+      <img src={mainImage.modalSrc} alt={mainImage.alt} decoding="async" data-gallery-modal-image />
       <figcaption data-modal-count>1 / {property.gallery.length}</figcaption>
     </figure>
     <button class="gallery-modal__arrow gallery-modal__arrow--next" type="button" aria-label="Ver foto siguiente" data-modal-next>

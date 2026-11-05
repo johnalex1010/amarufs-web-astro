@@ -1,5 +1,5 @@
 import { site } from "../data/site";
-import type { Property, PropertyOperation } from "../data/properties";
+import type { Property, PropertyOperation, PropertyPhoto } from "../data/properties";
 
 export function formatCurrency(value?: number) {
   if (!value) {
@@ -68,6 +68,217 @@ export function renderRichText(value: string) {
 
 export function getPropertyHref(property: Property) {
   return `/inmuebles/${property.slug}/`;
+}
+
+export function getPropertyUrl(property: Property) {
+  return new URL(getPropertyHref(property), site.baseUrl).toString();
+}
+
+const cloudinaryUploadSegment = "/image/upload/";
+
+/**
+ * Agrega transformaciones de Cloudinary (formato y calidad automáticos, ancho máximo)
+ * solo cuando la URL es de Cloudinary y aún no trae transformaciones propias.
+ */
+export function getOptimizedImageUrl(src: string, width: number, extra = "") {
+  try {
+    const url = new URL(src);
+    const uploadIndex = url.pathname.indexOf(cloudinaryUploadSegment);
+
+    if (url.hostname !== "res.cloudinary.com" || uploadIndex === -1) {
+      return src;
+    }
+
+    const prefix = url.pathname.slice(0, uploadIndex + cloudinaryUploadSegment.length);
+    const rest = url.pathname.slice(prefix.length);
+    const firstSegment = rest.split("/")[0] ?? "";
+    const hasTransformations = !/^v\d+$/.test(firstSegment) && /(^|,)[a-z]{1,3}_/.test(firstSegment);
+
+    if (hasTransformations) {
+      return src;
+    }
+
+    const transformations = extra || `f_auto,q_auto,c_limit,w_${Math.round(width)}`;
+    url.pathname = `${prefix}${transformations}/${rest}`;
+    return url.toString();
+  } catch {
+    return src;
+  }
+}
+
+export function getImageSrcset(src: string, widths: number[]) {
+  const candidates = widths.map((width) => ({ width, url: getOptimizedImageUrl(src, width) }));
+
+  if (candidates.every((candidate) => candidate.url === src)) {
+    return undefined;
+  }
+
+  return candidates.map((candidate) => `${candidate.url} ${candidate.width}w`).join(", ");
+}
+
+export function getSocialImageUrl(src: string) {
+  return getOptimizedImageUrl(src, 1200, "f_jpg,q_auto,c_fill,g_auto,w_1200,h_630");
+}
+
+/**
+ * Ubicación legible para textos generados: "Barrio, Municipio" o "Municipio, Departamento".
+ */
+export function getPropertyPlaceLabel(property: Property) {
+  const address = getPropertyPostalAddress(property);
+  const neighborhood = property.neighborhoodLabel?.trim();
+  const locality = "addressLocality" in address ? address.addressLocality : undefined;
+
+  if (locality && neighborhood && locality !== neighborhood) {
+    return `${neighborhood}, ${locality}`;
+  }
+
+  return [locality ?? neighborhood, address.addressRegion].filter(Boolean).join(", ");
+}
+
+export function getPropertyHeading(property: Property) {
+  const typeLabel = getPropertyTypeLabel(property.propertyType);
+  return `${typeLabel} en ${property.operation === "venta" ? "venta" : "arriendo"} en ${getPropertyPlaceLabel(property)}`;
+}
+
+/**
+ * Texto alternativo de cada foto. Usa el texto definido en Strapi cuando es propio
+ * de la foto; si solo repite el título, genera una descripción con tipo, operación,
+ * ubicación y posición de la foto.
+ */
+export function getPhotoAlt(property: Property, photo: PropertyPhoto, index: number) {
+  const customAlt = photo.alt?.trim();
+
+  if (customAlt && normalizeFilterText(customAlt) !== normalizeFilterText(property.title)) {
+    return customAlt;
+  }
+
+  return `${getPropertyHeading(property)}, foto ${index + 1} de ${property.gallery.length}`;
+}
+
+function getFeatureNumber(property: Property, pattern: RegExp) {
+  const feature = property.features.find((item) => pattern.test(normalizeFilterText(item.label)));
+  const rawValue = feature?.filterValue ?? feature?.label.match(/\d+(?:[.,]\d+)?/)?.[0];
+  const value = Number(String(rawValue ?? "").replace(",", "."));
+
+  return Number.isFinite(value) && value > 0 ? value : undefined;
+}
+
+export function getPropertyFacts(property: Property) {
+  const areaFeature = property.features.find((item) => /area/.test(normalizeFilterText(item.label)));
+  const areaMatch = areaFeature && !/\dx|x\s*\d/i.test(areaFeature.label)
+    ? areaFeature.label.match(/\d+(?:[.,]\d+)?/)
+    : null;
+  const area = areaMatch ? Number(areaMatch[0].replace(",", ".")) : undefined;
+
+  return {
+    area: area && Number.isFinite(area) ? area : undefined,
+    bedrooms: getFeatureNumber(property, /alcoba|habitacion/),
+    bathrooms: getFeatureNumber(property, /bano/)
+  };
+}
+
+function formatArea(value: number) {
+  return `${new Intl.NumberFormat("es-CO", { maximumFractionDigits: 2 }).format(value)} m²`;
+}
+
+/**
+ * Resumen autocontenido del inmueble (tipo, ubicación, espacios, área y precio)
+ * pensado para lectura rápida y para citación por buscadores con IA.
+ */
+export function getPropertyAnswerSummary(property: Property) {
+  const facts = getPropertyFacts(property);
+  const details = [
+    facts.bedrooms ? `${facts.bedrooms} ${facts.bedrooms === 1 ? "alcoba" : "alcobas"}` : "",
+    facts.bathrooms ? `${facts.bathrooms} ${facts.bathrooms === 1 ? "baño" : "baños"}` : "",
+    facts.area ? formatArea(facts.area) : ""
+  ].filter(Boolean);
+  const detailsText = details.length
+    ? `, con ${details.length > 1 ? `${details.slice(0, -1).join(", ")} y ${details.at(-1)}` : details[0]}`
+    : "";
+  const price = formatCurrency(getPropertyPrice(property));
+  const priceText = property.operation === "venta"
+    ? `Valor de venta: ${price}.`
+    : `Canon mensual: ${price}${property.administrationIncluded ? ", administración incluida" : ""}.`;
+
+  return `${getPropertyHeading(property)}${detailsText}. ${priceText}`;
+}
+
+/**
+ * Extrae coordenadas del embed de Google Maps (mapa normal o Street View).
+ * Solo devuelve valores dentro del rango geográfico de Colombia.
+ */
+export function getMapCoordinates(embedSrc: string) {
+  if (!embedSrc) {
+    return undefined;
+  }
+
+  const placeMatch = embedSrc.match(/!2d(-?\d+(?:\.\d+)?)!3d(-?\d+(?:\.\d+)?)/);
+  const streetViewMatch = embedSrc.match(/!1d(-?\d+(?:\.\d+)?)!2d(-?\d+(?:\.\d+)?)!3f/);
+  const latitude = Number(placeMatch?.[2] ?? streetViewMatch?.[1]);
+  const longitude = Number(placeMatch?.[1] ?? streetViewMatch?.[2]);
+  const isInColombia = latitude > -5 && latitude < 14 && longitude > -82 && longitude < -66;
+
+  return Number.isFinite(latitude) && Number.isFinite(longitude) && isInColombia
+    ? { latitude: Number(latitude.toFixed(5)), longitude: Number(longitude.toFixed(5)) }
+    : undefined;
+}
+
+const departmentLabels: Record<string, string> = {
+  cundinamarca: "Cundinamarca",
+  meta: "Meta",
+  boyaca: "Boyacá",
+  tolima: "Tolima",
+  huila: "Huila"
+};
+
+const municipalityDepartments: Record<string, string> = {
+  bogota: "Bogotá D.C.",
+  "bogota d c": "Bogotá D.C.",
+  tocancipa: "Cundinamarca",
+  zipaquira: "Cundinamarca",
+  "mesitas del colegio": "Cundinamarca",
+  villavicencio: "Meta"
+};
+
+/**
+ * Dirección estructurada para JSON-LD: municipio en addressLocality y
+ * departamento en addressRegion, sin exponer dirección exacta.
+ */
+export function getPropertyPostalAddress(property: Property) {
+  const location = normalizeFilterText(property.locationLabel);
+  const neighborhood = property.neighborhoodLabel?.trim();
+
+  if (departmentLabels[location]) {
+    return {
+      "@type": "PostalAddress",
+      ...(neighborhood ? { addressLocality: neighborhood } : {}),
+      addressRegion: departmentLabels[location],
+      addressCountry: "CO"
+    };
+  }
+
+  const isBogota = location.startsWith("bogota");
+
+  return {
+    "@type": "PostalAddress",
+    addressLocality: isBogota ? "Bogotá" : toLocationLabel(property.locationLabel),
+    ...(municipalityDepartments[location] ? { addressRegion: municipalityDepartments[location] } : {}),
+    addressCountry: "CO"
+  };
+}
+
+export function getRelatedProperties(property: Property, properties: Property[], limit = 3) {
+  const others = properties.filter((item) => item.slug !== property.slug);
+  const score = (item: Property) =>
+    (item.operation === property.operation ? 2 : 0) +
+    (normalizeFilterText(item.locationLabel) === normalizeFilterText(property.locationLabel) ? 1 : 0) +
+    (item.propertyType === property.propertyType ? 1 : 0);
+
+  return others
+    .map((item, index) => ({ item, index, score: score(item) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, limit)
+    .map((entry) => entry.item);
 }
 
 export function getPropertyWhatsappHref(property: Property) {
@@ -151,10 +362,11 @@ export function getListingSearchText(property: Property) {
     property.propertyType,
     property.locationLabel,
     property.neighborhoodLabel,
-    property.description,
+    property.internalCode,
     ...property.features.map((feature) => feature.label),
     ...property.nearbyZones
   ]
+    .filter(Boolean)
     .join(" ")
     .toLowerCase();
 }
@@ -200,6 +412,7 @@ function toLocationLabel(value: string) {
   const normalizedValue = normalizeFilterText(value);
   const knownLocations = {
     bogota: "Bogotá",
+    "bogota d c": "Bogotá D.C.",
     zipaquira: "Zipaquirá",
     tocancipa: "Tocancipá",
   };

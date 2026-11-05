@@ -278,28 +278,6 @@
         event.stopPropagation();
         const isPressed = favoriteButton.getAttribute("aria-pressed") === "true";
         favoriteButton.setAttribute("aria-pressed", String(!isPressed));
-        return;
-      }
-
-      const card = event.target.closest("[data-card-link]");
-      if (card) {
-        window.location.href = card.dataset.cardLink;
-      }
-    });
-
-    propertyGrid.addEventListener("keydown", function (event) {
-      if (event.key !== "Enter" && event.key !== " ") {
-        return;
-      }
-
-      if (event.target.closest("[data-favorite-toggle]")) {
-        return;
-      }
-
-      const card = event.target.closest("[data-card-link]");
-      if (card) {
-        event.preventDefault();
-        window.location.href = card.dataset.cardLink;
       }
     });
   }

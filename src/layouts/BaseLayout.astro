@@ -1,6 +1,7 @@
 ---
 import SiteHeader from "../components/global/SiteHeader.astro";
 import SiteFooter from "../components/global/SiteFooter.astro";
+import Breadcrumbs, { type BreadcrumbItem } from "../components/global/Breadcrumbs.astro";
 import { fontAwesomeHref, site } from "../data/site";
 import googleTagManagerScript from "../scripts/google-tag-manager.js?raw";
 import "../styles/tokens.css";
@@ -16,6 +17,8 @@ interface Props {
   robots?: string;
   activePage: string;
   disableReveal?: boolean;
+  /** Ruta de migas sin "Inicio" (se agrega solo). Vacío en el home para no mostrarla. */
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const {
@@ -27,7 +30,8 @@ const {
   canonicalPath,
   robots = "index, follow",
   activePage,
-  disableReveal = false
+  disableReveal = false,
+  breadcrumbs = []
 } = Astro.props;
 const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, site.baseUrl).toString();
 const ogImageUrl = new URL(ogImage, site.baseUrl).toString();
@@ -70,6 +74,7 @@ const ogImageUrl = new URL(ogImage, site.baseUrl).toString();
       ></iframe>
     </noscript>
     <SiteHeader activePage={activePage} />
+    {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
     <slot />
     <SiteFooter />
     <script>
