@@ -118,3 +118,20 @@ Definition of Done técnico:
 
 Actualizar `README.md` cuando cambien arquitectura, comandos, dependencias, variables de entorno, build, testing, despliegue o reglas operativas.
 
+## Sugerencia de commits
+
+- El agente solo sugiere el mensaje de commit. Nunca lo ejecuta; el commit lo hace el solicitante.
+- La sugerencia solo se incluye cuando en la respuesta se crearon, editaron o eliminaron archivos del proyecto. Si solo se leyó, consultó o explicó, no se sugiere commit.
+- El mensaje usa el formato `tipo: descripción`, con la descripción en español, breve y en minúscula inicial.
+- El tipo debe salir exclusivamente de este diccionario:
+
+| Tipo | Cuándo usarlo |
+| ---- | ------------- |
+| `feat` | Cuando se introduce una nueva funcionalidad visible. |
+| `fix` | Cuando se resuelve un error. |
+| `refactor` | Cuando se reestructura sin cambiar el comportamiento externo. |
+| `chore` | Cambios menores o sin impacto directo en el usuario. |
+| `docs` | Cambios en documentación. |
+| `style` | Cambios de formato o estilos sin lógica. |
+
+Ejemplo: `docs: agregar regla de commits sugeridos`.
