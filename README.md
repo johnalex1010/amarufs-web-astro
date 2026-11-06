@@ -16,7 +16,8 @@ El sitio Astro no depende de Strapi en producción. El flujo correcto es:
 2. Gestionar fotos en la Media Library de Strapi usando Cloudinary.
 3. Exportar inmuebles desde Strapi hacia `src/data/properties.ts`.
 4. Ejecutar `npm run build`.
-5. Desplegar el sitio estático en Vercel.
+5. Ejecutar `npm run images:warm` para pre-generar en Cloudinary las variantes de imagen.
+6. Desplegar el sitio estático en Vercel.
 
 Páginas activas:
 
@@ -118,8 +119,12 @@ npm run properties:pull
    npm run build
    npm run dev
    ```
-6. Revisar `/inmuebles/` y `/inmuebles/[slug]/`.
-7. Desplegar en Vercel.
+6. Pre-generar las imágenes en Cloudinary (después del build, cuando haya fotos nuevas):
+   ```bash
+   npm run images:warm
+   ```
+7. Revisar `/inmuebles/` y `/inmuebles/[slug]/`.
+8. Desplegar en Vercel.
 
 ## Estructura Principal
 
@@ -154,7 +159,7 @@ Campos:
 - `slug`: UID generado desde `titulo`.
 - `metaDescripcion`: descripción SEO. Reemplaza el resumen corto.
 - `estadoEditorial`: `borrador`, `en-validacion`, `publicado`, `reservado`, `vendido`, `arrendado`, `inactivo`.
-- `operacion`: `arriendo` o `venta`.
+- `operacion`: `arriendo`, `venta` o `venta-arriendo`. Con `venta-arriendo` la ficha y la tarjeta muestran ambos precios, el inmueble aparece en los filtros de Venta y de Arriendo, y el JSON-LD publica dos `Offer` (venta y arriendo). El precio principal (filtro de rango y barra móvil) es el canon.
 - `tipoInmueble`: lista cerrada inicial: `apartamento`, `casa`, `garaje`, `lote`.
 - `valorVenta`: valor de venta, solo números, sin signo pesos ni puntos.
 - `valorArriendo`: valor del canon, solo números, sin signo pesos ni puntos.
@@ -177,6 +182,8 @@ Campos:
 - Solo `estadoEditorial: "publicado"` aparece públicamente.
 - Para `operacion: "venta"` debe existir `valorVenta`.
 - Para `operacion: "arriendo"` debe existir `valorArriendo`.
+- Para `operacion: "venta-arriendo"` deben existir `valorVenta` y `valorArriendo`.
+- `tipoInmueble` acepta `apartaestudio` (filtro propio en `/inmuebles/`, JSON-LD `Apartment`).
 - Si `administracionIncluida` es `false`, debe existir `valorAdministracion`.
 - `valorTotalArriendo` se calcula como `valorArriendo + valorAdministracion`, o solo `valorArriendo` si la administración está incluida.
 - El precio siempre debe ser visible.
@@ -306,6 +313,8 @@ Los inmuebles incompletos no deben publicarse ni indexarse.
 - `addressLocality` / `addressRegion` desde `ubicacion` y `barrio`. Si `ubicacion` es un departamento (Cundinamarca, Meta), `barrio` debe ser el municipio.
 - Bloque "Otros inmuebles que te pueden interesar" y barra fija de contacto en móvil (IDs `inmueble-barra-movil-whatsapp` e `inmueble-barra-movil-llamar` para GTM).
 - Resumen autocontenido (tipo, ubicación, espacios, área y precio) bajo el H2 de características.
+- Optimización de imágenes de inmuebles: galería, tarjetas y relacionados usan `getCroppedImageUrl` (recorte 4:3 en Cloudinary con `c_fill,ar_4:3,g_auto,q_auto:eco`; miniaturas 1:1 de 240 px), porque esos contenedores ya recortan con `object-fit: cover`. El modal de zoom conserva la foto completa (`c_limit,w_1600`) y solo se descarga al abrirlo. `src/scripts/detalle-inmueble.js` precarga la foto anterior y la siguiente, y tras la carga inicial descarga el resto de la galería de a una foto (se omite con ahorro de datos o red 2G).
+- `npm run images:warm` (`scripts/warm-cloudinary-images.mjs`) recorre `dist/` y pide cada URL de Cloudinary como Chrome, Safari y Firefox para que la primera visita no espere la generación de la transformación (~1-2 s por foto). Solo hace GET a res.cloudinary.com; no usa credenciales.
 - Texto alternativo por foto: usa `alternativeText` o `caption` de la Media Library si es propio de la foto; si solo repite el título, genera "Tipo en operación en ubicación, foto N de M". Para SEO de imágenes, describir cada foto en Strapi (fachada, cocina, etc.).
 - Imágenes de Cloudinary con `f_auto,q_auto,c_limit,w_…`, `srcset` y `fetchpriority="high"` en la foto principal; imagen Open Graph recortada a 1200×630 en JPG.
 

@@ -7,7 +7,7 @@ export type EditorialStatus =
   | "arrendado"
   | "inactivo";
 
-export type PropertyOperation = "arriendo" | "venta";
+export type PropertyOperation = "arriendo" | "venta" | "venta-arriendo";
 
 export interface PropertyPhoto {
   src: string;
@@ -51,6 +51,145 @@ export interface Property {
 }
 
 export const fallbackProperties: Property[] = [
+  {
+    "title": "Apartaestudio en venta o arriendo en North Point Lift, Usaquén",
+    "seoTitle": "Apartaestudio en venta o arriendo en North Point Lift, Usaquén",
+    "slug": "apartaestudio-venta-arriendo-north-point-lift-usaquen",
+    "editorialStatus": "publicado",
+    "operation": "venta-arriendo",
+    "propertyType": "apartaestudio",
+    "saleValue": 300000000,
+    "rentBaseValue": 1900000,
+    "rentValue": 1900000,
+    "administrationIncluded": true,
+    "locationLabel": "Bogotá D.C.",
+    "neighborhoodLabel": "Usaquén",
+    "googleMapsEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.2232009887225!2d-74.0226733!3d4.7312509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f8f00098e343b%3A0xc8a5f10f427c246!2sNorth%20Point%20Lift!5e0!3m2!1ses-419!2sco!4v1794006858387!5m2!1ses-419!2sco\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
+    "description": "Apartaestudio en venta o arriendo en el conjunto North Point Lift, barrio Usaquén, Bogotá.\n\nTiene 30 m², una habitación, sala comedor, cocina integral y un baño. Está en el segundo piso, con vista exterior y buena entrada de luz natural por el ventanal. El edificio cuenta con ascensor y parqueadero comunal asignado por sorteo. Es estrato 4.\n\nLos acabados incluyen piso tipo madera, mueble de TV, clósets, escritorio empotrado y mesón de cocina en granito.\n\nEstá ubicado cerca de la Carrera 7 y de la Notaría 33.\n\n- **Venta:** $300.000.000 COP, negociables.\n- **Arriendo:** $1.900.000 COP mensuales, con administración incluida.",
+    "gallery": [
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007608/AAV_apto_bogota_nort_point/IMG_20261031_100913_493.jpg",
+        "alt": "Vista desde la entrada del apartaestudio con cocina, sala y ventanal exterior",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007609/AAV_apto_bogota_nort_point/IMG_20261031_100919_128.jpg",
+        "alt": "Cocina integral con mesón en granito y estufa eléctrica",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007610/AAV_apto_bogota_nort_point/IMG_20261031_100955_072.jpg",
+        "alt": "Sala con mueble de TV y ventanal con vista exterior",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007611/AAV_apto_bogota_nort_point/IMG_20261031_100944_958.jpg",
+        "alt": "Mueble de TV y clósets en la zona social",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007611/AAV_apto_bogota_nort_point/IMG_20261031_100939_087.jpg",
+        "alt": "Habitación con puerta plegable y clóset",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007612/AAV_apto_bogota_nort_point/IMG_20261031_101001_440.jpg",
+        "alt": "Clóset y puerta plegable de la habitación",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007613/AAV_apto_bogota_nort_point/IMG_20261031_101003_521.jpg",
+        "alt": "Zona social con mueble de TV y acceso a la habitación",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007614/AAV_apto_bogota_nort_point/IMG_20261031_100934_873.jpg",
+        "alt": "Escritorio empotrado en madera",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007615/AAV_apto_bogota_nort_point/IMG_20261031_100926_347.jpg",
+        "alt": "Baño con sanitario, lavamanos y espejo",
+        "width": 2976,
+        "height": 3968
+      },
+      {
+        "src": "https://res.cloudinary.com/domose0dj/image/upload/v1794007616/AAV_apto_bogota_nort_point/IMG_20261031_101012_718.jpg",
+        "alt": "Vista interior hacia la puerta de entrada del apartaestudio",
+        "width": 2976,
+        "height": 3968
+      }
+    ],
+    "features": [
+      {
+        "label": "1 Habitación",
+        "icon": "bed",
+        "filterValue": "1"
+      },
+      {
+        "label": "1 Sala comedor",
+        "icon": "couch",
+        "filterValue": "1"
+      },
+      {
+        "label": "1 Cocina",
+        "icon": "kitchen-set",
+        "filterValue": "1"
+      },
+      {
+        "label": "1 Baño",
+        "icon": "bath",
+        "filterValue": "1"
+      },
+      {
+        "label": "30 m² Área",
+        "icon": "ruler-combined",
+        "filterValue": "30 m²"
+      },
+      {
+        "label": "2 Piso",
+        "icon": "stairs",
+        "filterValue": "2"
+      },
+      {
+        "label": "4 Estrato",
+        "icon": "layer-group",
+        "filterValue": "4"
+      },
+      {
+        "label": "Sí Ascensor",
+        "icon": "elevator",
+        "filterValue": "Sí"
+      },
+      {
+        "label": "Exterior Vista",
+        "icon": "eye",
+        "filterValue": "Exterior"
+      },
+      {
+        "label": "Comunal por sorteo Parqueadero",
+        "icon": "square-parking",
+        "filterValue": "Comunal por sorteo"
+      }
+    ],
+    "nearbyZones": [
+      "Usaquén",
+      "Carrera 7",
+      "Notaría 33"
+    ],
+    "internalCode": "VAA_1019",
+    "metaDescription": "Apartaestudio de 30 m² en North Point Lift, Usaquén. Venta $300.000.000 negociables o arriendo $1.900.000 con administración incluida.",
+    "publishedAt": "2026-11-06T23:26:59.118Z",
+    "updatedAt": "2026-11-06T23:26:59.118Z"
+  },
   {
     "title": "Arriendo apartamento en Puertas del Sol 2",
     "seoTitle": "Arriendo apartamento en Puertas del Sol 2",

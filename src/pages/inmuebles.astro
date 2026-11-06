@@ -3,7 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
 import { getPublishedProperties } from "../lib/properties";
 import {
+  getListingOperationFilterText,
+  getPropertyPrices,
   formatCurrency,
+  getCroppedImageUrl,
   getListingLocationFilterText,
   getListingRoomsFilterText,
   getListingSearchText,
@@ -12,7 +15,6 @@ import {
   getImageSrcset,
   getOptimizedImageUrl,
   getPhotoAlt,
-  getPriceLabel,
   getPropertyHref,
   getPropertyLocationLabel,
   getPropertyPrice,
@@ -140,6 +142,7 @@ const faqJsonLd = {
               <legend>Tipo</legend>
               <label><input type="checkbox" value="all" data-filter="type" checked /> Todos</label>
               <label><input type="checkbox" value="apartamento" data-filter="type" /> Apartamento</label>
+              <label><input type="checkbox" value="apartaestudio" data-filter="type" /> Apartaestudio</label>
               <label><input type="checkbox" value="casa" data-filter="type" /> Casa</label>
               <label><input type="checkbox" value="lote" data-filter="type" /> Lote</label>
             </fieldset>
@@ -197,7 +200,7 @@ const faqJsonLd = {
                   class="property-card"
                   data-property-card
                   data-search={getListingSearchText(property)}
-                  data-operation={property.operation}
+                  data-operation={getListingOperationFilterText(property.operation)}
                   data-type={property.propertyType.toLowerCase()}
                   data-location={getListingLocationFilterText(property)}
                   data-rooms={getListingRoomsFilterText(property)}
@@ -205,12 +208,12 @@ const faqJsonLd = {
                 >
                   <figure class="property-card__media">
                     <img
-                      src={getOptimizedImageUrl(image.src, 640)}
-                      srcset={getImageSrcset(image.src, [400, 640, 960])}
+                      src={getCroppedImageUrl(image.src, 640)}
+                      srcset={getImageSrcset(image.src, [400, 640, 960], getCroppedImageUrl)}
                       sizes="(max-width: 760px) 100vw, 360px"
                       alt={getPhotoAlt(property, image, 0)}
-                      width={image.width ?? 2000}
-                      height={image.height ?? 1500}
+                      width="960"
+                      height="720"
                       loading="lazy"
                       decoding="async"
                     />
@@ -218,7 +221,7 @@ const faqJsonLd = {
                       <i class="fa-regular fa-heart" aria-hidden="true"></i>
                     </button>
                     <div class="property-card__meta">
-                      <span><i class={property.operation === "venta" ? "fa-solid fa-sign-hanging" : "fa-solid fa-door-open"} aria-hidden="true"></i> {getOperationLabel(property.operation)}</span>
+                      <span><i class={property.operation === "arriendo" ? "fa-solid fa-door-open" : "fa-solid fa-sign-hanging"} aria-hidden="true"></i> {getOperationLabel(property.operation)}</span>
                       <span><i class="fa-solid fa-building" aria-hidden="true"></i> {getPropertyTypeLabel(property.propertyType)}</span>
                     </div>
                     <span class="property-card__photos"><i class="fa-solid fa-camera" aria-hidden="true"></i> 1 / {property.gallery.length}</span>
@@ -232,13 +235,15 @@ const faqJsonLd = {
                       ))}
                     </div>
                     <div class="property-card__bottom">
-                      <div class="property-card__price">
-                        <span>{getPriceLabel(property.operation)}</span>
-                        <strong>{formatCurrency(price)}</strong>
-                        {property.operation === "arriendo" && property.administrationIncluded && (
-                          <small><i>con administración incluida*</i></small>
-                        )}
-                      </div>
+                      {getPropertyPrices(property).map((item) => (
+                        <div class="property-card__price">
+                          <span>{item.label}</span>
+                          <strong>{formatCurrency(item.value)}</strong>
+                          {item.kind === "arriendo" && property.administrationIncluded && (
+                            <small><i>con administración incluida*</i></small>
+                          )}
+                        </div>
+                      ))}
                     </div>
                     <span class="property-card__view" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver ficha del inmueble</span>
                   </div>

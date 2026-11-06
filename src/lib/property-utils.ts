@@ -15,6 +15,18 @@ export function formatCurrency(value?: number) {
   return `${formattedValue} COP`;
 }
 
+export function includesSale(operation: PropertyOperation) {
+  return operation === "venta" || operation === "venta-arriendo";
+}
+
+export function includesRent(operation: PropertyOperation) {
+  return operation === "arriendo" || operation === "venta-arriendo";
+}
+
+/**
+ * Precio principal del inmueble. En "venta-arriendo" se usa el canon, que es el
+ * valor comparable en filtros y tarjetas; el valor de venta se lee aparte.
+ */
 export function getPropertyPrice(property: Property) {
   return property.operation === "venta" ? property.saleValue : property.rentValue;
 }
@@ -24,7 +36,30 @@ export function getPriceLabel(operation: PropertyOperation) {
 }
 
 export function getOperationLabel(operation: PropertyOperation) {
+  if (operation === "venta-arriendo") return "Venta o arriendo";
   return operation === "venta" ? "Venta" : "Arriendo";
+}
+
+/**
+ * Precios visibles según la operación: uno para venta o arriendo, dos para venta-arriendo.
+ */
+export function getPropertyPrices(property: Property) {
+  const prices: { kind: "venta" | "arriendo"; label: string; value: number }[] = [];
+
+  if (includesSale(property.operation) && property.saleValue) {
+    prices.push({ kind: "venta", label: "Valor venta", value: property.saleValue });
+  }
+
+  if (includesRent(property.operation) && property.rentValue) {
+    prices.push({ kind: "arriendo", label: "Canon de arrendamiento", value: property.rentValue });
+  }
+
+  return prices;
+}
+
+/** Valor para data-operation en el listado: "venta-arriendo" coincide con ambos filtros. */
+export function getListingOperationFilterText(operation: PropertyOperation) {
+  return operation === "venta-arriendo" ? "venta arriendo" : operation;
 }
 
 export function getPropertyTypeLabel(propertyType: string) {
@@ -106,8 +141,21 @@ export function getOptimizedImageUrl(src: string, width: number, extra = "") {
   }
 }
 
-export function getImageSrcset(src: string, widths: number[]) {
-  const candidates = widths.map((width) => ({ width, url: getOptimizedImageUrl(src, width) }));
+/**
+ * Recorte 4:3 hecho por Cloudinary (g_auto elige el encuadre) con calidad "eco".
+ * Coincide con los contenedores 4:3 de galería, tarjetas y relacionados, así no se
+ * descargan píxeles que object-fit: cover iba a ocultar.
+ */
+export function getCroppedImageUrl(src: string, width: number, aspectRatio = "4:3") {
+  return getOptimizedImageUrl(src, width, `f_auto,q_auto:eco,c_fill,ar_${aspectRatio},g_auto,w_${Math.round(width)}`);
+}
+
+export function getImageSrcset(
+  src: string,
+  widths: number[],
+  buildUrl: (src: string, width: number) => string = getOptimizedImageUrl
+) {
+  const candidates = widths.map((width) => ({ width, url: buildUrl(src, width) }));
 
   if (candidates.every((candidate) => candidate.url === src)) {
     return undefined;
@@ -137,7 +185,7 @@ export function getPropertyPlaceLabel(property: Property) {
 
 export function getPropertyHeading(property: Property) {
   const typeLabel = getPropertyTypeLabel(property.propertyType);
-  return `${typeLabel} en ${property.operation === "venta" ? "venta" : "arriendo"} en ${getPropertyPlaceLabel(property)}`;
+  return `${typeLabel} en ${getOperationLabel(property.operation).toLowerCase()} en ${getPropertyPlaceLabel(property)}`;
 }
 
 /**
@@ -195,10 +243,13 @@ export function getPropertyAnswerSummary(property: Property) {
   const detailsText = details.length
     ? `, con ${details.length > 1 ? `${details.slice(0, -1).join(", ")} y ${details.at(-1)}` : details[0]}`
     : "";
-  const price = formatCurrency(getPropertyPrice(property));
-  const priceText = property.operation === "venta"
-    ? `Valor de venta: ${price}.`
-    : `Canon mensual: ${price}${property.administrationIncluded ? ", administración incluida" : ""}.`;
+  const priceText = getPropertyPrices(property)
+    .map((item) =>
+      item.kind === "venta"
+        ? `Valor de venta: ${formatCurrency(item.value)}.`
+        : `Canon mensual: ${formatCurrency(item.value)}${property.administrationIncluded ? ", administración incluida" : ""}.`
+    )
+    .join(" ");
 
   return `${getPropertyHeading(property)}${detailsText}. ${priceText}`;
 }
@@ -270,7 +321,11 @@ export function getPropertyPostalAddress(property: Property) {
 export function getRelatedProperties(property: Property, properties: Property[], limit = 3) {
   const others = properties.filter((item) => item.slug !== property.slug);
   const score = (item: Property) =>
-    (item.operation === property.operation ? 2 : 0) +
+    (item.operation === property.operation ||
+    (includesSale(item.operation) && includesSale(property.operation)) ||
+    (includesRent(item.operation) && includesRent(property.operation))
+      ? 2
+      : 0) +
     (normalizeFilterText(item.locationLabel) === normalizeFilterText(property.locationLabel) ? 1 : 0) +
     (item.propertyType === property.propertyType ? 1 : 0);
 
@@ -358,7 +413,7 @@ export function getYoutubeEmbedSrc(value?: string) {
 export function getListingSearchText(property: Property) {
   return [
     property.title,
-    property.operation,
+    getOperationLabel(property.operation),
     property.propertyType,
     property.locationLabel,
     property.neighborhoodLabel,

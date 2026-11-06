@@ -14,6 +14,99 @@
   const galleryModalNext = document.querySelector("[data-modal-next]");
   const galleryClose = document.querySelector("[data-gallery-close]");
   let currentGalleryIndex = 0;
+  const preloadedSlides = new Set();
+
+  function isGalleryModalOpen() {
+    return Boolean(galleryModal && !galleryModal.hidden);
+  }
+
+  // Descarga en segundo plano una foto vecina para que el cambio de slide sea inmediato.
+  function preloadSlide(index, forModal) {
+    if (!galleryThumbs.length) {
+      return;
+    }
+
+    const slideIndex = (index + galleryThumbs.length) % galleryThumbs.length;
+    const key = `${forModal ? "modal" : "main"}-${slideIndex}`;
+    const thumb = galleryThumbs[slideIndex];
+
+    if (!thumb || preloadedSlides.has(key)) {
+      return;
+    }
+
+    preloadedSlides.add(key);
+    const image = new Image();
+    image.decoding = "async";
+
+    if (forModal) {
+      image.src = thumb.dataset.galleryModalSrc || thumb.dataset.gallerySrc || "";
+      return image;
+    }
+
+    if (thumb.dataset.gallerySrcset && galleryMain) {
+      image.sizes = galleryMain.getAttribute("sizes") || "";
+      image.srcset = thumb.dataset.gallerySrcset;
+    }
+
+    image.src = thumb.dataset.gallerySrc || "";
+    return image;
+  }
+
+  // Tras la carga inicial, descarga el resto de la galería de a una foto (son ~30-60 KB
+  // cada una) para que cualquier slide se vea al instante. Respeta el ahorro de datos.
+  function preloadWholeGallery() {
+    const connection = navigator.connection;
+
+    if (connection && (connection.saveData || /2g/.test(connection.effectiveType || ""))) {
+      return;
+    }
+
+    let nextIndex = 0;
+
+    function loadNext() {
+      while (nextIndex < galleryThumbs.length && preloadedSlides.has(`main-${nextIndex}`)) {
+        nextIndex += 1;
+      }
+
+      if (nextIndex >= galleryThumbs.length) {
+        return;
+      }
+
+      const image = preloadSlide(nextIndex, false);
+      nextIndex += 1;
+
+      if (image) {
+        image.addEventListener("load", loadNext, { once: true });
+        image.addEventListener("error", loadNext, { once: true });
+      } else {
+        loadNext();
+      }
+    }
+
+    loadNext();
+  }
+
+  function preloadNeighbors() {
+    const forModal = isGalleryModalOpen();
+    preloadSlide(currentGalleryIndex + 1, forModal);
+    preloadSlide(currentGalleryIndex - 1, forModal);
+  }
+
+  function syncModalImage() {
+    const activeThumb = galleryThumbs[currentGalleryIndex];
+
+    if (!galleryModalImage || !activeThumb) {
+      return;
+    }
+
+    const modalSrc = activeThumb.dataset.galleryModalSrc || activeThumb.dataset.gallerySrc;
+
+    if (modalSrc && galleryModalImage.getAttribute("src") !== modalSrc) {
+      galleryModalImage.src = modalSrc;
+    }
+
+    galleryModalImage.alt = activeThumb.dataset.galleryAlt || "";
+  }
 
   function setGalleryOpen(isOpen) {
     if (!galleryModal) {
@@ -22,6 +115,11 @@
 
     galleryModal.hidden = !isOpen;
     body.classList.toggle("modal-open", isOpen);
+
+    if (isOpen) {
+      syncModalImage();
+      preloadNeighbors();
+    }
 
     if (isOpen) {
       galleryClose?.focus({ preventScroll: true });
@@ -39,20 +137,21 @@
     const activeThumb = galleryThumbs[currentGalleryIndex];
     const src = activeThumb.dataset.gallerySrc;
     const srcset = activeThumb.dataset.gallerySrcset;
-    const modalSrc = activeThumb.dataset.galleryModalSrc || src;
     const alt = activeThumb.dataset.galleryAlt;
 
-    if (srcset) {
-      galleryMain.srcset = srcset;
-    } else {
-      galleryMain.removeAttribute("srcset");
+    if (galleryMain.getAttribute("src") !== src) {
+      if (srcset) {
+        galleryMain.srcset = srcset;
+      } else {
+        galleryMain.removeAttribute("srcset");
+      }
+      galleryMain.src = src;
     }
-    galleryMain.src = src;
     galleryMain.alt = alt;
 
-    if (galleryModalImage) {
-      galleryModalImage.src = modalSrc;
-      galleryModalImage.alt = alt;
+    // La imagen grande del modal solo se descarga cuando el modal está abierto.
+    if (isGalleryModalOpen()) {
+      syncModalImage();
     }
 
     if (galleryModalCount) {
@@ -68,6 +167,10 @@
       thumb.classList.toggle("is-active", isActive);
       thumb.setAttribute("aria-current", isActive ? "true" : "false");
     });
+
+    if (preloadedSlides.size || document.readyState === "complete") {
+      preloadNeighbors();
+    }
   }
 
   if (galleryOpen) {
@@ -144,5 +247,29 @@
   });
 
   setActiveGalleryImage(0);
+
+  // Precarga vecinos solo después de la carga inicial para no competir con la foto principal.
+  function preloadAfterLoad() {
+    preloadedSlides.add(`main-${currentGalleryIndex}`);
+    preloadNeighbors();
+
+    const schedule = window.requestIdleCallback || function (callback) {
+      return window.setTimeout(callback, 300);
+    };
+
+    schedule(preloadWholeGallery);
+  }
+
+  if (document.readyState === "complete") {
+    preloadAfterLoad();
+  } else {
+    window.addEventListener("load", preloadAfterLoad, { once: true });
+  }
+
+  galleryThumbs.forEach(function (thumb, thumbIndex) {
+    thumb.addEventListener("pointerenter", function () {
+      preloadSlide(thumbIndex, false);
+    }, { once: true });
+  });
 
 })();

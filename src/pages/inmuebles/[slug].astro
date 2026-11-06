@@ -6,6 +6,7 @@ import { getPublishedProperties, getPublishedPropertyBySlug } from "../../lib/pr
 import {
   extractGoogleMapsSrc,
   formatCurrency,
+  getCroppedImageUrl,
   getFeatureIconClass,
   getImageSrcset,
   getMapCoordinates,
@@ -16,6 +17,9 @@ import {
   getPropertyAnswerSummary,
   getPropertyFacts,
   getPropertyHeading,
+  getPropertyPrices,
+  includesRent,
+  includesSale,
   getPropertyHref,
   getPropertyLocationLabel,
   getPropertyPlaceLabel,
@@ -52,7 +56,10 @@ const descriptionHtml = renderRichText(property.description);
 const mapsSrc = extractGoogleMapsSrc(property.googleMapsEmbed);
 const youtubeSrc = getYoutubeEmbedSrc(property.youtubeShortUrl);
 const whatsappHref = getPropertyWhatsappHref(property);
-const isRent = property.operation === "arriendo";
+const isRent = includesRent(property.operation);
+const isSale = includesSale(property.operation);
+const isDual = isRent && isSale;
+const prices = getPropertyPrices(property);
 const operationLabel = getOperationLabel(property.operation);
 const priceLabel = getPriceLabel(property.operation);
 const getGalleryImageAlt = (index: number) => getPhotoAlt(property, property.gallery[index], index);
@@ -61,9 +68,9 @@ const gallerySizes = "(max-width: 1180px) 100vw, 66vw";
 const galleryImages = property.gallery.map((photo, index) => ({
   ...photo,
   alt: getGalleryImageAlt(index),
-  mainSrc: getOptimizedImageUrl(photo.src, 1080),
-  srcset: getImageSrcset(photo.src, galleryWidths),
-  thumbSrc: getOptimizedImageUrl(photo.src, 440),
+  mainSrc: getCroppedImageUrl(photo.src, 1080),
+  srcset: getImageSrcset(photo.src, galleryWidths, getCroppedImageUrl),
+  thumbSrc: getCroppedImageUrl(photo.src, 240, "1:1"),
   modalSrc: getOptimizedImageUrl(photo.src, 1600)
 }));
 const mainImage = galleryImages[0];
@@ -76,7 +83,9 @@ const featuresTitle = `Características ${typeArticle} ${propertyTypeLabel.toLow
 const relatedProperties = getRelatedProperties(property, allProperties);
 const facts = getPropertyFacts(property);
 const coordinates = getMapCoordinates(mapsSrc);
-const processTitle = isRent
+const processTitle = isDual
+  ? "Cómo avanzar si quieres tomar en arriendo o comprar este inmueble"
+  : isRent
   ? "Cómo avanzar si quieres tomar en arriendo este inmueble"
   : "Cómo avanzar si quieres comprar este inmueble";
 const processSteps = isRent
@@ -168,12 +177,40 @@ const faqItems = [
 ];
 const schemaTypeByProperty: Record<string, string> = {
   apartamento: "Apartment",
+  apartaestudio: "Apartment",
   casa: "SingleFamilyResidence",
   lote: "Place"
 };
 const residenceType = schemaTypeByProperty[property.propertyType.toLowerCase()] ?? "Accommodation";
 const isAccommodation = residenceType !== "Place";
 const organizationId = `${site.baseUrl}#organizacion`;
+const offerNodes = prices.map((item) => {
+  const isRentOffer = item.kind === "arriendo";
+
+  return {
+    "@type": "Offer",
+    "@id": `${propertyUrl}#oferta${isDual ? `-${item.kind}` : ""}`,
+    url: propertyUrl,
+    price: item.value,
+    priceCurrency: "COP",
+    availability: "https://schema.org/InStock",
+    businessFunction: isRentOffer ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
+    ...(isRentOffer
+      ? {
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: item.value,
+            priceCurrency: "COP",
+            unitCode: "MON",
+            unitText: "mes",
+            ...(property.administrationIncluded ? { description: "Administración incluida" } : {})
+          }
+        }
+      : {}),
+    itemOffered: { "@id": `${propertyUrl}#inmueble` },
+    offeredBy: { "@id": organizationId }
+  };
+});
 const detailJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -188,7 +225,7 @@ const detailJsonLd = {
       ...(property.publishedAt ? { datePosted: property.publishedAt } : {}),
       ...(property.updatedAt ? { dateModified: property.updatedAt } : {}),
       about: { "@id": `${propertyUrl}#inmueble` },
-      mainEntity: { "@id": `${propertyUrl}#oferta` },
+      mainEntity: offerNodes.length === 1 ? { "@id": offerNodes[0]["@id"] } : offerNodes.map((offer) => ({ "@id": offer["@id"] })),
       breadcrumb: { "@id": `${propertyUrl}#migas` },
       ...(property.internalCode ? { identifier: property.internalCode } : {})
     },
@@ -209,29 +246,7 @@ const detailJsonLd = {
       ...(isAccommodation && facts.bedrooms ? { numberOfBedrooms: facts.bedrooms } : {}),
       ...(isAccommodation && facts.bathrooms ? { numberOfBathroomsTotal: facts.bathrooms } : {})
     },
-    {
-      "@type": "Offer",
-      "@id": `${propertyUrl}#oferta`,
-      url: propertyUrl,
-      price,
-      priceCurrency: "COP",
-      availability: "https://schema.org/InStock",
-      businessFunction: isRent ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
-      ...(isRent
-        ? {
-            priceSpecification: {
-              "@type": "UnitPriceSpecification",
-              price,
-              priceCurrency: "COP",
-              unitCode: "MON",
-              unitText: "mes",
-              ...(property.administrationIncluded ? { description: "Administración incluida" } : {})
-            }
-          }
-        : {}),
-      itemOffered: { "@id": `${propertyUrl}#inmueble` },
-      offeredBy: { "@id": organizationId }
-    },
+    ...offerNodes,
     {
       "@type": "RealEstateAgent",
       "@id": organizationId,
@@ -281,8 +296,8 @@ const faqJsonLd = {
             srcset={mainImage.srcset}
             sizes={mainImage.srcset ? gallerySizes : undefined}
             alt={mainImage.alt}
-            width={mainImage.width ?? 2000}
-            height={mainImage.height ?? 1500}
+            width="1440"
+            height="1080"
             fetchpriority="high"
             decoding="async"
             data-gallery-main
@@ -317,7 +332,7 @@ const faqJsonLd = {
                     data-gallery-modal-src={photo.modalSrc}
                     data-gallery-alt={imageAlt}
                   >
-                    <img src={photo.thumbSrc} alt="" width="220" height="165" loading="lazy" decoding="async" />
+                    <img src={photo.thumbSrc} alt="" width="120" height="120" loading="lazy" decoding="async" />
                   </button>
                 );
               })
@@ -348,10 +363,12 @@ const faqJsonLd = {
           <dt>Tipo</dt>
           <dd>{propertyTypeLabel} en {operationLabel.toLowerCase()}</dd>
         </div>
-        <div>
-          <dt>{priceLabel}</dt>
-          <dd>{formattedPrice}</dd>
-        </div>
+        {prices.map((item) => (
+          <div>
+            <dt>{item.label}</dt>
+            <dd>{formatCurrency(item.value)}{item.kind === "arriendo" && property.administrationIncluded ? " (administración incluida)" : ""}</dd>
+          </div>
+        ))}
       </dl>
       <div class="summary-actions">
         <a id="inmueble-consultar-disponibilidad" class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
@@ -476,7 +493,7 @@ const faqJsonLd = {
         <article>
           <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
           <h3>Proceso responsable</h3>
-          <p>{isRent ? "En arriendo, la aseguradora realiza el estudio de viabilidad del interesado y su deudor." : "En venta, las condiciones se validan con las partes antes de avanzar con documentos o visitas."}</p>
+          <p>{isDual ? "En arriendo, la aseguradora realiza el estudio de viabilidad del interesado y su deudor. En venta, las condiciones se validan con las partes antes de avanzar con documentos o visitas." : isRent ? "En arriendo, la aseguradora realiza el estudio de viabilidad del interesado y su deudor." : "En venta, las condiciones se validan con las partes antes de avanzar con documentos o visitas."}</p>
         </article>
       </div>
     </section>
@@ -485,7 +502,7 @@ const faqJsonLd = {
       <div>
         <p class="eyebrow">Siguiente paso</p>
         <h2 id="closing-title">¿Te interesa este inmueble?</h2>
-        <p>Escríbenos y te indicamos el siguiente paso para {isRent ? "tomarlo en arriendo" : "visitarlo y presentar tu oferta"}.</p>
+        <p>Escríbenos y te indicamos el siguiente paso para {isDual ? "tomarlo en arriendo o presentar tu oferta de compra" : isRent ? "tomarlo en arriendo" : "visitarlo y presentar tu oferta"}.</p>
       </div>
       <a id="inmueble-consultar-por-whatsapp" class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
     </section>
@@ -522,7 +539,7 @@ const faqJsonLd = {
           {relatedProperties.map((item) => (
             <li class="related-card">
               <img
-                src={getOptimizedImageUrl(item.gallery[0].src, 480)}
+                src={getCroppedImageUrl(item.gallery[0].src, 480)}
                 alt=""
                 width="480"
                 height="360"
@@ -583,7 +600,7 @@ const faqJsonLd = {
       <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
     <figure class="gallery-modal__stage">
-      <img src={mainImage.modalSrc} alt={mainImage.alt} decoding="async" data-gallery-modal-image />
+      <img data-src={mainImage.modalSrc} alt={mainImage.alt} decoding="async" data-gallery-modal-image />
       <figcaption data-modal-count>1 / {property.gallery.length}</figcaption>
     </figure>
     <button class="gallery-modal__arrow gallery-modal__arrow--next" type="button" aria-label="Ver foto siguiente" data-modal-next>

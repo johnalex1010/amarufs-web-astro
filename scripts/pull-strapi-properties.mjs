@@ -162,6 +162,7 @@ function validateProperty(property) {
   const errors = [];
   const price = property.operation === "venta" ? property.saleValue : property.rentValue;
 
+  if (property.operation === "venta-arriendo" && !(Number(property.saleValue) > 0)) errors.push("valor de venta");
   if (!property.title) errors.push("título");
   if (!property.seoTitle) errors.push("título SEO");
   if (!property.slug) errors.push("slug");
@@ -188,7 +189,7 @@ function renderPropertiesFile(properties) {
   | "arrendado"
   | "inactivo";
 
-export type PropertyOperation = "arriendo" | "venta";
+export type PropertyOperation = "arriendo" | "venta" | "venta-arriendo";
 
 export interface PropertyPhoto {
   src: string;
