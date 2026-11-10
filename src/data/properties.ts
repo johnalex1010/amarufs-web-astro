@@ -185,6 +185,7 @@ export const fallbackProperties: Property[] = [
       "Carrera 7",
       "Notaría 33"
     ],
+    "youtubeShortUrl": "https://youtube.com/shorts/TlZAvz_b-YQ",
     "internalCode": "VAA_1019",
     "metaDescription": "Apartaestudio de 30 m² en North Point Lift, Usaquén. Venta $300.000.000 negociables o arriendo $1.900.000 con administración incluida.",
     "publishedAt": "2026-11-06T23:26:59.118Z",
