@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ClosingCta from "../components/sections/ClosingCta.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
@@ -261,14 +262,14 @@ const collectionJsonLd = {
         <p>El inventario visible puede ser limitado. Amaru FS Inmobiliaria trabaja con propiedades reales y datos verificados, por eso solo mostramos inmuebles cuando la información está lista para consulta.</p>
       </div>
     </section>
-    <section class="referrals section-pad" aria-labelledby="owners-title">
-      <div>
-        <p class="eyebrow">Bloque para propietarios</p>
-        <h2 id="owners-title">¿Tienes un inmueble para vender o arrendar?</h2>
-        <p>Amaru FS Inmobiliaria valida tu inmueble, registra fotos y videos, verifica la ficha técnica y publica después del contrato con el propietario.</p>
-      </div>
+    <ClosingCta
+      eyebrow="Bloque para propietarios"
+      title="¿Tienes un inmueble para vender o arrendar?"
+      text="Amaru FS Inmobiliaria valida tu inmueble, registra fotos y videos, verifica la ficha técnica y publica después del contrato con el propietario."
+      titleId="owners-title"
+    >
       <Button variant="secondary" icon="fa-solid fa-key" id="inmuebles-publicar-iniciar" href="/propietarios/">Iniciar validación de mi inmueble</Button>
-    </section>
+    </ClosingCta>
 
     <FaqSection title="Preguntas frecuentes sobre inmuebles disponibles" items={faqItems} />
   </main>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ClosingCta from "../components/sections/ClosingCta.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
@@ -196,15 +197,12 @@ const faqItems: FaqItem[] = [
       </div>
     </section>
 
-    <section class="closing section-pad" aria-labelledby="closing-title">
-      <div>
-        <p class="eyebrow">Siguiente paso</p>
-        <h2 id="closing-title">¿Tienes un inmueble para vender o arrendar?</h2>
-        <p>Cuéntanos qué tipo de inmueble tienes, dónde está ubicado y cuál es tu objetivo. Revisamos tu caso y te
-          indicamos el siguiente paso.</p>
-      </div>
+    <ClosingCta
+      title="¿Tienes un inmueble para vender o arrendar?"
+      text="Cuéntanos qué tipo de inmueble tienes, dónde está ubicado y cuál es tu objetivo. Revisamos tu caso y te indicamos el siguiente paso."
+    >
       <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-iniciar-validacion" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20la%20validaci%C3%B3n%20de%20mi%20inmueble." external>Iniciar validación por WhatsApp</Button>
-    </section>
+    </ClosingCta>
 
     <FaqSection title="Preguntas frecuentes de propietarios" items={faqItems} />
   </main>

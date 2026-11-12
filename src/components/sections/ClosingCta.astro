@@ -1,0 +1,33 @@
+---
+/**
+ * Bloque de cierre de página: eyebrow + H2 + texto + una acción (docs/GUIA-UI-UX.md §7.13).
+ * Uno por página, al final del <main>. La acción va en el slot por defecto (un <Button>).
+ *
+ * <ClosingCta title="¿Quieres vender tu inmueble?" text="Cuéntanos...">
+ *   <Button variant="secondary" ...>Iniciar venta por WhatsApp</Button>
+ * </ClosingCta>
+ */
+import "../../styles/components/closing-cta.css";
+
+interface Props {
+  title: string;
+  text: string;
+  eyebrow?: string;
+  titleId?: string;
+  /** "card" = tarjeta blanca con borde · "flat" = sin borde (dentro de una banda de color). */
+  variant?: "card" | "flat";
+  /** Clases extra para la <section> (p. ej. bandas de la ficha). */
+  class?: string;
+}
+
+const { title, text, eyebrow = "Siguiente paso", titleId = "closing-title", variant = "card", class: className } = Astro.props;
+---
+
+<section class:list={["closing", "section-pad", variant === "flat" && "closing--flat", className]} aria-labelledby={titleId}>
+  <div class="closing__content">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 id={titleId}>{title}</h2>
+    <p class="closing__text">{text}</p>
+  </div>
+  <slot />
+</section>

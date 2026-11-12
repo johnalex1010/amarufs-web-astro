@@ -372,7 +372,7 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 | `ProcessPhases` | `sections/` | `.process-phase` (3 páginas) | `phases: { label, title, steps }[]` (usa `Timeline`) |
 | `InfoBox` | `sections/` | `.trust__box`, `.transparency__box` (6 páginas) | `eyebrow`, `title`, `titleId`, slot |
 | `ChecklistGroup` | `sections/` | `.checklist-group` (3 páginas) | `number`, `icon`, `title`, `description`, `items` |
-| `ClosingCta` | `sections/` | `.closing` (6 páginas) | `eyebrow`, `title`, `text`, `action` |
+| `ClosingCta` ✅ | `sections/` | `.closing` (5 páginas) y `.referrals` de `/inmuebles/` | `title`, `text`, `eyebrow?`, `titleId?`, `variant?` (`card` · `flat`), `class?`, slot con el botón (ver §7.13) |
 | `CommissionSummary` | `sections/` | `.commission-summary` (2 páginas) | datos de comisión |
 | `PropertyCard` | `property/` | `.property-card` y `.related-card` (variante `compact`) | `property`, `variant`, `headingLevel?` |
 | `PropertyFeatures` | `property/` | `.property-features` | `features`, `max?` |
@@ -571,8 +571,28 @@ const faqItems: FaqItem[] = [
 
 ### 7.13 Bloque de cierre (CTA final)
 
-- Fondo `--color-primary`, H2 blanco, párrafo `rgba(255,255,255,0.86)`, botón `secondary`.
-- Uno por página, al final del `main`.
+**Componente:** `src/components/sections/ClosingCta.astro` · **CSS:** `src/styles/components/closing-cta.css`.
+
+```astro
+---
+import ClosingCta from "../components/sections/ClosingCta.astro";
+import Button from "../components/ui/Button.astro";
+---
+<ClosingCta
+  title="¿Quieres vender tu inmueble?"
+  text="Cuéntanos dónde está ubicado, qué tipo de inmueble es y cuál es tu expectativa de venta."
+>
+  <Button variant="secondary" icon="fa-brands fa-whatsapp" id="pagina-cierre" href={whatsappHref} external>Iniciar venta por WhatsApp</Button>
+</ClosingCta>
+
+<!-- Dentro de una banda de color (ficha de inmueble): sin borde -->
+<ClosingCta title="¿Te interesa este inmueble?" text="..." variant="flat" class="section-band section-band--white">...</ClosingCta>
+```
+
+- Tarjeta blanca (`--color-white`, borde `--color-line`, `--radius`, padding 42 px / 26 px en móvil) con texto a la izquierda (máx. 820 px) y **un solo** botón `secondary` a la derecha; en ≤ 760 px se apila en columna.
+- Eyebrow por defecto "Siguiente paso"; `titleId` por defecto `closing-title` (cambiarlo si la página ya usa ese id). Texto en `--color-muted`.
+- El botón no se encoge: la etiqueta no se parte en dos líneas en escritorio.
+- Uno por página, normalmente al final del `main`, con la acción que más le sirve al visitante en ese punto.
 
 ### 7.14 Footer
 

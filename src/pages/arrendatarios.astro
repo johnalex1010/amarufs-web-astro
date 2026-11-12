@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ClosingCta from "../components/sections/ClosingCta.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
@@ -196,14 +197,12 @@ const faqItems: FaqItem[] = [
       </div>
     </section>
 
-    <section class="closing section-pad" aria-labelledby="closing-title">
-      <div>
-        <p class="eyebrow">Siguiente paso</p>
-        <h2 id="closing-title">¿Ya viste un inmueble que te interesa?</h2>
-        <p>Escríbenos por WhatsApp con el nombre o enlace del inmueble. Confirmamos información disponible, te compartimos requisitos y te indicamos el paso siguiente para avanzar con aseguradora.</p>
-      </div>
+    <ClosingCta
+      title="¿Ya viste un inmueble que te interesa?"
+      text="Escríbenos por WhatsApp con el nombre o enlace del inmueble. Confirmamos información disponible, te compartimos requisitos y te indicamos el paso siguiente para avanzar con aseguradora."
+    >
       <Button variant="secondary" icon="fa-solid fa-building" id="arrendatarios-ver-inmuebles-iniciar" href="/inmuebles/">Ver inmuebles disponibles</Button>
-    </section>
+    </ClosingCta>
 
     <FaqSection title="Preguntas frecuentes de arrendatarios" items={faqItems} />
 

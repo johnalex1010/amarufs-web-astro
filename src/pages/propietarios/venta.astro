@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ClosingCta from "../../components/sections/ClosingCta.astro";
 import PageHero from "../../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
@@ -271,14 +272,12 @@ const faqItems: FaqItem[] = [
       </div>
     </section>
 
-    <section class="closing section-pad" aria-labelledby="closing-title">
-      <div>
-        <p class="eyebrow">Siguiente paso</p>
-        <h2 id="closing-title">¿Quieres vender tu inmueble?</h2>
-        <p>Cuéntanos dónde está ubicado, qué tipo de inmueble es y cuál es tu expectativa de venta. Revisamos el caso y te indicamos el siguiente paso.</p>
-      </div>
+    <ClosingCta
+      title="¿Quieres vender tu inmueble?"
+      text="Cuéntanos dónde está ubicado, qué tipo de inmueble es y cuál es tu expectativa de venta. Revisamos el caso y te indicamos el siguiente paso."
+    >
       <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-venta-iniciar" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20la%20venta%20de%20mi%20inmueble." external>Iniciar venta por WhatsApp</Button>
-    </section>
+    </ClosingCta>
 
     <FaqSection title="Preguntas frecuentes sobre venta de inmuebles" items={faqItems} />
   </main>

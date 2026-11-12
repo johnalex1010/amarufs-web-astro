@@ -287,7 +287,7 @@
   updateResults();
 
   const animatedItems = Array.from(document.querySelectorAll(
-    ".hero__content, .hero__panel, .section-heading, .empty-state, .trust__box, .referrals, .faq-item"
+    ".hero__content, .hero__panel, .section-heading, .empty-state, .trust__box, .closing, .faq-item"
   )).filter(function (item) {
     return !item.closest(".filters-sidebar");
   });

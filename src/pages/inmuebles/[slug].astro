@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ClosingCta from "../../components/sections/ClosingCta.astro";
 import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
@@ -474,14 +475,14 @@ const detailJsonLd = {
       </div>
     </section>
 
-    <section class="closing section-pad section-band section-band--white" aria-labelledby="closing-title">
-      <div>
-        <p class="eyebrow">Siguiente paso</p>
-        <h2 id="closing-title">¿Te interesa este inmueble?</h2>
-        <p>Escríbenos y te indicamos el siguiente paso para {isDual ? "tomarlo en arriendo o presentar tu oferta de compra" : isRent ? "tomarlo en arriendo" : "visitarlo y presentar tu oferta"}.</p>
-      </div>
+    <ClosingCta
+      title="¿Te interesa este inmueble?"
+      text={`Escríbenos y te indicamos el siguiente paso para ${isDual ? "tomarlo en arriendo o presentar tu oferta de compra" : isRent ? "tomarlo en arriendo" : "visitarlo y presentar tu oferta"}.`}
+      variant="flat"
+      class="section-band section-band--white"
+    >
       <Button variant="secondary" icon="fa-brands fa-whatsapp" id="inmueble-consultar-por-whatsapp" href={whatsappHref} external>Consultar por WhatsApp</Button>
-    </section>
+    </ClosingCta>
 
     <FaqSection title="Preguntas frecuentes sobre este inmueble" items={faqItems} class="section-band section-band--gray" />
 

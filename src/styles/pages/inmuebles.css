@@ -888,25 +888,6 @@
 	color: rgba(255, 255, 255, 0.82);
 }
 
-.referrals.section-pad {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 30px;
-	padding: 42px;
-	background: var(--color-white);
-	border: 1px solid var(--color-line);
-	border-radius: var(--radius);
-}
-
-.referrals div {
-	max-width: 760px;
-}
-
-.referrals p:last-child {
-	color: var(--color-muted);
-}
-
 .reveal {
 	opacity: 0;
 	transform: translateY(22px);
@@ -1131,8 +1112,7 @@
 
 	.properties__content,
 	.search-panel,
-	.trust__box,
-	.referrals.section-pad {
+	.trust__box {
 		padding: 26px;
 	}
 
@@ -1141,8 +1121,7 @@
 	}
 
 	.filter-actions,
-	.results__head,
-	.referrals.section-pad {
+	.results__head {
 		flex-direction: column;
 		align-items: stretch;
 		max-width: 100%;

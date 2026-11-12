@@ -461,25 +461,6 @@
 	color: rgba(255, 255, 255, 0.82);
 }
 
-.closing.section-pad {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 30px;
-	padding: 42px;
-	background: var(--color-white);
-	border: 1px solid var(--color-line);
-	border-radius: var(--radius);
-}
-
-.closing div {
-	max-width: 820px;
-}
-
-.closing p:last-child {
-	color: var(--color-muted);
-}
-
 .reveal {
 	opacity: 0;
 	transform: translateY(22px);
@@ -564,8 +545,7 @@
 	.service-card,
 	.checklist-group,
 	.commission-summary,
-	.transparency__box,
-	.closing.section-pad {
+	.transparency__box {
 		padding: 26px;
 	}
 
@@ -575,12 +555,6 @@
 
 	h2 {
 		font-size: 34px;
-	}
-
-	.closing.section-pad {
-		flex-direction: column;
-		align-items: stretch;
-		max-width: 100%;
 	}
 
 	.timeline,
