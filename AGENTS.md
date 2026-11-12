@@ -55,6 +55,7 @@ Este archivo es la referencia principal dentro de `web-astro`. Si existe una con
 - Antes de crear o modificar componentes, estilos o páginas, leer `docs/GUIA-UI-UX.md` y cumplirla.
 - Prohibido crear colores o tipografías: usar solo la paleta y las fuentes (Bebas Neue y Outfit) definidas en la guía y en `src/styles/tokens.css`.
 - Si un cambio requiere un color, tamaño o componente que no está en la guía, detenerse y consultar al solicitante.
+- Toda pieza que se repita en 2 o más páginas (o 2 o más veces en una página), como hero, cards, FAQ, timeline, paginación o CTA de cierre, debe implementarse como componente Astro reutilizable en `src/components/` con su CSS en `src/styles/components/`. Prohibido copiar HTML o CSS entre páginas. Revisar primero el catálogo de componentes de la guía (§7.0) y actualizarlo al crear uno nuevo.
 
 ## SEO, GEO y AEO
 

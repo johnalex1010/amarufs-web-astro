@@ -12,7 +12,7 @@
 | Paleta de marca | 🟢 Bien definida | 10 tokens claros en `tokens.css`; la identidad azul + menta es coherente. |
 | Uso de tokens | 🔴 Bajo | 28 hex y ~60 `rgba()` distintos escritos a mano en CSS de páginas. |
 | Tipografía | 🟠 Parcial | Bebas Neue + Outfit bien elegidas, pero solo Outfit 400 cargado y 47 tamaños de letra distintos. |
-| Componentes | 🔴 Duplicados | `.hero`, `.btn`, `.faq-item`, `.section-pad`, `.reveal` redefinidos en 7–8 hojas de estilo. |
+| Componentes | 🔴 Duplicados | Solo 4 componentes Astro; 17 piezas (hero, FAQ, cards, timeline, cierre, paginación…) copiadas a mano entre páginas y su CSS redefinido en 7–8 hojas (ver §2.7). |
 | Accesibilidad | 🟠 Parcial | Buen uso de `aria-hidden`, `aria-expanded`, `reduced-motion`; faltan salto al contenido, Esc en menú, foco en cards/timeline, `alt` genéricos. |
 | Imágenes | 🟢 Bien en inmuebles | `srcset`, `sizes`, `lazy`, `fetchpriority` en ficha. 🟠 Hero de páginas con `alt` genérico. |
 | Responsive | 🟢 Funcional | Breakpoints coherentes, aunque hay 7 distintos (debería haber 4). |
@@ -92,6 +92,32 @@
 | `rel` externos | 12 enlaces `target="_blank" rel="noopener"` sin `noreferrer` (contra `AGENTS.md`). | 🟡 |
 | Reduced motion | ✅ (aunque duplicado). | 🟢 |
 
+### 2.7 Piezas repetidas que deben ser componentes
+
+Hoy solo existen 4 componentes (`SiteHeader`, `SiteFooter`, `Breadcrumbs`, `RentalRequirementsModal`). Todo lo demás está escrito a mano en cada página y su CSS copiado en cada hoja de estilo. Inventario obtenido buscando las clases en `src/pages/**/*.astro`:
+
+| Pieza (clase actual) | Páginas donde se repite | Nº | Componente objetivo |
+| --- | --- | --- | --- |
+| `.hero` + `.hero__panel` | inicio, propietarios, venta, arriendo, arrendatarios, inmuebles, referidos (+ variante en ficha) | 7–8 | `sections/PageHero.astro` |
+| `.faq-list` / `.faq-item` | las 8 páginas | 8 | `sections/FaqSection.astro` (genera también el JSON-LD) |
+| `.section-heading` + `.eyebrow` | las 8 páginas | 8 | `ui/SectionHeading.astro` |
+| `.btn` (`--primary/--secondary/--light/--ghost`) | las 8 páginas | 8 | `ui/Button.astro` |
+| `.timeline` | propietarios, venta, arriendo, arrendatarios, referidos, ficha | 6 | `sections/Timeline.astro` |
+| `.closing` (CTA final) | propietarios, venta, arriendo, arrendatarios, referidos, ficha | 6 | `sections/ClosingCta.astro` |
+| `.trust__box` / `.transparency__box` | inicio, inmuebles, arrendatarios / propietarios, venta, arriendo | 6 | `sections/InfoBox.astro` |
+| `.service-card` | propietarios, venta, arriendo | 3 | `ui/Card.astro` (variante `service`) |
+| `.audience` | propietarios, venta, arriendo | 3 | `ui/Card.astro` + layout de sección |
+| `.checklist-group` | propietarios, venta, arriendo | 3 | `sections/ChecklistGroup.astro` |
+| `.process-phase` | arrendatarios, venta, arriendo | 3 | `sections/ProcessPhases.astro` (usa `Timeline`) |
+| `.commission-summary` | venta, arriendo | 2 | `sections/CommissionSummary.astro` |
+| `.property-card` / `.related-card` | inmuebles / ficha (inmuebles relacionados) | 2 | `property/PropertyCard.astro` (variante `compact`) |
+| `.property-features`, precio | inmuebles, ficha | 2 | `property/PropertyFeatures.astro`, `property/PropertyPrice.astro` |
+| `.route-card` | inicio (2 veces) | 1 página, 2 usos | `ui/Card.astro` (variante `route`) |
+| `.pagination` | inmuebles (generada por JS) | 1 (reutilizable: futuros listados, blog) | `ui/Pagination.astro` + `scripts/components/pagination.js` |
+| `.empty-state` | inmuebles | 1 (reutilizable) | `ui/EmptyState.astro` |
+
+**Impacto:** cada cambio visual en, por ejemplo, el FAQ o el hero hoy obliga a editar 7–8 archivos `.astro` y 7–8 archivos `.css`, con alto riesgo de que las páginas queden distintas. Con componentes se edita 1 archivo.
+
 ---
 
 ## 3. Plan de acción
@@ -120,16 +146,31 @@ Cada fase termina con `npm run build`, revisión en 375/768/1280 px y teclado (D
 | 2.5 | Aplicar la escala tipográfica de 10 niveles (guía §3.3) con `clamp()`; subir 11–12 px a 13 px. | todas las hojas | De 47 a ~12 tamaños. |
 | 2.6 | Unificar radio de botones a `--radius` y duraciones a 180/220/520 ms. | `utilities.css`, páginas | Botones idénticos en todo el sitio. |
 
-### Fase 3 — Componentes compartidos (P1) · ~4–5 días
+### Fase 3 — Componentes reutilizables (P1) · ~6–8 días
 
-| # | Acción | Archivos | Resultado esperado |
-| --- | --- | --- | --- |
-| 3.1 | Consolidar `.btn` + 4 variantes (`primary`, `secondary`, `light`, `ghost`) con estados `hover/focus/active/disabled` en `utilities.css`; borrar copias de páginas. | `utilities.css`, 8 CSS de página | ~90 bloques menos. |
-| 3.2 | Crear `components/common/PageHero.astro` (props: eyebrow, título, lead, acciones, panel, imagen) y su CSS compartido; migrar 7 páginas. Imagen principal como `<img fetchpriority="high">`. | nuevo componente, páginas, CSS | Hero consistente y mejor LCP. |
-| 3.3 | Crear `components/common/FaqList.astro` que pinte el acordeón y genere el JSON-LD `FAQPage` desde el mismo arreglo; añadir `aria-controls`. | nuevo componente, páginas | FAQ visibles = FAQ en schema; un solo estilo. |
-| 3.4 | Crear base `.card` (+ `.card--interactive`) y hacer que `route-card`, `service-card`, `related-card`, `trust-cards`, `*__box` la extiendan. | `utilities.css` o `styles/components/card.css` | Cards homogéneas. |
-| 3.5 | Mover `.section-pad`, `.section-heading`, `.reveal` y el bloque `prefers-reduced-motion` a un único lugar; borrar duplicados. | `utilities.css`, páginas | CSS de página solo con layout propio. |
-| 3.6 | Componente `ClosingCta.astro` para el bloque final de cada página. | nuevo componente | Cierre uniforme. |
+Regla: toda pieza del inventario §2.7 pasa a ser un componente en `src/components/` con su CSS en `src/styles/components/` (guía §7.0). Se migra **un componente a la vez**, en todas las páginas que lo usan, borrando el HTML y el CSS duplicados en el mismo cambio. Después de cada componente: `npm run build` + revisión visual de las páginas afectadas.
+
+Orden recomendado (de mayor a menor reutilización y riesgo bajo primero):
+
+| # | Componente | Carpeta | Páginas a migrar | Notas |
+| --- | --- | --- | --- | --- |
+| 3.0 | Crear carpetas `components/ui`, `components/sections`, `components/property`, `styles/components`, `scripts/components`. | — | — | Base de la estructura. |
+| 3.1 | `Button` | `ui/` | 8 | CSS único con 4 variantes y estados `hover/focus/active/disabled`; prop `external` añade `target="_blank" rel="noopener noreferrer"`. Borrar ~110 bloques `.btn` de páginas. |
+| 3.2 | `SectionHeading` | `ui/` | 8 | Incluye `.eyebrow`. |
+| 3.3 | `FaqSection` | `sections/` | 8 | Pinta el acordeón **y** el JSON-LD `FAQPage` desde el mismo arreglo; `aria-controls`. Elimina el riesgo de FAQ visibles distintas a las del schema. |
+| 3.4 | `PageHero` | `sections/` | 7 | Props de contenido + panel; imagen de fondo como `<img fetchpriority="high">` (mejora LCP); `alt` reales. |
+| 3.5 | `ClosingCta` | `sections/` | 6 | Un cierre por página. |
+| 3.6 | `Timeline` | `sections/` | 6 | Variante `dark`/`light` según fondo (número verde solo sobre azul). |
+| 3.7 | `InfoBox` | `sections/` | 6 | Unifica `trust__box` y `transparency__box`. |
+| 3.8 | `Card` (base + variantes `route`, `service`, `audience`) | `ui/` | inicio, propietarios, venta, arriendo | Una sola base de borde, radio, sombra y hover. |
+| 3.9 | `ChecklistGroup` y `ProcessPhases` | `sections/` | 3 + 3 | `ProcessPhases` reutiliza `Timeline`. |
+| 3.10 | `CommissionSummary` | `sections/` | venta, arriendo | — |
+| 3.11 | `PropertyCard` (+ `PropertyFeatures`, `PropertyPrice`, `Badge`) | `property/`, `ui/` | inmuebles, ficha (relacionados) | `related-card` pasa a `variant="compact"`. Mismos datos y formato de precio en listado y ficha. |
+| 3.12 | `Pagination` + `EmptyState` | `ui/` | inmuebles | Marcado en Astro + `scripts/components/pagination.js` reutilizable para futuros listados (blog, proyectos). |
+| 3.13 | Mover `.section-pad`, `.reveal` y `prefers-reduced-motion` a `utilities.css`; borrar duplicados en las 8 hojas. | — | 8 | El CSS de página queda solo con layout propio de esa página. |
+| 3.14 | Actualizar el catálogo de la guía (§7.0) marcando ✅ cada componente creado. | `docs/GUIA-UI-UX.md` | — | La IA siempre sabe qué existe. |
+
+Resultado esperado de la fase: las páginas `.astro` quedan como composición de componentes con datos; los CSS de página se reducen de forma importante (hoy suman ~8.500 líneas) y un cambio visual se hace en un solo archivo.
 
 ### Fase 4 — Accesibilidad y navegación (P1) · ~2 días
 
@@ -169,6 +210,8 @@ Cada fase termina con `npm run build`, revisión en 375/768/1280 px y teclado (D
 | Hex fuera de `tokens.css` | 28 valores | 0 |
 | Tamaños de fuente distintos | 47 | ≤ 12 |
 | Bloques `.btn` duplicados en páginas | ~110 | 0 |
+| Componentes reutilizables | 4 | ≥ 20 (catálogo §7.0 de la guía) |
+| Piezas con HTML/CSS copiado entre páginas | 17 | 0 |
 | Breakpoints distintos | 7 | 4 |
 | `alt` genéricos | 7 | 0 |
 | `id` duplicados | 1 | 0 |

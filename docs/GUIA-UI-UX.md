@@ -11,7 +11,7 @@
 1. **Prohibido crear colores.** Solo se usan los valores listados en la sección 2. No inventar hex, rgb, hsl, gradientes con colores nuevos ni "tonos intermedios".
 2. **Prohibido crear o agregar tipografías.** En la web solo existen **Bebas Neue** (títulos) y **Outfit** (texto). No usar Google Fonts, Poppins, Afacad Flux ni fuentes del sistema como estilo principal.
 3. **Usar tokens, no valores sueltos.** En CSS nuevo se escribe `var(--color-primary)`, nunca `#1a3b89`. Si el valor no tiene token, se usa el valor canónico de la sección 2 y se registra en el plan de acción para tokenizarlo.
-4. **Reutilizar antes de crear.** Antes de escribir un componente o clase, buscar en `src/styles/tokens.css`, `src/styles/utilities.css` y `src/components/`. No duplicar `.btn`, `.hero`, `.faq-item`, `.section-pad` en CSS de página.
+4. **Reutilizar antes de crear; lo que se repite es componente.** Antes de escribir un componente o clase, buscar en `src/styles/tokens.css`, `src/styles/utilities.css` y `src/components/`. Toda pieza que aparezca en 2+ páginas (cards, hero, FAQ, timeline, paginación, CTA de cierre…) se implementa como componente Astro reutilizable (ver §7.0). No duplicar `.btn`, `.hero`, `.faq-item`, `.section-pad` en CSS de página.
 5. **Accesibilidad AA mínima (WCAG 2.2).** Contraste de texto ≥ 4.5:1 (≥ 3:1 en texto grande e íconos/bordes funcionales), foco visible, objetivos táctiles ≥ 44×44 px, navegación por teclado completa.
 6. **Mobile first real.** Todo se valida en 375 px, 768 px y ≥ 1280 px sin scroll horizontal.
 7. **Español Colombia (es-CO)**, tono profesional, cercano y verificable. Nunca prometer tiempos, aprobaciones o disponibilidad sin evidencia.
@@ -279,7 +279,108 @@ Sombra de color solo en el botón primario: `0 12px 30px rgba(26, 59, 137, 0.22)
 
 ## 7. Componentes
 
-> Todo componente reutilizable vive en `src/components/` (Astro) y su CSS base en `utilities.css` (o en un archivo de componente). Las páginas **solo** ajustan layout, nunca redefinen la apariencia base del componente.
+> Todo componente reutilizable vive en `src/components/` (Astro) y su CSS base en `src/styles/components/`. Las páginas **solo** ajustan layout, nunca redefinen la apariencia base del componente.
+
+### 7.0 Regla de reutilización (obligatoria)
+
+**Si una pieza de interfaz se repite, es un componente.** Se considera que se repite cuando:
+
+- aparece en **2 o más páginas** (hero, FAQ, cards, timeline, cierre, paginación…), o
+- aparece **2 o más veces en la misma página** con la misma estructura (cards de una grilla, pasos, ítems de checklist), o
+- es previsible que se reutilice (paginación, estado vacío, insignias, precio de inmueble).
+
+En esos casos está **prohibido copiar y pegar el HTML o el CSS** entre páginas. Se crea (o se reutiliza) un componente Astro y la página solo le pasa datos.
+
+#### Estructura de carpetas
+
+```text
+src/
+  components/
+    global/      → piezas del layout: SiteHeader, SiteFooter, Breadcrumbs
+    ui/          → piezas pequeñas y genéricas: Button, SectionHeading, Badge, Card, EmptyState, Pagination
+    sections/    → bloques completos de página: PageHero, FaqSection, Timeline, ProcessPhases, InfoBox, ClosingCta, ChecklistGroup, ServiceCards
+    property/    → piezas de inmuebles: PropertyCard, PropertyFeatures, PropertyPrice, PropertyGallery, PropertyFilters
+    common/      → modales y piezas de negocio específicas (RentalRequirementsModal)
+  styles/
+    components/  → un CSS por componente, con el mismo nombre en kebab-case (property-card.css, page-hero.css)
+```
+
+#### Convenciones
+
+| Tema | Regla |
+| --- | --- |
+| Nombre del archivo | `PascalCase.astro` (`PropertyCard.astro`). |
+| Clases CSS | BEM con el nombre del componente en kebab-case: `.property-card`, `.property-card__media`, `.property-card--compact`. |
+| CSS | En `src/styles/components/<nombre>.css`, importado **desde el propio componente** (`import "../../styles/components/property-card.css";`). Así solo se carga en las páginas que lo usan. No se redefine en CSS de página. |
+| Props | Tipadas con `interface Props`. Datos (textos, URLs, listas) entran por props; nada de textos fijos de una página dentro del componente. |
+| Variantes | Con una prop `variant` (`"default" \| "compact" \| "dark"`) que agrega un modificador BEM. No crear un componente nuevo por cada variación visual. |
+| Contenido libre | Con `<slot />` o slots con nombre (`<slot name="actions" />`) cuando el contenido varía mucho (botones, párrafos con enlaces). |
+| Encabezados | Prop `headingLevel` (`2 \| 3`) cuando el componente puede ir en distintos niveles, para no romper la jerarquía H1→H2→H3. |
+| IDs | Recibidos por props (`id`, `titleId`) para que sean únicos por página y sirvan a GTM y `aria-labelledby`. |
+| Datos repetidos | Listas (FAQ, pasos, servicios) en un arreglo en el frontmatter de la página o en `src/data/`, y se recorren con `.map()`. |
+| JS | Si el componente necesita interacción, su script vive en `src/scripts/components/<nombre>.js`, se inicializa por atributo `data-*` y soporta varias instancias en la misma página. |
+| SEO | Si el componente pinta contenido que también va en JSON-LD (FAQ, inmueble), el componente genera ambos desde los mismos datos. |
+
+#### Ejemplo
+
+```astro
+---
+// src/components/ui/SectionHeading.astro
+import "../../styles/components/section-heading.css";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleId: string;
+  headingLevel?: 2 | 3;
+}
+
+const { eyebrow, title, titleId, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}`;
+---
+
+<div class="section-heading">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Heading id={titleId}>{title}</Heading>
+  <slot />
+</div>
+```
+
+```astro
+<!-- Uso en una página -->
+<SectionHeading eyebrow="FAQ" title="Preguntas frecuentes" titleId="faq-title" />
+```
+
+#### Catálogo de componentes del sitio
+
+Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el componente; si no existe todavía, se crea con este nombre.
+
+| Componente | Carpeta | Reemplaza (clases actuales) | Props principales |
+| --- | --- | --- | --- |
+| `SiteHeader` ✅ | `global/` | `.site-header`, `.main-nav` | `activePage` |
+| `SiteFooter` ✅ | `global/` | `.site-footer` | — |
+| `Breadcrumbs` ✅ | `global/` | `.breadcrumbs` | `items` |
+| `Button` | `ui/` | `.btn`, `.btn--*` | `href?`, `variant`, `icon?`, `id?`, `external?`, `type?` |
+| `SectionHeading` | `ui/` | `.section-heading` + `.eyebrow` | `eyebrow?`, `title`, `titleId`, `headingLevel?` |
+| `Card` | `ui/` | base de `.route-card`, `.service-card`, `.audience__box`, `.trust-cards` | `variant`, `image?`, `icon?`, `title`, `headingLevel?`, slot |
+| `Badge` | `ui/` | chips/estados (`.property-card__status`, tags de ficha) | `variant`, `icon?`, texto en slot |
+| `Pagination` | `ui/` | `.pagination` (`data-pagination`) | `label`, `totalPages?`; JS reutilizable |
+| `EmptyState` | `ui/` | `.empty-state` | `icon`, `title`, slot de acciones |
+| `PageHero` | `sections/` | `.hero`, `.hero__content`, `.hero__panel` (7 páginas) | `eyebrow`, `title`, `lead`, `actions`, `panel { image, imageAlt, icon, title, text }`, `backgroundImage` |
+| `FaqSection` | `sections/` | `.faq-list`, `.faq-item` (8 páginas) + JSON-LD `FAQPage` | `eyebrow?`, `title`, `titleId`, `items: { question, answer }[]` |
+| `Timeline` | `sections/` | `.timeline` (6 páginas) | `steps: { icon?, title, text, href? }[]`, `variant` |
+| `ProcessPhases` | `sections/` | `.process-phase` (3 páginas) | `phases: { label, title, steps }[]` (usa `Timeline`) |
+| `InfoBox` | `sections/` | `.trust__box`, `.transparency__box` (6 páginas) | `eyebrow`, `title`, `titleId`, slot |
+| `ChecklistGroup` | `sections/` | `.checklist-group` (3 páginas) | `number`, `icon`, `title`, `description`, `items` |
+| `ClosingCta` | `sections/` | `.closing` (6 páginas) | `eyebrow`, `title`, `text`, `action` |
+| `CommissionSummary` | `sections/` | `.commission-summary` (2 páginas) | datos de comisión |
+| `PropertyCard` | `property/` | `.property-card` y `.related-card` (variante `compact`) | `property`, `variant`, `headingLevel?` |
+| `PropertyFeatures` | `property/` | `.property-features` | `features`, `max?` |
+| `PropertyPrice` | `property/` | `.property-card__price`, precio de ficha | `property`, `size` |
+| `PropertyFilters` | `property/` | buscador de `/inmuebles/` | `options` |
+| `RentalRequirementsModal` ✅ | `common/` | modal de requisitos | — |
+
+✅ = ya existe. Al crear uno nuevo, agregarlo a esta tabla en el mismo cambio.
 
 ### 7.1 Botones (`.btn`)
 
@@ -456,7 +557,7 @@ Reglas: no más información de la necesaria; los datos deben coincidir con la f
 ## 11. Flujo obligatorio para la IA al crear o editar UI
 
 1. Leer esta guía y `AGENTS.md`.
-2. Identificar si ya existe un componente/clase equivalente (`grep` en `src/styles` y `src/components`). Si existe, reutilizarlo.
+2. Revisar el catálogo de componentes (§7.0). Si la pieza existe, reutilizarla con props/variantes. Si no existe y se va a repetir (2+ páginas o 2+ veces en una página), crearla como componente en la carpeta correcta, con su CSS en `src/styles/components/`, y agregarla al catálogo. Nunca copiar HTML/CSS entre páginas.
 3. Usar **solo** tokens/valores de las secciones 2–4. Si se necesita un color o tamaño que no está, **detenerse y preguntar**; no inventarlo.
 4. Escribir HTML semántico con estados accesibles (sección 8).
 5. Verificar en 375 / 768 / 1280 px, teclado y consola sin errores.
