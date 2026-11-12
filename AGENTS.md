@@ -50,6 +50,12 @@ Este archivo es la referencia principal dentro de `web-astro`. Si existe una con
 - Todo texto visible debe conservar tono profesional, claridad comercial y Español Colombia.
 - Todo cambio que afecte comandos, dependencias, variables, build, SEO, seguridad o flujos operativos debe actualizar `README.md`.
 
+## Diseño UI/UX
+
+- Antes de crear o modificar componentes, estilos o páginas, leer `docs/GUIA-UI-UX.md` y cumplirla.
+- Prohibido crear colores o tipografías: usar solo la paleta y las fuentes (Bebas Neue y Outfit) definidas en la guía y en `src/styles/tokens.css`.
+- Si un cambio requiere un color, tamaño o componente que no está en la guía, detenerse y consultar al solicitante.
+
 ## SEO, GEO y AEO
 
 - Mantener `site.baseUrl` como fuente canónica del dominio.

@@ -443,6 +443,9 @@ Resumen operativo:
 - no enviar formularios sin autorización explícita
 - usar datos simulados en pruebas de formularios, filtros y búsquedas
 - actualizar este `README.md` cuando cambien arquitectura, comandos, dependencias, build, despliegue o reglas operativas
+- seguir `docs/GUIA-UI-UX.md` para colores, tipografías, componentes, imágenes y accesibilidad (prohibido crear colores o tipografías nuevas)
+
+El estado actual frente a esa guía y el plan de mejora están en `docs/AUDITORIA-UI-UX.md`.
 
 ## Riesgos Conocidos
 
