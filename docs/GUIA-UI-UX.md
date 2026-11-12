@@ -368,8 +368,8 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 | `EmptyState` | `ui/` | `.empty-state` | `icon`, `title`, slot de acciones |
 | `PageHero` ✅ | `sections/` | `.hero`, `.hero__content`, `.hero__panel` (7 páginas) | `eyebrow`, `title`, `lead`, `backgroundImage`, `panel? { image, imageAlt?, icon, title, text }`, slot `actions` (ver §7.5) |
 | `FaqSection` ✅ | `sections/` | `.faq-list`, `.faq-item` (8 páginas) + JSON-LD `FAQPage` | `title`, `items: { question, answer, answerHtml? }[]`, `eyebrow?`, `titleId?`, `class?`, `schema?` (ver §7.8) |
-| `Timeline` | `sections/` | `.timeline` (6 páginas) | `steps: { icon?, title, text, href? }[]`, `variant` |
-| `ProcessPhases` | `sections/` | `.process-phase` (3 páginas) | `phases: { label, title, steps }[]` (usa `Timeline`) |
+| `Timeline` ✅ | `sections/` | `.timeline` (6 páginas) | `steps: { icon, title, text, action? { label, href? \| modalId?, id? } }[]`, `start?`, `columns?` (2 · 3 · 5), `headingLevel?`, `highlight?` (ver §7.9) |
+| `ProcessPhases` ✅ | `sections/` | `.process-phase` (arrendatarios, venta, arriendo) e `.info-phase` (referidos) | `phases: { label, title, steps }[]`, `columns?` (2 · 3), `highlightLast?` (usa `Timeline`) |
 | `InfoBox` | `sections/` | `.trust__box`, `.transparency__box` (6 páginas) | `eyebrow`, `title`, `titleId`, slot |
 | `ChecklistGroup` | `sections/` | `.checklist-group` (3 páginas) | `number`, `icon`, `title`, `description`, `items` |
 | `ClosingCta` ✅ | `sections/` | `.closing` (5 páginas) y `.referrals` de `/inmuebles/` | `title`, `text`, `eyebrow?`, `titleId?`, `variant?` (`card` · `flat`), `class?`, slot con el botón (ver §7.13) |
@@ -547,9 +547,34 @@ const faqItems: FaqItem[] = [
 
 ### 7.9 Timeline / pasos de proceso
 
-- Numeración en Bebas Neue 40 px. Sobre fondo azul, número en `--color-secondary`; sobre fondo claro, en `--color-primary`.
-- Máximo 6 pasos visibles; cada paso con título corto + 1–2 líneas.
-- En móvil, una columna con línea vertical.
+**Componentes:** `src/components/sections/Timeline.astro` (lista de pasos) y `src/components/sections/ProcessPhases.astro` (proceso dividido en fases, cada una con su `Timeline`). **CSS:** `src/styles/components/timeline.css` y `process-phases.css`.
+
+```astro
+---
+import Timeline, { type TimelineStep } from "../components/sections/Timeline.astro";
+import ProcessPhases, { type ProcessPhase } from "../components/sections/ProcessPhases.astro";
+
+const processSteps: TimelineStep[] = [
+  { icon: "fa-brands fa-whatsapp", title: "Contacto inicial", text: "Nos escribes por WhatsApp..." },
+  { icon: "fa-solid fa-clipboard-list", title: "Revisa requisitos", text: "...", action: { label: "Ver requisitos", modalId: "requirements-modal" } },
+  { icon: "fa-solid fa-building", title: "Elige un inmueble", text: "...", action: { label: "Ver inmuebles", href: "/inmuebles/", id: "fase-1-ver-inmuebles" } }
+];
+const processPhases: ProcessPhase[] = [
+  { label: "Fase 1", title: "Búsqueda", steps: [/* TimelineStep */] },
+  { label: "Fase 2", title: "Revisión", steps: [/* ... */] }
+];
+---
+<Timeline steps={processSteps} />                       <!-- 5 columnas, títulos H3 -->
+<Timeline steps={timelineSteps} columns={3} />          <!-- ficha de inmueble -->
+<ProcessPhases phases={processPhases} columns={2} />    <!-- fases con pasos H4; numeración continua -->
+```
+
+- Cada paso: ícono + número (Bebas Neue 40 px) + título (26 px, `--color-ink`) + texto (15 px, `--color-muted`) + acción opcional al pie (`href` → enlace; `modalId` → botón que abre el modal). Los enlaces `http(s)` se abren en pestaña nueva con `rel="noopener noreferrer"`.
+- **Color del número:** sobre fondo claro, `--color-primary` (el verde menta no tiene contraste sobre blanco); el ícono decorativo lleva el acento `--color-secondary`. Sobre fondo azul se podría invertir.
+- Tarjetas con borde, `#fbfcff`, sombra `sm` y elevación al pasar el cursor. La última fase de `ProcessPhases` se resalta con borde y degradado verde muy suave (`highlightLast`).
+- Columnas: 5 (proceso corto), 3 o 2 (dentro de fases). Responsive: ≤ 1100 px → 2 columnas; ≤ 760 px → 1 columna.
+- Máximo 6 pasos por timeline suelta; si el proceso es más largo, dividirlo en fases con `ProcessPhases`.
+- Los datos van en el frontmatter de la página (o en `src/data/`), nunca como HTML repetido.
 
 ### 7.10 Insignias, chips y etiquetas
 

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProcessPhases, { type ProcessPhase } from "../../components/sections/ProcessPhases.astro";
 import ClosingCta from "../../components/sections/ClosingCta.astro";
 import PageHero from "../../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
@@ -31,6 +32,72 @@ const faqItems: FaqItem[] = [
   {
     question: "¿Amaru FS garantiza que el inmueble se arrienda de forma inmediata?",
     answer: "No. Amaru FS acompaña la publicación y atención de interesados, pero no promete arriendo inmediato ni cierre garantizado."
+  }
+];
+
+const processPhases: ProcessPhase[] = [
+  {
+    label: "Fase 1",
+    title: "Preparación",
+    steps: [
+      {
+        icon: "fa-brands fa-whatsapp",
+        title: "Contacto inicial",
+        text: "Nos escribes por WhatsApp o llamada y nos cuentas qué inmueble quieres arrendar, dónde está ubicado y qué condiciones iniciales tienes."
+      },
+      {
+        icon: "fa-solid fa-comments",
+        title: "Aclaración de dudas",
+        text: "Explicamos el alcance del servicio, los pasos para publicar y qué información debe estar clara antes de recibir interesados."
+      },
+      {
+        icon: "fa-solid fa-camera",
+        title: "Visita al inmueble",
+        text: "Amaru FS visita la propiedad para tomar fotos, grabar videos y revisar características relevantes."
+      }
+    ]
+  },
+  {
+    label: "Fase 2",
+    title: "Publicación",
+    steps: [
+      {
+        icon: "fa-solid fa-clipboard-check",
+        title: "Ficha técnica",
+        text: "Organizamos canon, administración, área, distribución, ubicación, estado y condiciones de visita."
+      },
+      {
+        icon: "fa-solid fa-file-signature",
+        title: "Contrato",
+        text: "Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria."
+      },
+      {
+        icon: "fa-solid fa-bullhorn",
+        title: "Promoción",
+        text: "La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad."
+      }
+    ]
+  },
+  {
+    label: "Fase 3",
+    title: "Gestión y cierre",
+    steps: [
+      {
+        icon: "fa-solid fa-handshake",
+        title: "Interesados reales",
+        text: "Atendemos consultas, compartimos información del inmueble, coordinamos visitas y hacemos seguimiento comercial."
+      },
+      {
+        icon: "fa-solid fa-shield-halved",
+        title: "Aseguradora",
+        text: "Cuando un interesado avanza, se comparten requisitos y la aseguradora estudia la viabilidad del interesado y su deudor."
+      },
+      {
+        icon: "fa-solid fa-file-contract",
+        title: "Contrato de arriendo",
+        text: "Si el proceso avanza correctamente, se realiza el contrato de arrendamiento con las cláusulas correspondientes."
+      }
+    ]
   }
 ];
 ---
@@ -105,79 +172,7 @@ const faqItems: FaqItem[] = [
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
       <SectionHeading eyebrow="Proceso de arriendo" title="Cómo ayudamos a arrendar tu inmueble" titleId="process-title" />
-      <div class="process-phases">
-        <article class="process-phase">
-          <div class="process-phase__heading">
-            <span>Fase 1</span>
-            <h3>Preparación</h3>
-          </div>
-          <ol class="timeline timeline--rent">
-            <li>
-              <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
-              <h4>Contacto inicial</h4>
-              <p>Nos escribes por WhatsApp o llamada y nos cuentas qué inmueble quieres arrendar, dónde está ubicado y qué condiciones iniciales tienes.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
-              <h4>Aclaración de dudas</h4>
-              <p>Explicamos el alcance del servicio, los pasos para publicar y qué información debe estar clara antes de recibir interesados.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
-              <h4>Visita al inmueble</h4>
-              <p>Amaru FS visita la propiedad para tomar fotos, grabar videos y revisar características relevantes.</p>
-            </li>
-          </ol>
-        </article>
-
-        <article class="process-phase">
-          <div class="process-phase__heading">
-            <span>Fase 2</span>
-            <h3>Publicación</h3>
-          </div>
-          <ol class="timeline timeline--rent" start="4">
-            <li>
-              <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 04</span>
-              <h4>Ficha técnica</h4>
-              <p>Organizamos canon, administración, área, distribución, ubicación, estado y condiciones de visita.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 05</span>
-              <h4>Contrato</h4>
-              <p>Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 06</span>
-              <h4>Promoción</h4>
-              <p>La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad.</p>
-            </li>
-          </ol>
-        </article>
-
-        <article class="process-phase process-phase--closing">
-          <div class="process-phase__heading">
-            <span>Fase 3</span>
-            <h3>Gestión y cierre</h3>
-          </div>
-          <ol class="timeline timeline--rent" start="7">
-            <li>
-              <span><i class="fa-solid fa-handshake" aria-hidden="true"></i> 07</span>
-              <h4>Interesados reales</h4>
-              <p>Atendemos consultas, compartimos información del inmueble, coordinamos visitas y hacemos seguimiento comercial.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> 08</span>
-              <h4>Aseguradora</h4>
-              <p>Cuando un interesado avanza, se comparten requisitos y la aseguradora estudia la viabilidad del interesado y su deudor.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-file-contract" aria-hidden="true"></i> 09</span>
-              <h4>Contrato de arriendo</h4>
-              <p>Si el proceso avanza correctamente, se realiza el contrato de arrendamiento con las cláusulas correspondientes.</p>
-            </li>
-          </ol>
-        </article>
-      </div>
+      <ProcessPhases phases={processPhases} columns={3} />
     </section>
 
     <section class="commission section-pad" aria-labelledby="commission-title">

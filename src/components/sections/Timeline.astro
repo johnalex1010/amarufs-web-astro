@@ -1,0 +1,72 @@
+---
+/**
+ * Lista numerada de pasos de un proceso (docs/GUIA-UI-UX.md §7.9).
+ * Cada paso: ícono + número + título + texto + acción opcional (enlace o botón que abre un modal).
+ */
+import "../../styles/components/timeline.css";
+
+export interface TimelineAction {
+  label: string;
+  /** Enlace: si empieza por http se abre en pestaña nueva con rel seguro. */
+  href?: string;
+  /** Alternativa a href: id del modal que abre (data-modal-open, ver site-interactions.js). */
+  modalId?: string;
+  id?: string;
+}
+
+export interface TimelineStep {
+  icon: string;
+  title: string;
+  text: string;
+  action?: TimelineAction;
+}
+
+interface Props {
+  steps: TimelineStep[];
+  /** Número del primer paso (para timelines partidas en fases). */
+  start?: number;
+  /** Columnas en escritorio: 5 (proceso corto), 3 o 2 (dentro de fases). */
+  columns?: 2 | 3 | 5;
+  headingLevel?: 3 | 4;
+  /** Resalta los pasos (fase final del proceso). */
+  highlight?: boolean;
+}
+
+const { steps, start = 1, columns = 5, headingLevel = 3, highlight = false } = Astro.props;
+const Heading = headingLevel === 4 ? "h4" : "h3";
+const pad = (n: number) => String(n).padStart(2, "0");
+const isExternal = (href?: string) => Boolean(href && /^https?:\/\//.test(href));
+---
+
+<ol
+  class:list={["timeline", columns !== 5 && `timeline--cols-${columns}`, highlight && "timeline--highlight"]}
+  start={start !== 1 ? start : undefined}
+>
+  {
+    steps.map((step, index) => (
+      <li>
+        <span class="timeline__number">
+          <i class={step.icon} aria-hidden="true"></i> {pad(start + index)}
+        </span>
+        <Heading>{step.title}</Heading>
+        <p>{step.text}</p>
+        {step.action?.href && (
+          <a
+            id={step.action.id}
+            class="timeline__link"
+            href={step.action.href}
+            target={isExternal(step.action.href) ? "_blank" : undefined}
+            rel={isExternal(step.action.href) ? "noopener noreferrer" : undefined}
+          >
+            {step.action.label} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        )}
+        {step.action?.modalId && !step.action.href && (
+          <button id={step.action.id} class="timeline__link" type="button" data-modal-open={step.action.modalId}>
+            {step.action.label} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        )}
+      </li>
+    ))
+  }
+</ol>

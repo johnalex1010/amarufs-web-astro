@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Timeline, { type TimelineStep } from "../components/sections/Timeline.astro";
+import ProcessPhases, { type ProcessPhase } from "../components/sections/ProcessPhases.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
@@ -26,6 +28,85 @@ const faqItems: FaqItem[] = [
   {
     question: "¿Puedo referir a alguien que quiere comprar o arrendar?",
     answer: "Sí. Puedes referir personas que buscan comprar o tomar en arriendo un inmueble, siempre que el contacto sea válido y autorizado."
+  }
+];
+
+const processSteps: TimelineStep[] = [
+  {
+    icon: "fa-brands fa-whatsapp",
+    title: "Envías el referido",
+    text: "Compartes los datos mínimos del propietario, interesado, inmueble o búsqueda por WhatsApp."
+  },
+  {
+    icon: "fa-solid fa-clipboard-check",
+    title: "Validamos la información",
+    text: "Revisamos si el contacto es real, si autorizó ser contactado y si la oportunidad puede avanzar."
+  },
+  {
+    icon: "fa-solid fa-comments",
+    title: "Inicia el proceso comercial",
+    text: "Contactamos al propietario o interesado, aclaramos dudas y definimos el siguiente paso."
+  },
+  {
+    icon: "fa-solid fa-file-signature",
+    title: "Se gestiona la oportunidad",
+    text: "Si aplica, se publica el inmueble, se agenda visita o se avanza con requisitos y condiciones."
+  },
+  {
+    icon: "fa-solid fa-hand-holding-heart",
+    title: "La recompensa aplica por cierre",
+    text: "Se reconoce únicamente cuando el negocio se cierra y queda documentado según las reglas internas."
+  }
+];
+
+const dataPhases: ProcessPhase[] = [
+  {
+    label: "Fase 1",
+    title: "Referente",
+    steps: [
+      {
+        icon: "fa-solid fa-id-card",
+        title: "Nombre completo",
+        text: "Identifica al referente y permite dejar trazabilidad del registro."
+      },
+      {
+        icon: "fa-solid fa-address-book",
+        title: "Correo y teléfono",
+        text: "Correo electrónico y teléfono del referente para confirmar el registro."
+      }
+    ]
+  },
+  {
+    label: "Fase 2",
+    title: "Referido",
+    steps: [
+      {
+        icon: "fa-solid fa-user-check",
+        title: "Datos del contacto",
+        text: "Nombre completo, número celular y correo electrónico de la persona referida."
+      },
+      {
+        icon: "fa-solid fa-users-viewfinder",
+        title: "Tipo de referido",
+        text: "Define si el contacto es propietario, vendedor o persona interesada."
+      }
+    ]
+  },
+  {
+    label: "Fase 3",
+    title: "Oportunidad",
+    steps: [
+      {
+        icon: "fa-solid fa-bullseye",
+        title: "Intención y ubicación",
+        text: "Indica si quiere vender, arrendar, comprar o tomar en arriendo, junto con ciudad y sector."
+      },
+      {
+        icon: "fa-solid fa-circle-check",
+        title: "Autorización",
+        text: "Confirma que la persona referida autorizó ser contactada para revisar la oportunidad."
+      }
+    ]
   }
 ];
 ---
@@ -102,95 +183,12 @@ const faqItems: FaqItem[] = [
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
       <SectionHeading eyebrow="Cómo funciona" title="Proceso del programa de referidos" titleId="process-title" />
-      <ol class="timeline">
-        <li>
-          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
-          <h3>Envías el referido</h3>
-          <p>Compartes los datos mínimos del propietario, interesado, inmueble o búsqueda por WhatsApp.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 02</span>
-          <h3>Validamos la información</h3>
-          <p>Revisamos si el contacto es real, si autorizó ser contactado y si la oportunidad puede avanzar.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 03</span>
-          <h3>Inicia el proceso comercial</h3>
-          <p>Contactamos al propietario o interesado, aclaramos dudas y definimos el siguiente paso.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 04</span>
-          <h3>Se gestiona la oportunidad</h3>
-          <p>Si aplica, se publica el inmueble, se agenda visita o se avanza con requisitos y condiciones.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i> 05</span>
-          <h3>La recompensa aplica por cierre</h3>
-          <p>Se reconoce únicamente cuando el negocio se cierra y queda documentado según las reglas internas.</p>
-        </li>
-      </ol>
+      <Timeline steps={processSteps} />
     </section>
 
     <section class="checklist section-pad" aria-labelledby="data-title">
       <SectionHeading eyebrow="Datos mínimos" title="Qué información necesitamos" titleId="data-title" description="Para conservar trazabilidad, el registro debe separar quién refiere, quién es el contacto referido y cuál es la oportunidad inmobiliaria." />
-      <div class="info-phases">
-        <article class="info-phase">
-          <div class="info-phase__heading">
-            <span>Fase 1</span>
-            <h3>Referente</h3>
-          </div>
-          <ol class="info-timeline">
-            <li>
-              <span><i class="fa-solid fa-id-card" aria-hidden="true"></i> 01</span>
-              <h4>Nombre completo</h4>
-              <p>Identifica al referente y permite dejar trazabilidad del registro.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-address-book" aria-hidden="true"></i> 02</span>
-              <h4>Correo y teléfono</h4>
-              <p>Correo electrónico y teléfono del referente para confirmar el registro.</p>
-            </li>
-          </ol>
-        </article>
-
-        <article class="info-phase">
-          <div class="info-phase__heading">
-            <span>Fase 2</span>
-            <h3>Referido</h3>
-          </div>
-          <ol class="info-timeline" start="3">
-            <li>
-              <span><i class="fa-solid fa-user-check" aria-hidden="true"></i> 03</span>
-              <h4>Datos del contacto</h4>
-              <p>Nombre completo, número celular y correo electrónico de la persona referida.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-users-viewfinder" aria-hidden="true"></i> 04</span>
-              <h4>Tipo de referido</h4>
-              <p>Define si el contacto es propietario, vendedor o persona interesada.</p>
-            </li>
-          </ol>
-        </article>
-
-        <article class="info-phase info-phase--closing">
-          <div class="info-phase__heading">
-            <span>Fase 3</span>
-            <h3>Oportunidad</h3>
-          </div>
-          <ol class="info-timeline" start="5">
-            <li>
-              <span><i class="fa-solid fa-bullseye" aria-hidden="true"></i> 05</span>
-              <h4>Intención y ubicación</h4>
-              <p>Indica si quiere vender, arrendar, comprar o tomar en arriendo, junto con ciudad y sector.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 06</span>
-              <h4>Autorización</h4>
-              <p>Confirma que la persona referida autorizó ser contactada para revisar la oportunidad.</p>
-            </li>
-          </ol>
-        </article>
-      </div>
+      <ProcessPhases phases={dataPhases} columns={2} />
     </section>
 
     <section class="simulator section-pad" aria-labelledby="simulator-title">

@@ -1,0 +1,49 @@
+---
+/**
+ * Proceso dividido en fases (docs/GUIA-UI-UX.md §7.9).
+ * Cada fase tiene etiqueta ("Fase 1"), título (H3) y una Timeline con sus pasos (H4).
+ * La numeración de pasos continúa entre fases automáticamente.
+ */
+import Timeline, { type TimelineStep } from "./Timeline.astro";
+import "../../styles/components/process-phases.css";
+
+export interface ProcessPhase {
+  label: string;
+  title: string;
+  steps: TimelineStep[];
+}
+
+interface Props {
+  phases: ProcessPhase[];
+  /** Columnas de la timeline de cada fase. */
+  columns?: 2 | 3;
+  /** Resaltar la última fase (cierre del proceso). */
+  highlightLast?: boolean;
+}
+
+const { phases, columns = 2, highlightLast = true } = Astro.props;
+const starts = phases.reduce<number[]>((acc, phase, index) => {
+  acc.push(index === 0 ? 1 : acc[index - 1] + phases[index - 1].steps.length);
+  return acc;
+}, []);
+---
+
+<div class="process-phases">
+  {
+    phases.map((phase, index) => (
+      <article class="process-phase">
+        <div class="process-phase__heading">
+          <span class="process-phase__label">{phase.label}</span>
+          <h3>{phase.title}</h3>
+        </div>
+        <Timeline
+          steps={phase.steps}
+          start={starts[index]}
+          columns={columns}
+          headingLevel={4}
+          highlight={highlightLast && index === phases.length - 1}
+        />
+      </article>
+    ))
+  }
+</div>

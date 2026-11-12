@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Timeline, { type TimelineStep } from "../../components/sections/Timeline.astro";
 import ClosingCta from "../../components/sections/ClosingCta.astro";
 import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
@@ -261,6 +262,13 @@ const detailJsonLd = {
     }
   ]
 };
+
+const timelineSteps: TimelineStep[] = processSteps.map((step) => ({
+  icon: step.icon,
+  title: step.title,
+  text: step.text,
+  action: step.modalId ? { label: step.actionLabel ?? "Ver más", modalId: step.modalId } : undefined
+}));
 ---
 
 <BaseLayout
@@ -436,22 +444,7 @@ const detailJsonLd = {
 
     <section class="process section-pad section-band section-band--white" aria-labelledby="rent-process-title">
       <SectionHeading eyebrow={`Proceso de ${operationLabel.toLowerCase()}`} title={processTitle} titleId="rent-process-title" />
-      <ol class="timeline">
-        {
-          processSteps.map((step, index) => (
-            <li>
-              <span><i class={step.icon} aria-hidden="true"></i> {String(index + 1).padStart(2, "0")}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-              {step.modalId && (
-                <button class="timeline__link" type="button" data-modal-open={step.modalId}>
-                  {step.actionLabel} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                </button>
-              )}
-            </li>
-          ))
-        }
-      </ol>
+      <Timeline steps={timelineSteps} columns={3} />
     </section>
 
     <section class="section-pad section-band section-band--gray trust-grid" aria-labelledby="trust-title">

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Timeline, { type TimelineStep } from "../components/sections/Timeline.astro";
 import ClosingCta from "../components/sections/ClosingCta.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
@@ -23,6 +24,34 @@ const faqItems: FaqItem[] = [
   {
     question: "¿Amaru FS Inmobiliaria garantiza el cierre?",
     answer: "No. Amaru FS Inmobiliaria ofrece acompañamiento, publicación clara y seguimiento comercial, pero no garantiza resultados ni cierres."
+  }
+];
+
+const processSteps: TimelineStep[] = [
+  {
+    icon: "fa-brands fa-whatsapp",
+    title: "Contacto inicial",
+    text: "Nos escribes por WhatsApp o llamas con el tipo de inmueble, ciudad o sector y objetivo: venta o arriendo."
+  },
+  {
+    icon: "fa-solid fa-comments",
+    title: "Llamada o reunión",
+    text: "Aclaramos dudas sobre el proceso, alcance, información requerida y siguiente paso."
+  },
+  {
+    icon: "fa-solid fa-camera",
+    title: "Visita al inmueble",
+    text: "Amaru FS Inmobiliaria se acerca al inmueble para registrar fotos, videos y verificar datos de la ficha técnica."
+  },
+  {
+    icon: "fa-solid fa-file-signature",
+    title: "Formalización",
+    text: "Cuando el caso avanza, se realiza el contrato entre propietario e inmobiliaria según el servicio acordado."
+  },
+  {
+    icon: "fa-solid fa-bullhorn",
+    title: "Publicación por Amaru FS",
+    text: "La inmobiliaria publica el inmueble con las características verificadas y hace seguimiento comercial a los interesados."
   }
 ];
 ---
@@ -104,37 +133,7 @@ const faqItems: FaqItem[] = [
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
       <SectionHeading eyebrow="Paso a paso" title="Cómo trabaja Amaru FS Inmobiliaria con propietarios" titleId="process-title" />
-      <ol class="timeline">
-        <li>
-          <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
-          <h3>Contacto inicial</h3>
-          <p>Nos escribes por WhatsApp o llamas con el tipo de inmueble, ciudad o sector y objetivo: venta o arriendo.
-          </p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
-          <h3>Llamada o reunión</h3>
-          <p>Aclaramos dudas sobre el proceso, alcance, información requerida y siguiente paso.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
-          <h3>Visita al inmueble</h3>
-          <p>Amaru FS Inmobiliaria se acerca al inmueble para registrar fotos, videos y verificar datos de la ficha
-            técnica.</p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 04</span>
-          <h3>Formalización</h3>
-          <p>Cuando el caso avanza, se realiza el contrato entre propietario e inmobiliaria según el servicio acordado.
-          </p>
-        </li>
-        <li>
-          <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 05</span>
-          <h3>Publicación por Amaru FS</h3>
-          <p>La inmobiliaria publica el inmueble con las características verificadas y hace seguimiento comercial a los
-            interesados.</p>
-        </li>
-      </ol>
+      <Timeline steps={processSteps} />
     </section>
 
     <section class="checklist section-pad" aria-labelledby="checklist-title">

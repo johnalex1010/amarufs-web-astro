@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ProcessPhases, { type ProcessPhase } from "../components/sections/ProcessPhases.astro";
 import ClosingCta from "../components/sections/ClosingCta.astro";
 import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
@@ -28,6 +29,72 @@ const faqItems: FaqItem[] = [
   {
     question: "¿De qué depende el valor del estudio con la aseguradora?",
     answer: "El valor del estudio depende del canon de arrendamiento del inmueble. Ese valor es definido y cobrado directamente por la aseguradora."
+  }
+];
+
+const processPhases: ProcessPhase[] = [
+  {
+    label: "Fase 1",
+    title: "Búsqueda",
+    steps: [
+      {
+        icon: "fa-solid fa-magnifying-glass",
+        title: "Elige un inmueble disponible",
+        text: "Revisa las características, fotos, ubicación y precio publicado.",
+        action: {
+          label: "Ver inmuebles disponibles",
+          href: "/inmuebles/",
+          id: "fase-1-arrendatarios-ver-inmuebles"
+        }
+      },
+      {
+        icon: "fa-brands fa-whatsapp",
+        title: "Escríbenos por WhatsApp",
+        text: "Indica cuál inmueble te interesa para confirmar disponibilidad y resolver dudas.",
+        action: {
+          label: "Escribir por WhatsApp",
+          href: "https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20me%20interesa%20un%20inmueble%20en%20arriendo.%20Quiero%20confirmar%20disponibilidad%20y%20recibir%20m%C3%A1s%20informaci%C3%B3n.",
+          id: "fase-1-arrendatarios-escribir-whatsapp"
+        }
+      }
+    ]
+  },
+  {
+    label: "Fase 2",
+    title: "Revisión",
+    steps: [
+      {
+        icon: "fa-solid fa-images",
+        title: "Recibe información adicional",
+        text: "Te compartimos características, fotos, videos y datos disponibles para que evalúes si quieres continuar."
+      },
+      {
+        icon: "fa-solid fa-clipboard-list",
+        title: "Revisa requisitos",
+        text: "Si sigues interesado, te compartimos los requisitos necesarios para iniciar el proceso con la aseguradora.",
+        action: {
+          label: "Ver requisitos",
+          modalId: "requirements-modal",
+          id: "fase-2-arrendatarios-ver-requisitos"
+        }
+      }
+    ]
+  },
+  {
+    label: "Fase 3",
+    title: "Aprobación",
+    steps: [
+      {
+        icon: "fa-solid fa-shield-halved",
+        title: "Estudio de aseguradora",
+        text: "La aseguradora, no Amaru FS Inmobiliaria, realiza el estudio de viabilidad del interesado y su deudor."
+      },
+      {
+        icon: "fa-solid fa-file-signature",
+        title: "Contrato de arrendamiento",
+        text: "Una vez el interesado y su deudor son aprobados por la aseguradora, se genera el contrato de arrendamiento con las cláusulas correspondientes."
+      }
+    ]
   }
 ];
 ---
@@ -62,67 +129,7 @@ const faqItems: FaqItem[] = [
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
       <SectionHeading eyebrow="Paso a paso" title="Cómo avanzar si te interesa un inmueble" titleId="process-title" />
-      <div class="process-phases">
-        <article class="process-phase">
-          <div class="process-phase__heading">
-            <span>Fase 1</span>
-            <h3>Búsqueda</h3>
-          </div>
-          <ol class="timeline">
-            <li>
-              <span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 01</span>
-              <h4>Elige un inmueble disponible</h4>
-              <p>Revisa las características, fotos, ubicación y precio publicado.</p>
-              <a id="fase-1-arrendatarios-ver-inmuebles" class="timeline__link" href="/inmuebles/">Ver inmuebles disponibles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-            </li>
-            <li>
-              <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 02</span>
-              <h4>Escríbenos por WhatsApp</h4>
-              <p>Indica cuál inmueble te interesa para confirmar disponibilidad y resolver dudas.</p>
-              <a id="fase-1-arrendatarios-escribir-whatsapp" class="timeline__link" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20me%20interesa%20un%20inmueble%20en%20arriendo.%20Quiero%20confirmar%20disponibilidad%20y%20recibir%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-            </li>
-          </ol>
-        </article>
-
-        <article class="process-phase">
-          <div class="process-phase__heading">
-            <span>Fase 2</span>
-            <h3>Revisión</h3>
-          </div>
-          <ol class="timeline" start="3">
-            <li>
-              <span><i class="fa-solid fa-images" aria-hidden="true"></i> 03</span>
-              <h4>Recibe información adicional</h4>
-              <p>Te compartimos características, fotos, videos y datos disponibles para que evalúes si quieres continuar.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 04</span>
-              <h4>Revisa requisitos</h4>
-              <p>Si sigues interesado, te compartimos los requisitos necesarios para iniciar el proceso con la aseguradora.</p>
-              <button id="fase-2-arrendatarios-ver-requisitos" class="timeline__link timeline__link--button" type="button" data-modal-open="requirements-modal">Ver requisitos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-            </li>
-          </ol>
-        </article>
-
-        <article class="process-phase process-phase--closing">
-          <div class="process-phase__heading">
-            <span>Fase 3</span>
-            <h3>Aprobación</h3>
-          </div>
-          <ol class="timeline" start="5">
-            <li>
-              <span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> 05</span>
-              <h4>Estudio de aseguradora</h4>
-              <p>La aseguradora, no Amaru FS Inmobiliaria, realiza el estudio de viabilidad del interesado y su deudor.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 06</span>
-              <h4>Contrato de arrendamiento</h4>
-              <p>Una vez el interesado y su deudor son aprobados por la aseguradora, se genera el contrato de arrendamiento con las cláusulas correspondientes.</p>
-            </li>
-          </ol>
-        </article>
-      </div>
+      <ProcessPhases phases={processPhases} columns={2} />
     </section>
 
     <section class="questions section-pad" id="informacion" aria-labelledby="questions-title">

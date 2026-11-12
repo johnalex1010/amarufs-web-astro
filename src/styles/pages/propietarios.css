@@ -133,47 +133,6 @@
 	background: var(--color-white);
 }
 
-.timeline {
-	display: grid;
-	grid-template-columns: repeat(5, minmax(0, 1fr));
-	gap: 16px;
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
-
-.timeline li {
-	min-height: 280px;
-	padding: 24px;
-	border: 1px solid var(--color-line);
-	border-radius: var(--radius);
-	background: #fbfcff;
-}
-
-.timeline span {
-	display: inline-flex;
-	align-items: center;
-	gap: 9px;
-	margin-bottom: 34px;
-	color: var(--color-secondary);
-	font-family: "Bebas Neue", Impact, sans-serif;
-	font-size: 40px;
-}
-
-.timeline span i {
-	color: var(--color-primary);
-	font-size: 20px;
-}
-
-.timeline h3 {
-	font-size: 26px;
-}
-
-.timeline p {
-	color: var(--color-muted);
-	font-size: 15px;
-}
-
 .checklist {
 	display: block;
 }
@@ -353,10 +312,6 @@
 		grid-template-columns: 1fr;
 	}
 
-	.timeline {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
 	.checklist__groups {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
@@ -378,7 +333,6 @@
 		font-size: 34px;
 	}
 
-	.timeline,
 	.audience__summary,
 	.checklist__groups {
 		grid-template-columns: 1fr;
@@ -388,9 +342,6 @@
 		min-height: 112px;
 	}
 
-	.timeline li {
-		min-height: auto;
-	}
 }
 
 @media (prefers-reduced-motion: reduce) {

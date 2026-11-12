@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProcessPhases, { type ProcessPhase } from "../../components/sections/ProcessPhases.astro";
 import ClosingCta from "../../components/sections/ClosingCta.astro";
 import PageHero from "../../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
@@ -27,6 +28,72 @@ const faqItems: FaqItem[] = [
   {
     question: "¿Dónde trabaja Amaru FS Inmobiliaria la venta de inmuebles?",
     answer: "El enfoque inicial está en Bogotá y Sabana, sujeto a validación interna y viabilidad comercial del inmueble."
+  }
+];
+
+const processPhases: ProcessPhase[] = [
+  {
+    label: "Fase 1",
+    title: "Preparación",
+    steps: [
+      {
+        icon: "fa-brands fa-whatsapp",
+        title: "Contacto inicial",
+        text: "Nos escribes por WhatsApp o llamada y nos cuentas qué tipo de inmueble quieres vender, dónde está ubicado y cuál es tu objetivo."
+      },
+      {
+        icon: "fa-solid fa-comments",
+        title: "Aclaración de dudas",
+        text: "Revisamos contigo el proceso, la información necesaria, las condiciones comerciales y los pasos antes de publicar."
+      },
+      {
+        icon: "fa-solid fa-camera",
+        title: "Visita al inmueble",
+        text: "Amaru FS Inmobiliaria se acerca al inmueble para conocerlo, tomar fotos, grabar videos y validar características relevantes."
+      }
+    ]
+  },
+  {
+    label: "Fase 2",
+    title: "Publicación",
+    steps: [
+      {
+        icon: "fa-solid fa-clipboard-check",
+        title: "Ficha técnica",
+        text: "Organizamos área, ubicación, distribución, estado, características, precio esperado, disponibilidad y condiciones de venta."
+      },
+      {
+        icon: "fa-solid fa-file-signature",
+        title: "Contrato",
+        text: "Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria."
+      },
+      {
+        icon: "fa-solid fa-bullhorn",
+        title: "Promoción",
+        text: "La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad."
+      }
+    ]
+  },
+  {
+    label: "Fase 3",
+    title: "Cierre",
+    steps: [
+      {
+        icon: "fa-solid fa-handshake",
+        title: "Interesados reales",
+        text: "Atendemos consultas, compartimos información del inmueble y coordinamos los siguientes pasos comerciales."
+      },
+      {
+        icon: "fa-solid fa-calendar-check",
+        title: "Visitas y negociación",
+        text: "Coordinamos visitas con interesados calificados, resolvemos dudas comerciales y acompañamos la revisión de ofertas."
+      },
+      {
+        icon: "fa-solid fa-key",
+        title: "Cierre de venta",
+        text: "Acompañamos el proceso comercial hasta el cierre de venta, según las condiciones pactadas entre las partes."
+      }
+    ]
   }
 ];
 ---
@@ -101,79 +168,7 @@ const faqItems: FaqItem[] = [
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
       <SectionHeading eyebrow="Proceso de venta" title="Cómo vendemos tu inmueble" titleId="process-title" />
-      <div class="process-phases">
-        <article class="process-phase">
-          <div class="process-phase__heading">
-            <span>Fase 1</span>
-            <h3>Preparación</h3>
-          </div>
-          <ol class="timeline timeline--sale">
-            <li>
-              <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
-              <h4>Contacto inicial</h4>
-              <p>Nos escribes por WhatsApp o llamada y nos cuentas qué tipo de inmueble quieres vender, dónde está ubicado y cuál es tu objetivo.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-comments" aria-hidden="true"></i> 02</span>
-              <h4>Aclaración de dudas</h4>
-              <p>Revisamos contigo el proceso, la información necesaria, las condiciones comerciales y los pasos antes de publicar.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-camera" aria-hidden="true"></i> 03</span>
-              <h4>Visita al inmueble</h4>
-              <p>Amaru FS Inmobiliaria se acerca al inmueble para conocerlo, tomar fotos, grabar videos y validar características relevantes.</p>
-            </li>
-          </ol>
-        </article>
-
-        <article class="process-phase">
-          <div class="process-phase__heading">
-            <span>Fase 2</span>
-            <h3>Publicación</h3>
-          </div>
-          <ol class="timeline timeline--sale" start="4">
-            <li>
-              <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> 04</span>
-              <h4>Ficha técnica</h4>
-              <p>Organizamos área, ubicación, distribución, estado, características, precio esperado, disponibilidad y condiciones de venta.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-file-signature" aria-hidden="true"></i> 05</span>
-              <h4>Contrato</h4>
-              <p>Antes de publicar, debe existir un contrato formal entre el propietario y Amaru FS Inmobiliaria.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> 06</span>
-              <h4>Promoción</h4>
-              <p>La inmobiliaria publica el inmueble con información verificada en web, redes, WhatsApp y piezas comerciales según disponibilidad.</p>
-            </li>
-          </ol>
-        </article>
-
-        <article class="process-phase process-phase--closing">
-          <div class="process-phase__heading">
-            <span>Fase 3</span>
-            <h3>Cierre</h3>
-          </div>
-          <ol class="timeline timeline--sale" start="7">
-            <li>
-              <span><i class="fa-solid fa-handshake" aria-hidden="true"></i> 07</span>
-              <h4>Interesados reales</h4>
-              <p>Atendemos consultas, compartimos información del inmueble y coordinamos los siguientes pasos comerciales.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 08</span>
-              <h4>Visitas y negociación</h4>
-              <p>Coordinamos visitas con interesados calificados, resolvemos dudas comerciales y acompañamos la revisión de ofertas.</p>
-            </li>
-            <li>
-              <span><i class="fa-solid fa-key" aria-hidden="true"></i> 09</span>
-              <h4>Cierre de venta</h4>
-              <p>Acompañamos el proceso comercial hasta el cierre de venta, según las condiciones pactadas entre las partes.</p>
-            </li>
-          </ol>
-        </article>
-      </div>
+      <ProcessPhases phases={processPhases} columns={3} />
     </section>
 
     <section class="commission section-pad" aria-labelledby="commission-title">
