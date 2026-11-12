@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import { site } from "../data/site";
 import { getPublishedProperties } from "../lib/properties";
@@ -122,11 +123,7 @@ const faqJsonLd = {
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         </div>
-        <div class="section-heading">
-          <p class="eyebrow">Buscador y filtros</p>
-          <h2 id="search-title">Busca por palabra clave</h2>
-          <p>Escribe una ubicación, tipo de inmueble, barrio, característica o palabra relacionada con lo que necesitas.</p>
-        </div>
+        <SectionHeading eyebrow="Buscador y filtros" title="Busca por palabra clave" titleId="search-title" description="Escribe una ubicación, tipo de inmueble, barrio, característica o palabra relacionada con lo que necesitas." />
         <form class="search-panel" data-listing-form>
           <label class="search-field" for="property-search">
             <span>Buscar inmueble</span>
@@ -285,10 +282,7 @@ const faqJsonLd = {
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes sobre inmuebles disponibles</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre inmuebles disponibles" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         {
           faqItems.map((item) => (

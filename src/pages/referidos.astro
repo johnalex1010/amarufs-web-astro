@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import "../styles/pages/referidos.css";
 ---
@@ -97,11 +98,7 @@ import "../styles/pages/referidos.css";
     </section>
 
     <section class="valid-referrals section-pad" aria-labelledby="valid-title">
-      <div class="section-heading">
-        <p class="eyebrow">A quién puedes referir</p>
-        <h2 id="valid-title">Referidos válidos para Amaru FS Inmobiliaria</h2>
-        <p>Puedes referir propietarios con inmuebles para venta o arriendo, y también personas que buscan comprar o tomar en arriendo. El enfoque inicial está en Bogotá y Sabana, según viabilidad comercial y validación interna.</p>
-      </div>
+      <SectionHeading eyebrow="A quién puedes referir" title="Referidos válidos para Amaru FS Inmobiliaria" titleId="valid-title" description="Puedes referir propietarios con inmuebles para venta o arriendo, y también personas que buscan comprar o tomar en arriendo. El enfoque inicial está en Bogotá y Sabana, según viabilidad comercial y validación interna." width="wide" />
       <div class="referral-grid">
         <article class="referral-card">
           <i class="fa-solid fa-sign-hanging" aria-hidden="true"></i>
@@ -127,10 +124,7 @@ import "../styles/pages/referidos.css";
     </section>
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
-      <div class="section-heading">
-        <p class="eyebrow">Cómo funciona</p>
-        <h2 id="process-title">Proceso del programa de referidos</h2>
-      </div>
+      <SectionHeading eyebrow="Cómo funciona" title="Proceso del programa de referidos" titleId="process-title" />
       <ol class="timeline">
         <li>
           <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
@@ -161,11 +155,7 @@ import "../styles/pages/referidos.css";
     </section>
 
     <section class="checklist section-pad" aria-labelledby="data-title">
-      <div class="section-heading">
-        <p class="eyebrow">Datos mínimos</p>
-        <h2 id="data-title">Qué información necesitamos</h2>
-        <p>Para conservar trazabilidad, el registro debe separar quién refiere, quién es el contacto referido y cuál es la oportunidad inmobiliaria.</p>
-      </div>
+      <SectionHeading eyebrow="Datos mínimos" title="Qué información necesitamos" titleId="data-title" description="Para conservar trazabilidad, el registro debe separar quién refiere, quién es el contacto referido y cuál es la oportunidad inmobiliaria." />
       <div class="info-phases">
         <article class="info-phase">
           <div class="info-phase__heading">
@@ -227,11 +217,7 @@ import "../styles/pages/referidos.css";
     </section>
 
     <section class="simulator section-pad" aria-labelledby="simulator-title">
-      <div class="section-heading">
-        <p class="eyebrow">Tarifas de negociación</p>
-        <h2 id="simulator-title">Registra tu referido y estima la recompensa</h2>
-        <p>Este espacio deja listo el flujo de inscripción y permite calcular un valor estimado según el tipo de oportunidad. La recompensa final aplica solo cuando el negocio se cierra con Amaru FS Inmobiliaria y queda documentado.</p>
-      </div>
+      <SectionHeading eyebrow="Tarifas de negociación" title="Registra tu referido y estima la recompensa" titleId="simulator-title" description="Este espacio deja listo el flujo de inscripción y permite calcular un valor estimado según el tipo de oportunidad. La recompensa final aplica solo cuando el negocio se cierra con Amaru FS Inmobiliaria y queda documentado." width="wide" />
       <div class="simulator__layout">
         <article class="referral-intake" aria-labelledby="intake-title">
           <p class="eyebrow">Inscripción del referido</p>
@@ -367,10 +353,7 @@ import "../styles/pages/referidos.css";
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes sobre referidos</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre referidos" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         <article class="faq-item">
           <button type="button" aria-expanded="false">

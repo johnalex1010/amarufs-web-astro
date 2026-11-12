@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import "../styles/pages/propietarios.css";
 ---
@@ -79,10 +80,7 @@ import "../styles/pages/propietarios.css";
     </section>
 
     <section class="audience section-pad" aria-labelledby="audience-title">
-      <div class="section-heading">
-        <p class="eyebrow">Ruta para propietarios</p>
-        <h2 id="audience-title">Esta ruta es para propietarios con un inmueble real</h2>
-      </div>
+      <SectionHeading eyebrow="Ruta para propietarios" title="Esta ruta es para propietarios con un inmueble real" titleId="audience-title" />
       <div class="audience__layout">
         <div class="audience__box">
           <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
@@ -108,10 +106,7 @@ import "../styles/pages/propietarios.css";
     </section>
 
     <section class="services section-pad" id="servicios" aria-labelledby="services-title">
-      <div class="section-heading">
-        <p class="eyebrow">Servicios para propietarios</p>
-        <h2 id="services-title">Elige el objetivo de tu inmueble</h2>
-      </div>
+      <SectionHeading eyebrow="Servicios para propietarios" title="Elige el objetivo de tu inmueble" titleId="services-title" />
       <div class="service-grid">
         <article class="service-card">
           <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-sign-hanging"></i></span>
@@ -132,10 +127,7 @@ import "../styles/pages/propietarios.css";
     </section>
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
-      <div class="section-heading">
-        <p class="eyebrow">Paso a paso</p>
-        <h2 id="process-title">Cómo trabaja Amaru FS Inmobiliaria con propietarios</h2>
-      </div>
+      <SectionHeading eyebrow="Paso a paso" title="Cómo trabaja Amaru FS Inmobiliaria con propietarios" titleId="process-title" />
       <ol class="timeline">
         <li>
           <span><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 01</span>
@@ -240,10 +232,7 @@ import "../styles/pages/propietarios.css";
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes de propietarios</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes de propietarios" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         <article class="faq-item">
           <button type="button" aria-expanded="false">

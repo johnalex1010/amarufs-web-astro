@@ -1,25 +1,10 @@
 .eyebrow {
   color: var(--color-primary);
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0;
   margin-bottom: 12px;
   text-transform: uppercase;
-}
-
-.section-heading {
-  max-width: 760px;
-  margin-bottom: 34px;
-}
-
-.section-heading h2,
-.section-heading p {
-  margin-bottom: 0;
-}
-
-.section-heading h2 {
-  color: var(--color-primary);
-  font-size: clamp(2.2rem, 4vw, 4.3rem);
 }
 
 .reveal {

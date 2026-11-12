@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
 import "../../styles/pages/propietarios-arriendo.css";
 ---
@@ -105,10 +106,7 @@ import "../../styles/pages/propietarios-arriendo.css";
     </section>
 
     <section class="audience section-pad" aria-labelledby="audience-title">
-      <div class="section-heading">
-        <p class="eyebrow">Ruta de arriendo</p>
-        <h2 id="audience-title">Esta ruta es para propietarios que quieren arrendar</h2>
-      </div>
+      <SectionHeading eyebrow="Ruta de arriendo" title="Esta ruta es para propietarios que quieren arrendar" titleId="audience-title" />
       <div class="audience__layout">
         <div class="audience__box">
           <i class="fa-solid fa-house-circle-check" aria-hidden="true"></i>
@@ -132,10 +130,7 @@ import "../../styles/pages/propietarios-arriendo.css";
     </section>
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
-      <div class="section-heading">
-        <p class="eyebrow">Proceso de arriendo</p>
-        <h2 id="process-title">Cómo ayudamos a arrendar tu inmueble</h2>
-      </div>
+      <SectionHeading eyebrow="Proceso de arriendo" title="Cómo ayudamos a arrendar tu inmueble" titleId="process-title" />
       <div class="process-phases">
         <article class="process-phase">
           <div class="process-phase__heading">
@@ -293,10 +288,7 @@ import "../../styles/pages/propietarios-arriendo.css";
     </section>
 
     <section class="deliverables section-pad" aria-labelledby="roles-title">
-      <div class="section-heading">
-        <p class="eyebrow">Responsabilidades claras</p>
-        <h2 id="roles-title">Qué hace Amaru FS y qué hace la aseguradora</h2>
-      </div>
+      <SectionHeading eyebrow="Responsabilidades claras" title="Qué hace Amaru FS y qué hace la aseguradora" titleId="roles-title" />
       <div class="service-grid">
         <article class="service-card">
           <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-house-user"></i></span>
@@ -329,10 +321,7 @@ import "../../styles/pages/propietarios-arriendo.css";
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes sobre arriendo de inmuebles</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre arriendo de inmuebles" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         <article class="faq-item">
           <button type="button" aria-expanded="false">

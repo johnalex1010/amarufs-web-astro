@@ -1,0 +1,29 @@
+---
+/**
+ * Encabezado de sección reutilizable: eyebrow opcional + título + descripción opcional.
+ * El `titleId` es obligatorio porque la sección lo usa en aria-labelledby.
+ * Contenido extra (enlaces, listas cortas) va en el slot.
+ */
+import "../../styles/components/section-heading.css";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleId: string;
+  description?: string;
+  headingLevel?: 2 | 3;
+  /** "default" = 780 px · "wide" = 980 px */
+  width?: "default" | "wide";
+  class?: string;
+}
+
+const { eyebrow, title, titleId, description, headingLevel = 2, width = "default", class: className } = Astro.props;
+const Heading = headingLevel === 3 ? "h3" : "h2";
+---
+
+<div class:list={["section-heading", width === "wide" && "section-heading--wide", className]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Heading id={titleId}>{title}</Heading>
+  {description && <p class="section-heading__description">{description}</p>}
+  <slot />
+</div>

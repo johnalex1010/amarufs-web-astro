@@ -321,35 +321,35 @@ src/
 | JS | Si el componente necesita interacción, su script vive en `src/scripts/components/<nombre>.js`, se inicializa por atributo `data-*` y soporta varias instancias en la misma página. |
 | SEO | Si el componente pinta contenido que también va en JSON-LD (FAQ, inmueble), el componente genera ambos desde los mismos datos. |
 
-#### Ejemplo
+#### Ejemplo (componente real: `src/components/ui/SectionHeading.astro`)
 
 ```astro
 ---
-// src/components/ui/SectionHeading.astro
-import "../../styles/components/section-heading.css";
-
-interface Props {
-  eyebrow?: string;
-  title: string;
-  titleId: string;
-  headingLevel?: 2 | 3;
-}
-
-const { eyebrow, title, titleId, headingLevel = 2 } = Astro.props;
-const Heading = `h${headingLevel}`;
+import SectionHeading from "../components/ui/SectionHeading.astro";
 ---
+<section class="faq section-pad" aria-labelledby="faq-title">
+  <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes" titleId="faq-title" />
+  ...
+</section>
 
-<div class="section-heading">
-  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-  <Heading id={titleId}>{title}</Heading>
-  <slot />
-</div>
+<!-- Con descripción (se pinta en --color-muted) y ancho amplio -->
+<SectionHeading
+  eyebrow="Tarifas de negociación"
+  title="Registra tu referido y estima la recompensa"
+  titleId="simulator-title"
+  description="La recompensa final aplica solo cuando el negocio se cierra."
+  width="wide"
+/>
+
+<!-- Con datos dinámicos -->
+<SectionHeading eyebrow={`Proceso de ${operationLabel.toLowerCase()}`} title={processTitle} titleId="rent-process-title" />
 ```
 
-```astro
-<!-- Uso en una página -->
-<SectionHeading eyebrow="FAQ" title="Preguntas frecuentes" titleId="faq-title" />
-```
+Reglas del encabezado de sección:
+
+- `titleId` siempre coincide con el `aria-labelledby` de la `<section>` que lo contiene.
+- El `.eyebrow` (13 px, 700, mayúsculas, `--color-primary`) es global en `utilities.css`; dentro del encabezado va pegado al título. Sobre fondos azules (hero, cajas oscuras) la página solo cambia su color a blanco.
+- Ajustes permitidos en CSS de página: márgenes por contexto (p. ej. `.filters-sidebar .section-heading { margin-bottom: 0; }`). No redefinir colores, tamaños ni ancho base.
 
 #### Catálogo de componentes del sitio
 
@@ -361,7 +361,7 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 | `SiteFooter` ✅ | `global/` | `.site-footer` | — |
 | `Breadcrumbs` ✅ | `global/` | `.breadcrumbs` | `items` |
 | `Button` ✅ | `ui/` | `.btn`, `.btn--*` | `href?`, `variant`, `size?`, `icon?`, `external?`, `type?`, `block?` (ver §7.1) |
-| `SectionHeading` | `ui/` | `.section-heading` + `.eyebrow` | `eyebrow?`, `title`, `titleId`, `headingLevel?` |
+| `SectionHeading` ✅ | `ui/` | `.section-heading` + `.eyebrow` | `eyebrow?`, `title`, `titleId`, `description?`, `headingLevel?`, `width?` (`default` 780 px · `wide` 980 px), slot |
 | `Card` | `ui/` | base de `.route-card`, `.service-card`, `.audience__box`, `.trust-cards` | `variant`, `image?`, `icon?`, `title`, `headingLevel?`, slot |
 | `Badge` | `ui/` | chips/estados (`.property-card__status`, tags de ficha) | `variant`, `icon?`, texto en slot |
 | `Pagination` | `ui/` | `.pagination` (`data-pagination`) | `label`, `totalPages?`; JS reutilizable |

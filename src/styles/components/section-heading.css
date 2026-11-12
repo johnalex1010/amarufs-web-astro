@@ -1,0 +1,33 @@
+/* Componente SectionHeading — encabezado de sección: eyebrow + título + descripción (docs/GUIA-UI-UX.md §7.0). */
+
+.section-heading {
+	max-width: 780px;
+	margin-bottom: 34px;
+}
+
+.section-heading--wide {
+	max-width: 980px;
+}
+
+.section-heading h2,
+.section-heading h3,
+.section-heading p {
+	margin-bottom: 0;
+}
+
+.section-heading h2,
+.section-heading h3 {
+	color: var(--color-primary);
+}
+
+.section-heading h2 {
+	font-size: clamp(2.2rem, 4vw, 4.3rem);
+}
+
+.section-heading h3 {
+	font-size: clamp(26px, 2.4vw, 34px);
+}
+
+.section-heading__description {
+	color: var(--color-muted);
+}

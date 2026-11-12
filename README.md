@@ -138,7 +138,7 @@ amarufs/
     src/
       components/
         global/      # header, footer, migas de pan
-        ui/          # piezas genéricas reutilizables (Button, ...)
+        ui/          # piezas genéricas reutilizables (Button, SectionHeading, ...)
         common/      # modales y piezas de negocio
       data/
         properties.ts

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
 import "../../styles/pages/propietarios-venta.css";
 ---
@@ -97,10 +98,7 @@ import "../../styles/pages/propietarios-venta.css";
     </section>
 
     <section class="audience section-pad" aria-labelledby="audience-title">
-      <div class="section-heading">
-        <p class="eyebrow">Ruta de venta</p>
-        <h2 id="audience-title">Esta ruta es para propietarios que quieren vender</h2>
-      </div>
+      <SectionHeading eyebrow="Ruta de venta" title="Esta ruta es para propietarios que quieren vender" titleId="audience-title" />
       <div class="audience__layout">
         <div class="audience__box">
           <i class="fa-solid fa-house-circle-check" aria-hidden="true"></i>
@@ -124,10 +122,7 @@ import "../../styles/pages/propietarios-venta.css";
     </section>
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
-      <div class="section-heading">
-        <p class="eyebrow">Proceso de venta</p>
-        <h2 id="process-title">Cómo vendemos tu inmueble</h2>
-      </div>
+      <SectionHeading eyebrow="Proceso de venta" title="Cómo vendemos tu inmueble" titleId="process-title" />
       <div class="process-phases">
         <article class="process-phase">
           <div class="process-phase__heading">
@@ -276,10 +271,7 @@ import "../../styles/pages/propietarios-venta.css";
     </section>
 
     <section class="deliverables section-pad" aria-labelledby="deliverables-title">
-      <div class="section-heading">
-        <p class="eyebrow">Acompañamiento comercial</p>
-        <h2 id="deliverables-title">Qué recibe el propietario</h2>
-      </div>
+      <SectionHeading eyebrow="Acompañamiento comercial" title="Qué recibe el propietario" titleId="deliverables-title" />
       <div class="service-grid">
         <article class="service-card">
           <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-clipboard-list"></i></span>
@@ -312,10 +304,7 @@ import "../../styles/pages/propietarios-venta.css";
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes sobre venta de inmuebles</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre venta de inmuebles" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         <article class="faq-item">
           <button type="button" aria-expanded="false">

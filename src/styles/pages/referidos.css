@@ -100,28 +100,6 @@
 	color: rgba(255, 255, 255, 0.86);
 }
 
-.section-heading {
-	max-width: 780px;
-	margin-bottom: 34px;
-}
-
-.eyebrow {
-	margin-bottom: 12px;
-	color: var(--color-primary);
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: 0;
-	text-transform: uppercase;
-}
-
-.valid-referrals .section-heading {
-	max-width: 940px;
-}
-
-.valid-referrals .section-heading p:last-child {
-	color: var(--color-muted);
-}
-
 .referral-grid {
 	display: grid;
 	grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -347,14 +325,6 @@
 .timeline p {
 	color: var(--color-muted);
 	font-size: 15px;
-}
-
-.simulator .section-heading {
-	max-width: 980px;
-}
-
-.simulator .section-heading p:last-child {
-	color: var(--color-muted);
 }
 
 .simulator__layout {
@@ -945,10 +915,6 @@
 	padding-right: max(24px, calc((100vw - var(--content-max-width)) / 2));
 	padding-left: max(24px, calc((100vw - var(--content-max-width)) / 2));
 	background: var(--color-white);
-}
-
-.checklist .section-heading p:last-child {
-	color: var(--color-muted);
 }
 
 .info-phases {

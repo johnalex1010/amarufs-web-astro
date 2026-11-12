@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import "../styles/pages/home.css";
 ---
@@ -94,10 +95,7 @@ import "../styles/pages/home.css";
     </section>
 
     <section class="intro section-pad" aria-labelledby="intro-title">
-      <div class="section-heading">
-        <p class="eyebrow">Atención directa y cercana</p>
-        <h2 id="intro-title">Un proceso claro para cada intención inmobiliaria</h2>
-      </div>
+      <SectionHeading eyebrow="Atención directa y cercana" title="Un proceso claro para cada intención inmobiliaria" titleId="intro-title" />
       <div class="intro__grid">
         <p><i class="fa-solid fa-key" aria-hidden="true"></i> Si buscas vivienda o una oportunidad de compra, te
           compartimos información del inmueble disponible y te orientamos antes de avanzar.</p>
@@ -107,10 +105,7 @@ import "../styles/pages/home.css";
     </section>
 
     <section class="routes section-pad" id="rutas" aria-labelledby="routes-title">
-      <div class="section-heading">
-        <p class="eyebrow">Rutas principales</p>
-        <h2 id="routes-title">¿Qué necesitas hacer hoy?</h2>
-      </div>
+      <SectionHeading eyebrow="Rutas principales" title="¿Qué necesitas hacer hoy?" titleId="routes-title" />
       <div class="card-grid">
         <article class="route-card">
           <img src="/images/banner-propietario-lateral.webp" alt="Asesoría para propietarios que quieren vender o arrendar un inmueble" width="720" height="420" loading="lazy">
@@ -163,10 +158,7 @@ import "../styles/pages/home.css";
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes sobre Amaru FS Inmobiliaria</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre Amaru FS Inmobiliaria" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         <article class="faq-item">
           <button type="button" aria-expanded="false">

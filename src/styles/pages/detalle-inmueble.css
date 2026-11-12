@@ -310,14 +310,10 @@ main {
 	margin-top: 4px;
 }
 
+/* Ritmo vertical propio de la ficha: el eyebrow se separa del título con padding. */
 .eyebrow {
 	display: block;
 	margin-bottom: 0;
-	color: var(--color-primary);
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: 0;
-	text-transform: uppercase;
 }
 
 .eyebrow + h1,
@@ -327,17 +323,12 @@ main {
 }
 
 .section-heading {
-	max-width: 820px;
 	margin-bottom: var(--heading-content-gap);
 }
 
 .intro-block > p:last-of-type,
 .location-layout h2 {
 	margin-bottom: var(--heading-content-gap);
-}
-
-.section-heading p:last-child {
-	color: var(--color-muted);
 }
 
 .quick-grid {

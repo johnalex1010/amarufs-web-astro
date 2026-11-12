@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import RentalRequirementsModal from "../components/common/RentalRequirementsModal.astro";
 import "../styles/pages/arrendatarios.css";
@@ -85,10 +86,7 @@ import "../styles/pages/arrendatarios.css";
     </section>
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
-      <div class="section-heading">
-        <p class="eyebrow">Paso a paso</p>
-        <h2 id="process-title">Cómo avanzar si te interesa un inmueble</h2>
-      </div>
+      <SectionHeading eyebrow="Paso a paso" title="Cómo avanzar si te interesa un inmueble" titleId="process-title" />
       <div class="process-phases">
         <article class="process-phase">
           <div class="process-phase__heading">
@@ -201,10 +199,7 @@ import "../styles/pages/arrendatarios.css";
     </section>
 
     <section class="roles section-pad" aria-labelledby="roles-title">
-      <div class="section-heading">
-        <p class="eyebrow">Roles del proceso</p>
-        <h2 id="roles-title">Quién hace qué en el proceso de arriendo</h2>
-      </div>
+      <SectionHeading eyebrow="Roles del proceso" title="Quién hace qué en el proceso de arriendo" titleId="roles-title" />
       <div class="role-grid">
         <article>
           <i class="fa-solid fa-house-user" aria-hidden="true"></i>
@@ -237,10 +232,7 @@ import "../styles/pages/arrendatarios.css";
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes de arrendatarios</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes de arrendatarios" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         <article class="faq-item">
           <button type="button" aria-expanded="false"><span>¿Amaru FS Inmobiliaria aprueba mi solicitud de arriendo?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>

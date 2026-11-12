@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
 import RentalRequirementsModal from "../../components/common/RentalRequirementsModal.astro";
 import { site } from "../../data/site";
@@ -379,11 +380,7 @@ const faqJsonLd = {
     </aside>
 
     <section class="section-pad section-band section-band--white intro-block" aria-labelledby="intro-title">
-      <div class="section-heading">
-        <p class="eyebrow">Información principal</p>
-        <h2 id="intro-title">{featuresTitle}</h2>
-        <p>{answerSummary}</p>
-      </div>
+      <SectionHeading eyebrow="Información principal" title={featuresTitle} titleId="intro-title" description={answerSummary} />
       <div class="quick-grid">
         {property.features.map((feature) => (
           <article>
@@ -395,10 +392,7 @@ const faqJsonLd = {
     </section>
 
     <section class="section-pad section-band section-band--gray description-section" aria-labelledby="description-title">
-      <div class="section-heading">
-        <p class="eyebrow">Descripción</p>
-        <h2 id="description-title">Descripción del inmueble</h2>
-      </div>
+      <SectionHeading eyebrow="Descripción" title="Descripción del inmueble" titleId="description-title" />
       <div class="description-box">
         <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
         <div class="description-box__content" set:html={descriptionHtml}></div>
@@ -452,10 +446,7 @@ const faqJsonLd = {
     )}
 
     <section class="process section-pad section-band section-band--white" aria-labelledby="rent-process-title">
-      <div class="section-heading">
-        <p class="eyebrow">Proceso de {operationLabel.toLowerCase()}</p>
-        <h2 id="rent-process-title">{processTitle}</h2>
-      </div>
+      <SectionHeading eyebrow={`Proceso de ${operationLabel.toLowerCase()}`} title={processTitle} titleId="rent-process-title" />
       <ol class="timeline">
         {
           processSteps.map((step, index) => (
@@ -475,11 +466,7 @@ const faqJsonLd = {
     </section>
 
     <section class="section-pad section-band section-band--gray trust-grid" aria-labelledby="trust-title">
-      <div class="section-heading">
-        <p class="eyebrow">Confianza</p>
-        <h2 id="trust-title">Información verificada antes de avanzar</h2>
-        <p>Amaru FS Inmobiliaria trabaja con información real del inmueble, fotos autorizadas y características revisadas.</p>
-      </div>
+      <SectionHeading eyebrow="Confianza" title="Información verificada antes de avanzar" titleId="trust-title" description="Amaru FS Inmobiliaria trabaja con información real del inmueble, fotos autorizadas y características revisadas." />
       <div class="trust-cards">
         <article>
           <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
@@ -509,10 +496,7 @@ const faqJsonLd = {
     </section>
 
     <section class="faq section-pad section-band section-band--gray" aria-labelledby="faq-title">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Preguntas frecuentes sobre este inmueble</h2>
-      </div>
+      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre este inmueble" titleId="faq-title" />
       <div class="faq-list" data-faq-list>
         {
           faqItems.map((item) => (
@@ -532,10 +516,7 @@ const faqJsonLd = {
 
     {relatedProperties.length > 0 && (
       <section class="related section-pad section-band section-band--white" aria-labelledby="related-title">
-        <div class="section-heading">
-          <p class="eyebrow">Más opciones</p>
-          <h2 id="related-title">Otros inmuebles que te pueden interesar</h2>
-        </div>
+        <SectionHeading eyebrow="Más opciones" title="Otros inmuebles que te pueden interesar" titleId="related-title" />
         <ul class="related-grid">
           {relatedProperties.map((item) => (
             <li class="related-card">
