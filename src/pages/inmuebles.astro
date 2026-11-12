@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
@@ -80,23 +81,23 @@ const collectionJsonLd = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
 
   <main id="inicio">
-    <section class="hero listings-hero">
-      <div class="hero__content">
-        <p class="eyebrow">Inmuebles disponibles</p>
-        <h1>Inmuebles disponibles para arriendo y venta</h1>
-        <p class="hero__lead">Consulta propiedades publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles.</p>
-        <div class="hero__actions" aria-label="Acciones principales">
-          <Button variant="secondary" icon="fa-solid fa-magnifying-glass" id="inmuebles-buscar" href="#buscador">Buscar inmueble</Button>
-          <Button variant="light" icon="fa-solid fa-key" id="inmuebles-publicar" href="/propietarios/">Tengo un inmueble para publicar</Button>
-        </div>
-      </div>
-      <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/inmuebles-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216" />
-        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-list-check"></i></span>
-        <h2 id="hero-panel-title">Encuentra inmuebles con información clara y atención directa</h2>
-        <p>Revisa fotos, ubicación, características principales y acceso a consulta por WhatsApp antes de avanzar.</p>
-      </aside>
-    </section>
+    <PageHero
+      eyebrow="Inmuebles disponibles"
+      title="Inmuebles disponibles para arriendo y venta"
+      lead="Consulta propiedades publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles."
+      backgroundImage="/images/banner-arrendatario.webp"
+      panel={{
+        image: "/images/inmuebles-lateral.webp",
+        icon: "fa-solid fa-list-check",
+        title: "Encuentra inmuebles con información clara y atención directa",
+        text: "Revisa fotos, ubicación, características principales y acceso a consulta por WhatsApp antes de avanzar."
+      }}
+    >
+      <Fragment slot="actions">
+        <Button variant="secondary" icon="fa-solid fa-magnifying-glass" id="inmuebles-buscar" href="#buscador">Buscar inmueble</Button>
+        <Button variant="light" icon="fa-solid fa-key" id="inmuebles-publicar" href="/propietarios/">Tengo un inmueble para publicar</Button>
+      </Fragment>
+    </PageHero>
 
     <section class="listings-board section-pad" id="buscador" aria-labelledby="results-title">
       <button class="filters-fab" type="button" aria-label="Abrir filtros de inmuebles" aria-controls="filters-sidebar" aria-expanded="false" data-filter-toggle>

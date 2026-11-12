@@ -139,7 +139,7 @@ amarufs/
       components/
         global/      # header, footer, migas de pan
         ui/          # piezas genéricas reutilizables (Button, SectionHeading, ...)
-        sections/    # bloques completos de página (FaqSection: acordeón + JSON-LD FAQPage, ...)
+        sections/    # bloques completos de página (PageHero, FaqSection: acordeón + JSON-LD FAQPage, ...)
         common/      # modales y piezas de negocio
       data/
         properties.ts

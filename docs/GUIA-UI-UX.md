@@ -366,7 +366,7 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 | `Badge` | `ui/` | chips/estados (`.property-card__status`, tags de ficha) | `variant`, `icon?`, texto en slot |
 | `Pagination` | `ui/` | `.pagination` (`data-pagination`) | `label`, `totalPages?`; JS reutilizable |
 | `EmptyState` | `ui/` | `.empty-state` | `icon`, `title`, slot de acciones |
-| `PageHero` | `sections/` | `.hero`, `.hero__content`, `.hero__panel` (7 páginas) | `eyebrow`, `title`, `lead`, `actions`, `panel { image, imageAlt, icon, title, text }`, `backgroundImage` |
+| `PageHero` ✅ | `sections/` | `.hero`, `.hero__content`, `.hero__panel` (7 páginas) | `eyebrow`, `title`, `lead`, `backgroundImage`, `panel? { image, imageAlt?, icon, title, text }`, slot `actions` (ver §7.5) |
 | `FaqSection` ✅ | `sections/` | `.faq-list`, `.faq-item` (8 páginas) + JSON-LD `FAQPage` | `title`, `items: { question, answer, answerHtml? }[]`, `eyebrow?`, `titleId?`, `class?`, `schema?` (ver §7.8) |
 | `Timeline` | `sections/` | `.timeline` (6 páginas) | `steps: { icon?, title, text, href? }[]`, `variant` |
 | `ProcessPhases` | `sections/` | `.process-phase` (3 páginas) | `phases: { label, title, steps }[]` (usa `Timeline`) |
@@ -453,13 +453,37 @@ Reglas:
 
 ### 7.5 Hero de página
 
-Estructura estándar (inicio, propietarios, arrendatarios, inmuebles, referidos):
+**Componente:** `src/components/sections/PageHero.astro` · **CSS:** `src/styles/components/page-hero.css`. Lo usan inicio, propietarios, venta, arriendo, arrendatarios, inmuebles y referidos (la ficha de inmueble tiene su propio hero con galería, `.detail-hero`).
 
-- Grilla `main + aside` (`--layout-main` / `--layout-aside`), una columna ≤ 1100 px.
-- **Contenido** (izquierda): fondo azul con gradiente `rgba(26,59,137,0.97) → rgba(16,26,45,0.98)` sobre imagen; `.eyebrow` + H1 + lead + máximo 2 botones (`secondary` + `light` translúcido).
-- **Panel** (derecha): fondo `--color-primary`, imagen 16/9, ícono circular verde, H2 corto y párrafo.
-- Altura mínima razonable (`min-height` no debe empujar el contenido fuera del primer pantallazo en móvil; en ≤ 760 px usar `auto`).
-- El CSS del hero vive en un solo lugar compartido; las páginas solo cambian la imagen de fondo con una variable (`--hero-image`).
+```astro
+---
+import PageHero from "../components/sections/PageHero.astro";
+import Button from "../components/ui/Button.astro";
+---
+<PageHero
+  eyebrow="Propietarios en Bogotá y Sabana"
+  title="Vende o arrienda tu inmueble con acompañamiento inmobiliario"
+  lead="En Amaru FS Inmobiliaria te orientamos desde el primer contacto..."
+  backgroundImage="/images/banner-amarufs-propietarios.webp"
+  panel={{
+    image: "/images/banner-propietario-lateral.webp",
+    icon: "fa-solid fa-camera-retro",
+    title: "Tu inmueble necesita información clara, fotos reales y seguimiento",
+    text: "Organizamos la información, validamos características..."
+  }}
+>
+  <Fragment slot="actions">
+    <Button variant="secondary" icon="fa-brands fa-whatsapp" id="pagina-whatsapp" href={whatsappHref} external>Quiero hablar con Amaru FS</Button>
+    <Button variant="light" icon="fa-solid fa-arrow-down" href="#proceso">Conocer el proceso</Button>
+  </Fragment>
+</PageHero>
+```
+
+- Grilla `main + aside` (`--layout-main` / `--layout-aside`); una columna ≤ 1100 px; en ≤ 760 px el panel se oculta y los botones ocupan el ancho completo.
+- **Contenido** (izquierda): imagen de fondo por página (`backgroundImage` → variable CSS `--hero-image`) con `--color-primary` como color de respaldo mientras carga; `.eyebrow` + **único H1 de la página** + lead (máx. 760 px) + máximo 2 botones: `secondary` (acción principal) y `light` (secundaria).
+- **Panel** (derecha, opcional): fondo `--color-primary`, imagen 16/9, ícono circular verde 48 px, H2 de 38 px y párrafo. La imagen del panel es decorativa (`imageAlt` vacío por defecto); si aporta información, pasar un `imageAlt` descriptivo.
+- Tamaños del H1: 78 px escritorio · 62 px ≤ 1100 px · `clamp(38px, 10.5vw, 42px)` ≤ 760 px.
+- Prohibido redefinir `.hero*` en CSS de página. La imagen de fondo nueva debe estar en `public/images` en WebP.
 
 ### 7.6 Cards
 

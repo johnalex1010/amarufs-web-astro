@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
@@ -55,23 +56,23 @@ const faqItems: FaqItem[] = [
   </Fragment>
 
   <main id="inicio">
-    <section class="hero">
-      <div class="hero__content">
-        <p class="eyebrow">Referidos inmobiliarios</p>
-        <h1>Refiere propietarios o interesados y participa por recompensa de cierre</h1>
-        <p class="hero__lead">Si conoces a alguien que quiere vender o arrendar su inmueble, o a una persona que busca comprar o tomar en arriendo, puedes conectarlo con Amaru FS Inmobiliaria. Si el referido es válido y el negocio se cierra con nosotros, puedes recibir una recompensa según las reglas del programa.</p>
-        <div class="hero__actions" aria-label="Acciones principales">
-          <Button variant="secondary" icon="fa-solid fa-handshake-angle" href="#simulator-title">Quiero referir ahora</Button>
-          <Button variant="light" icon="fa-solid fa-list-check" href="#valid-title">Ver reglas del programa</Button>
-        </div>
-      </div>
-      <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/banner-referidos-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
-        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-people-arrows"></i></span>
-        <h2 id="hero-panel-title">Tu contacto puede convertirse en una oportunidad real</h2>
-        <p>Recibimos referidos reales, con datos verificables y autorización para contactar al propietario o al interesado. La recompensa aplica únicamente por cierre documentado.</p>
-      </aside>
-    </section>
+    <PageHero
+      eyebrow="Referidos inmobiliarios"
+      title="Refiere propietarios o interesados y participa por recompensa de cierre"
+      lead="Si conoces a alguien que quiere vender o arrendar su inmueble, o a una persona que busca comprar o tomar en arriendo, puedes conectarlo con Amaru FS Inmobiliaria. Si el referido es válido y el negocio se cierra con nosotros, puedes recibir una recompensa según las reglas del programa."
+      backgroundImage="/images/banner-amarufs.webp"
+      panel={{
+        image: "/images/banner-referidos-lateral.webp",
+        icon: "fa-solid fa-people-arrows",
+        title: "Tu contacto puede convertirse en una oportunidad real",
+        text: "Recibimos referidos reales, con datos verificables y autorización para contactar al propietario o al interesado. La recompensa aplica únicamente por cierre documentado."
+      }}
+    >
+      <Fragment slot="actions">
+        <Button variant="secondary" icon="fa-solid fa-handshake-angle" href="#simulator-title">Quiero referir ahora</Button>
+        <Button variant="light" icon="fa-solid fa-list-check" href="#valid-title">Ver reglas del programa</Button>
+      </Fragment>
+    </PageHero>
 
     <section class="valid-referrals section-pad" aria-labelledby="valid-title">
       <SectionHeading eyebrow="A quién puedes referir" title="Referidos válidos para Amaru FS Inmobiliaria" titleId="valid-title" description="Puedes referir propietarios con inmuebles para venta o arriendo, y también personas que buscan comprar o tomar en arriendo. El enfoque inicial está en Bogotá y Sabana, según viabilidad comercial y validación interna." width="wide" />

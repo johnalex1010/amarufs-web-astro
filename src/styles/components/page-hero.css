@@ -1,0 +1,162 @@
+/* Componente PageHero — hero de página: contenido + panel lateral (docs/GUIA-UI-UX.md §7.5). */
+
+.hero {
+	display: grid;
+	grid-template-columns: var(--layout-main) var(--layout-aside);
+	gap: var(--layout-gap);
+	align-items: stretch;
+	width: min(var(--content-max-width), calc(100% - 48px));
+	min-height: calc(100vh - 200px);
+	margin: 0 auto;
+	padding: 56px 0 42px;
+}
+
+.hero__content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 52px;
+	overflow: hidden;
+	color: var(--color-white);
+	/* El color azul se ve mientras carga la imagen de la página (--hero-image). */
+	background-color: var(--color-primary);
+	background-image: var(--hero-image, none);
+	background-position: center;
+	background-size: cover;
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-soft);
+}
+
+.hero__content h1,
+.hero__content .eyebrow {
+	color: var(--color-white);
+}
+
+.hero__lead {
+	max-width: 760px;
+	margin-bottom: 32px;
+	color: rgba(255, 255, 255, 0.88);
+	font-size: 20px;
+}
+
+.hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.hero__panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 20px;
+	padding: 28px;
+	color: var(--color-white);
+	background: var(--color-primary);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-soft);
+}
+
+.hero__panel img {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border-radius: var(--radius);
+}
+
+.hero__panel-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	color: var(--color-primary);
+	background: var(--color-secondary);
+	border-radius: 50%;
+	font-size: 22px;
+	transition: transform 220ms ease;
+}
+
+.hero__panel h2 {
+	color: var(--color-white);
+	font-size: 38px;
+}
+
+.hero__panel p {
+	color: rgba(255, 255, 255, 0.86);
+}
+
+/* Animación de entrada del panel (la clase .reveal la agrega site-interactions.js). */
+.hero__panel.reveal {
+	transform: translateY(18px) scale(0.985);
+}
+
+.hero__panel.reveal.is-visible {
+	transform: translateY(0) scale(1);
+}
+
+@media (max-width: 1100px) {
+	.hero {
+		grid-template-columns: 1fr;
+		min-height: auto;
+	}
+
+	.hero__content h1 {
+		font-size: 62px;
+	}
+}
+
+@media (max-width: 760px) {
+	.hero {
+		width: calc(100vw - 32px);
+		max-width: calc(100vw - 32px);
+		min-width: 0;
+		padding-top: 26px;
+		gap: 18px;
+		overflow: hidden;
+	}
+
+	.hero__content {
+		min-width: 0;
+		max-width: 100%;
+		padding: 26px;
+	}
+
+	.hero__content > * {
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	.hero__panel {
+		display: none;
+	}
+
+	.hero__content h1 {
+		font-size: clamp(38px, 10.5vw, 42px);
+		overflow-wrap: anywhere;
+		word-break: break-word;
+	}
+
+	.hero__lead {
+		max-width: 100%;
+		font-size: 18px;
+		overflow-wrap: anywhere;
+	}
+
+	.hero__actions {
+		flex-direction: column;
+		align-items: stretch;
+		max-width: 100%;
+	}
+
+	.hero__actions .btn {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero__panel.reveal {
+		opacity: 1;
+		transform: none;
+	}
+}

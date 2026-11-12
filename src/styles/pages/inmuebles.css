@@ -4,102 +4,6 @@
 	padding: 86px 0;
 }
 
-.hero {
-	display: grid;
-	grid-template-columns: var(--layout-main) var(--layout-aside);
-	gap: var(--layout-gap);
-	align-items: stretch;
-	width: min(var(--max-width), calc(100% - 48px));
-	min-height: calc(100vh - 200px);
-	margin: 0 auto;
-	padding: 56px 0 42px;
-}
-
-.hero__content {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: 52px;
-	overflow: hidden;
-	color: var(--color-white);
-	background:
-		linear-gradient(
-			135deg,
-			rgba(26, 59, 137, 0.97),
-			rgba(16, 26, 45, 0.98)
-		),
-		linear-gradient(
-			90deg,
-			rgba(0, 225, 173, 0.16),
-			rgba(242, 185, 80, 0.12)
-		);
-	background-position: center;
-	background-size: cover;
-	background-image: url("/images/banner-arrendatario.webp");
-	border-radius: var(--radius);
-	box-shadow: var(--shadow-soft);
-}
-
-.hero__content h1,
-.hero__content .eyebrow {
-	color: var(--color-white);
-}
-
-.hero__lead {
-	max-width: 720px;
-	margin-bottom: 32px;
-	color: rgba(255, 255, 255, 0.88);
-	font-size: 20px;
-}
-
-.hero__actions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 14px;
-}
-
-.hero__panel {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 20px;
-	padding: 28px;
-	color: var(--color-white);
-	background: var(--color-primary);
-	border-radius: var(--radius);
-	box-shadow: var(--shadow-soft);
-}
-
-.hero__panel img {
-	width: 100%;
-	/* margin-bottom: 20px; */
-	aspect-ratio: 16 / 9;
-	object-fit: cover;
-	border-radius: var(--radius);
-}
-
-.hero__panel-icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 48px;
-	height: 48px;
-	/* margin-bottom: auto; */
-	color: var(--color-primary);
-	background: var(--color-secondary);
-	border-radius: 50%;
-	font-size: 22px;
-}
-
-.hero__panel h2 {
-	color: var(--color-white);
-	font-size: 38px;
-}
-
-.hero__panel p {
-	color: rgba(255, 255, 255, 0.86);
-}
-
 .intro__grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1018,12 +922,10 @@
 	transform: translateY(0);
 }
 
-.hero__panel.reveal,
 .properties__visual.reveal {
 	transform: translateY(18px) scale(0.985);
 }
 
-.hero__panel.reveal.is-visible,
 .properties__visual.reveal.is-visible {
 	transform: translateY(0) scale(1);
 }
@@ -1043,7 +945,6 @@
 }
 
 .route-card__icon,
-.hero__panel-icon,
 .property-window span {
 	transition: transform 220ms ease;
 }
@@ -1074,21 +975,12 @@
 }
 
 @media (max-width: 1020px) {
-	h1 {
-		font-size: 60px;
-	}
-
 	h2 {
 		font-size: 40px;
 	}
 
-	.hero,
 	.properties {
 		grid-template-columns: 1fr;
-	}
-
-	.hero {
-		min-height: auto;
 	}
 
 	.card-grid {
@@ -1111,10 +1003,6 @@
 	.section-pad {
 		width: min(var(--max-width), calc(100% - 32px));
 		padding: 62px 0;
-	}
-
-	.hero {
-		width: min(var(--max-width), calc(100% - 32px));
 	}
 
 	.listings-board {
@@ -1241,30 +1129,6 @@
 		border-top: 1px solid var(--color-line);
 	}
 
-	.hero {
-		width: calc(100vw - 32px);
-		max-width: calc(100vw - 32px);
-		padding-top: 26px;
-		gap: 18px;
-	}
-
-	.hero,
-	.hero__content {
-		min-width: 0;
-		max-width: 100%;
-		overflow: hidden;
-	}
-
-	.hero__content > * {
-		min-width: 0;
-		max-width: 100%;
-	}
-
-	.hero__panel {
-		display: none;
-	}
-
-	.hero__content,
 	.properties__content,
 	.search-panel,
 	.trust__box,
@@ -1272,37 +1136,16 @@
 		padding: 26px;
 	}
 
-	.hero__content h1 {
-		font-size: clamp(38px, 10.5vw, 42px);
-		overflow-wrap: anywhere;
-		word-break: break-word;
-	}
-
 	h2 {
 		font-size: 34px;
 	}
 
-	.hero__lead {
-		font-size: 18px;
-		max-width: 100%;
-		overflow-wrap: anywhere;
-	}
-
-	.hero__actions,
 	.filter-actions,
 	.results__head,
 	.referrals.section-pad {
 		flex-direction: column;
 		align-items: stretch;
 		max-width: 100%;
-	}
-
-	.hero__actions .btn {
-		width: 100%;
-		max-width: 100%;
-		min-width: 0;
-		overflow-wrap: anywhere;
-		white-space: normal;
 	}
 
 	.intro__grid,
@@ -1339,7 +1182,6 @@
 	}
 
 	.reveal,
-	.hero__panel.reveal,
 	.properties__visual.reveal,
 	.route-card.reveal,
 	.property-card.reveal,

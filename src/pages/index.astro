@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
@@ -54,26 +55,23 @@ const faqItems: FaqItem[] = [
   </Fragment>
 
   <main id="inicio">
-    <section class="hero">
-      <div class="hero__content">
-        <p class="eyebrow">Inmobiliaria en Bogotá y Sabana</p>
-        <h1>Arrienda o vende tu inmueble con acompañamiento directo en Bogotá y Sabana</h1>
-        <p class="hero__lead">En Amaru FS Inmobiliaria ayudamos a propietarios, arrendatarios y compradores con
-          información clara, fotos reales, seguimiento por WhatsApp y un proceso pensado para generar confianza desde el
-          primer contacto.</p>
-        <div class="hero__actions" aria-label="Acciones principales">
-          <Button variant="secondary" icon="fa-brands fa-whatsapp" id="home-validar-whatsapp" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20validar%20mi%20inmueble." external>Quiero validar mi inmueble</Button>
-          <Button variant="light" icon="fa-solid fa-building" id="home-ver-inmuebles" href="/inmuebles/">Ver inmuebles disponibles</Button>
-        </div>
-      </div>
-      <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/home-banner.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
-        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-        <h2 id="hero-panel-title">Inmuebles reales, proceso claro y contacto directo</h2>
-        <p>Si tienes un inmueble para arrendar o vender, comunícate con nosotros y revisamos tu caso, visitamos la propiedad, verificamos la ficha
-          técnica y publicamos.</p>
-      </aside>
-    </section>
+    <PageHero
+      eyebrow="Inmobiliaria en Bogotá y Sabana"
+      title="Arrienda o vende tu inmueble con acompañamiento directo en Bogotá y Sabana"
+      lead="En Amaru FS Inmobiliaria ayudamos a propietarios, arrendatarios y compradores con información clara, fotos reales, seguimiento por WhatsApp y un proceso pensado para generar confianza desde el primer contacto."
+      backgroundImage="/images/banner-amarufs.webp"
+      panel={{
+        image: "/images/home-banner.webp",
+        icon: "fa-solid fa-shield-halved",
+        title: "Inmuebles reales, proceso claro y contacto directo",
+        text: "Si tienes un inmueble para arrendar o vender, comunícate con nosotros y revisamos tu caso, visitamos la propiedad, verificamos la ficha técnica y publicamos."
+      }}
+    >
+      <Fragment slot="actions">
+        <Button variant="secondary" icon="fa-brands fa-whatsapp" id="home-validar-whatsapp" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20validar%20mi%20inmueble." external>Quiero validar mi inmueble</Button>
+        <Button variant="light" icon="fa-solid fa-building" id="home-ver-inmuebles" href="/inmuebles/">Ver inmuebles disponibles</Button>
+      </Fragment>
+    </PageHero>
 
     <section class="intro section-pad" aria-labelledby="intro-title">
       <SectionHeading eyebrow="Atención directa y cercana" title="Un proceso claro para cada intención inmobiliaria" titleId="intro-title" />

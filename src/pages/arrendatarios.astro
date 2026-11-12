@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
@@ -40,23 +41,23 @@ const faqItems: FaqItem[] = [
   breadcrumbs={[{ name: "Arrendatarios", path: "/arrendatarios/" }]}
 >
   <main id="inicio">
-    <section class="hero">
-      <div class="hero__content">
-        <p class="eyebrow">Arrendatarios en Bogotá y Sabana</p>
-        <h1>Encuentra inmuebles en arriendo con información clara y atención directa</h1>
-        <p class="hero__lead">Si te interesa un inmueble publicado por Amaru FS Inmobiliaria, te compartimos características, fotos, videos y requisitos. Cuando el proceso avanza, la aseguradora realiza el estudio de viabilidad del interesado y su deudor. Una vez aprobados, generamos el contrato de arrendamiento.</p>
-        <div class="hero__actions" aria-label="Acciones principales">
-          <Button variant="secondary" icon="fa-solid fa-building" id="arrendatarios-ver-inmuebles" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." external>Ver inmuebles disponibles</Button>
-          <Button variant="light" icon="fa-solid fa-arrow-down" id="arrendatarios-mas-informacion" href="#informacion">Más información</Button>
-        </div>
-      </div>
-      <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/banner-arrendatario-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
-        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></span>
-        <h2 id="hero-panel-title">Antes de avanzar, revisa información real del inmueble</h2>
-        <p>Te orientamos con datos claros: canon, ubicación, características, fotos, videos, disponibilidad y requisitos antes de avanzar con aseguradora.</p>
-      </aside>
-    </section>
+    <PageHero
+      eyebrow="Arrendatarios en Bogotá y Sabana"
+      title="Encuentra inmuebles en arriendo con información clara y atención directa"
+      lead="Si te interesa un inmueble publicado por Amaru FS Inmobiliaria, te compartimos características, fotos, videos y requisitos. Cuando el proceso avanza, la aseguradora realiza el estudio de viabilidad del interesado y su deudor. Una vez aprobados, generamos el contrato de arrendamiento."
+      backgroundImage="/images/banner-arrendatario.webp"
+      panel={{
+        image: "/images/banner-arrendatario-lateral.webp",
+        icon: "fa-solid fa-circle-info",
+        title: "Antes de avanzar, revisa información real del inmueble",
+        text: "Te orientamos con datos claros: canon, ubicación, características, fotos, videos, disponibilidad y requisitos antes de avanzar con aseguradora."
+      }}
+    >
+      <Fragment slot="actions">
+        <Button variant="secondary" icon="fa-solid fa-building" id="arrendatarios-ver-inmuebles" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." external>Ver inmuebles disponibles</Button>
+        <Button variant="light" icon="fa-solid fa-arrow-down" id="arrendatarios-mas-informacion" href="#informacion">Más información</Button>
+      </Fragment>
+    </PageHero>
 
     <section class="process section-pad" id="proceso" aria-labelledby="process-title">
       <SectionHeading eyebrow="Paso a paso" title="Cómo avanzar si te interesa un inmueble" titleId="process-title" />

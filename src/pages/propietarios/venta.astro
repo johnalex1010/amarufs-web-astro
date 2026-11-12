@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
 import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
@@ -55,23 +56,23 @@ const faqItems: FaqItem[] = [
   </Fragment>
 
   <main id="inicio">
-    <section class="hero">
-      <div class="hero__content">
-        <p class="eyebrow">Propietarios vendedores en Bogotá y Sabana</p>
-        <h1>Vende tu inmueble con acompañamiento inmobiliario en Bogotá y Sabana</h1>
-        <p class="hero__lead">En Amaru FS Inmobiliaria te acompañamos desde la primera conversación hasta el cierre de venta del inmueble: aclaramos dudas, visitamos la propiedad, registramos fotos y videos, verificamos la ficha técnica, publicamos después del contrato con la inmobiliaria y damos seguimiento a la gestión comercial.</p>
-        <div class="hero__actions" aria-label="Acciones principales">
-          <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-venta-quiero-vender" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20vender%20mi%20inmueble." external>Quiero vender mi inmueble</Button>
-          <Button variant="light" icon="fa-solid fa-arrow-down" id="propietarios-venta-conocer-proceso" href="#proceso">Conocer el proceso de venta</Button>
-        </div>
-      </div>
-      <aside class="hero__panel" aria-labelledby="hero-panel-title">
-        <img src="/images/banner-propietario-venta-lateral.webp" alt="Amaru FS Inmobiliaria" width="216" height="216">
-        <span class="hero__panel-icon" aria-hidden="true"><i class="fa-solid fa-sign-hanging"></i></span>
-        <h2 id="hero-panel-title">Tu inmueble en venta necesita información clara y seguimiento comercial</h2>
-        <p>Organizamos la información comercial para que los interesados entiendan ubicación, características, precio, disponibilidad y siguiente paso de contacto.</p>
-      </aside>
-    </section>
+    <PageHero
+      eyebrow="Propietarios vendedores en Bogotá y Sabana"
+      title="Vende tu inmueble con acompañamiento inmobiliario en Bogotá y Sabana"
+      lead="En Amaru FS Inmobiliaria te acompañamos desde la primera conversación hasta el cierre de venta del inmueble: aclaramos dudas, visitamos la propiedad, registramos fotos y videos, verificamos la ficha técnica, publicamos después del contrato con la inmobiliaria y damos seguimiento a la gestión comercial."
+      backgroundImage="/images/banner-amarufs.webp"
+      panel={{
+        image: "/images/banner-propietario-venta-lateral.webp",
+        icon: "fa-solid fa-sign-hanging",
+        title: "Tu inmueble en venta necesita información clara y seguimiento comercial",
+        text: "Organizamos la información comercial para que los interesados entiendan ubicación, características, precio, disponibilidad y siguiente paso de contacto."
+      }}
+    >
+      <Fragment slot="actions">
+        <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-venta-quiero-vender" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20vender%20mi%20inmueble." external>Quiero vender mi inmueble</Button>
+        <Button variant="light" icon="fa-solid fa-arrow-down" id="propietarios-venta-conocer-proceso" href="#proceso">Conocer el proceso de venta</Button>
+      </Fragment>
+    </PageHero>
 
     <section class="audience section-pad" aria-labelledby="audience-title">
       <SectionHeading eyebrow="Ruta de venta" title="Esta ruta es para propietarios que quieren vender" titleId="audience-title" />

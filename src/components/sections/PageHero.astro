@@ -1,0 +1,66 @@
+---
+/**
+ * Hero de página reutilizable (docs/GUIA-UI-UX.md §7.5).
+ * Columna principal: eyebrow + H1 + lead + acciones (slot "actions", máx. 2 botones).
+ * Panel lateral (opcional): imagen, ícono, H2 corto y texto. Se oculta en móvil.
+ *
+ * Uso:
+ * <PageHero eyebrow="..." title="..." lead="..." backgroundImage="/images/x.webp" panel={{ ... }}>
+ *   <Fragment slot="actions">
+ *     <Button variant="secondary" ...>...</Button>
+ *     <Button variant="light" ...>...</Button>
+ *   </Fragment>
+ * </PageHero>
+ */
+import "../../styles/components/page-hero.css";
+
+interface HeroPanel {
+  image: string;
+  /** Vacío si la imagen es decorativa (el texto del panel ya explica el mensaje). */
+  imageAlt?: string;
+  /** Clases de Font Awesome del ícono circular. */
+  icon: string;
+  title: string;
+  text: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  /** Imagen de fondo de la columna principal (ruta de /public). */
+  backgroundImage: string;
+  panel?: HeroPanel;
+  class?: string;
+}
+
+const { eyebrow, title, lead, backgroundImage, panel, class: className } = Astro.props;
+const panelTitleId = "hero-panel-title";
+---
+
+<section class:list={["hero", className]} style={`--hero-image: url("${backgroundImage}")`}>
+  <div class="hero__content">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    <p class="hero__lead">{lead}</p>
+    {
+      Astro.slots.has("actions") && (
+        <div class="hero__actions" aria-label="Acciones principales">
+          <slot name="actions" />
+        </div>
+      )
+    }
+  </div>
+  {
+    panel && (
+      <aside class="hero__panel" aria-labelledby={panelTitleId}>
+        <img src={panel.image} alt={panel.imageAlt ?? ""} width="216" height="216" />
+        <span class="hero__panel-icon" aria-hidden="true">
+          <i class={panel.icon}></i>
+        </span>
+        <h2 id={panelTitleId}>{panel.title}</h2>
+        <p>{panel.text}</p>
+      </aside>
+    )
+  }
+</section>
