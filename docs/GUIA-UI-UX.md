@@ -367,7 +367,7 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 | `Pagination` | `ui/` | `.pagination` (`data-pagination`) | `label`, `totalPages?`; JS reutilizable |
 | `EmptyState` | `ui/` | `.empty-state` | `icon`, `title`, slot de acciones |
 | `PageHero` | `sections/` | `.hero`, `.hero__content`, `.hero__panel` (7 páginas) | `eyebrow`, `title`, `lead`, `actions`, `panel { image, imageAlt, icon, title, text }`, `backgroundImage` |
-| `FaqSection` | `sections/` | `.faq-list`, `.faq-item` (8 páginas) + JSON-LD `FAQPage` | `eyebrow?`, `title`, `titleId`, `items: { question, answer }[]` |
+| `FaqSection` ✅ | `sections/` | `.faq-list`, `.faq-item` (8 páginas) + JSON-LD `FAQPage` | `title`, `items: { question, answer, answerHtml? }[]`, `eyebrow?`, `titleId?`, `class?`, `schema?` (ver §7.8) |
 | `Timeline` | `sections/` | `.timeline` (6 páginas) | `steps: { icon?, title, text, href? }[]`, `variant` |
 | `ProcessPhases` | `sections/` | `.process-phase` (3 páginas) | `phases: { label, title, steps }[]` (usa `Timeline`) |
 | `InfoBox` | `sections/` | `.trust__box`, `.transparency__box` (6 páginas) | `eyebrow`, `title`, `titleId`, slot |
@@ -495,10 +495,31 @@ Reglas: no más información de la necesaria; los datos deben coincidir con la f
 
 ### 7.8 FAQ / acordeón
 
-- Usar `<details>/<summary>` nativo o botón con `aria-expanded` + `aria-controls`.
-- Pregunta en Outfit 18 px peso 700 (no Bebas Neue), ícono `+`/chevron que rota.
-- Las mismas preguntas visibles deben coincidir con el JSON-LD `FAQPage`.
-- Un único estilo de FAQ para todo el sitio (componente compartido).
+**Componente:** `src/components/sections/FaqSection.astro` · **CSS:** `src/styles/components/faq.css` · **JS:** `src/scripts/components/faq.js`.
+
+```astro
+---
+import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
+
+const faqItems: FaqItem[] = [
+  { question: "¿Dónde trabaja Amaru FS Inmobiliaria?", answer: "El enfoque inicial está en Bogotá y Sabana..." },
+  {
+    question: "¿Cómo contacto a Amaru FS Inmobiliaria?",
+    answer: "El canal principal es WhatsApp 315 877 4545...",                 // texto para el schema
+    answerHtml: 'El canal principal es WhatsApp <a href="https://wa.me/...">315 877 4545</a>...' // opcional, en pantalla
+  }
+];
+---
+<FaqSection title="Preguntas frecuentes sobre Amaru FS Inmobiliaria" items={faqItems} />
+<!-- Con fondo de banda en la ficha -->
+<FaqSection title="Preguntas frecuentes sobre este inmueble" items={faqItems} class="section-band section-band--gray" />
+```
+
+- **Una sola fuente de datos:** el componente pinta el acordeón **y** el JSON-LD `FAQPage` desde el mismo arreglo. Prohibido escribir el `FAQPage` a mano en el `<head>` de la página: así lo visible y lo que lee Google nunca difieren.
+- `answer` es siempre texto plano. `answerHtml` solo para HTML estático escrito en el código (un enlace, una negrita); **nunca** con datos de Strapi, formularios o URL.
+- Accesibilidad incluida: botón con `aria-expanded` + `aria-controls`, una pregunta abierta a la vez, ícono `+` que rota 45°.
+- Pregunta en Outfit peso 700 (no Bebas Neue); respuesta en `--color-muted`; enlaces de la respuesta en `--color-primary`.
+- Por defecto: `eyebrow="FAQ"` y `titleId="faq-title"`. Si una página tuviera dos FAQ, la segunda debe recibir otro `titleId`.
 
 ### 7.9 Timeline / pasos de proceso
 

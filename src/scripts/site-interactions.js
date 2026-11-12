@@ -18,26 +18,6 @@ if (navToggle && nav) {
   });
 }
 
-document.querySelectorAll("[data-faq-list] .faq-item button").forEach((button) => {
-  button.addEventListener("click", () => {
-    const item = button.closest(".faq-item");
-    const faqList = button.closest("[data-faq-list]");
-    const isOpen = button.getAttribute("aria-expanded") === "true";
-
-    faqList?.querySelectorAll(".faq-item").forEach((faqItem) => {
-      if (faqItem === item) {
-        return;
-      }
-
-      faqItem.classList.remove("is-open");
-      faqItem.querySelector("button")?.setAttribute("aria-expanded", "false");
-    });
-
-    button.setAttribute("aria-expanded", String(!isOpen));
-    item?.classList.toggle("is-open", !isOpen);
-  });
-});
-
 document.querySelectorAll("[data-modal-open]").forEach((trigger) => {
   trigger.addEventListener("click", () => {
     const modalId = trigger.getAttribute("data-modal-open");

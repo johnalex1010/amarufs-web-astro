@@ -1,8 +1,36 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
 import "../../styles/pages/propietarios-arriendo.css";
+
+const faqItems: FaqItem[] = [
+  {
+    question: "¿Amaru FS Inmobiliaria publica mi inmueble en arriendo de inmediato?",
+    answer: "No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario."
+  },
+  {
+    question: "¿El propietario publica el inmueble directamente?",
+    answer: "No. La publicación la realiza Amaru FS después de validar el inmueble y formalizar el acuerdo correspondiente."
+  },
+  {
+    question: "¿Quién estudia al arrendatario?",
+    answer: "La aseguradora realiza el estudio de viabilidad del interesado y su deudor. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación comercial."
+  },
+  {
+    question: "¿Qué porcentaje cobra la inmobiliaria por arrendar?",
+    answer: "La comisión de Amaru FS Inmobiliaria es del 8% sobre el canon de arrendamiento. Adicionalmente, se suma el 2.5% correspondiente al respaldo de la aseguradora por incumplimiento de pago del arrendatario, para un total mensual de 10.5% sobre el canon."
+  },
+  {
+    question: "¿La póliza de aseguradora cubre daños del inmueble u otros eventos?",
+    answer: "El respaldo inicial de la aseguradora está enfocado en el pago del canon frente a mora o incumplimiento del arrendatario. Coberturas adicionales, como daños a puertas u otros elementos del inmueble, deben revisarse y conversarse directamente según las opciones y beneficios adicionales que ofrezca la aseguradora."
+  },
+  {
+    question: "¿Amaru FS garantiza que el inmueble se arrienda de forma inmediata?",
+    answer: "No. Amaru FS acompaña la publicación y atención de interesados, pero no promete arriendo inmediato ni cierre garantizado."
+  }
+];
 ---
 
 <BaseLayout
@@ -26,62 +54,6 @@ import "../../styles/pages/propietarios-arriendo.css";
             },
             "areaServed": ["Bogotá", "Sabana"],
             "serviceType": "Validación, publicación y acompañamiento comercial para inmuebles en arriendo"
-          }
-    </script>
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS Inmobiliaria publica mi inmueble en arriendo de inmediato?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿El propietario publica el inmueble directamente?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Quién estudia al arrendatario?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "La aseguradora realiza el estudio de viabilidad del interesado y su deudor. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación comercial."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Qué porcentaje cobra la inmobiliaria por arrendar?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "La comisión de Amaru FS Inmobiliaria es del 8% sobre el canon de arrendamiento. Adicionalmente, se suma el 2.5% correspondiente al respaldo de la aseguradora por incumplimiento de pago del arrendatario, para un total mensual de 10.5% sobre el canon."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿La póliza de aseguradora cubre daños del inmueble u otros eventos?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "El respaldo inicial de la aseguradora está enfocado en el pago del canon frente a mora o incumplimiento del arrendatario. Coberturas adicionales, como daños a puertas u otros elementos del inmueble, deben revisarse según las opciones y beneficios adicionales que ofrezca la aseguradora."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS garantiza que el inmueble se arrienda de forma inmediata?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. Amaru FS acompaña la publicación y atención de interesados, pero no promete arriendo inmediato ni cierre garantizado."
-                }
-              }
-            ]
           }
     </script>
   </Fragment>
@@ -320,64 +292,6 @@ import "../../styles/pages/propietarios-arriendo.css";
       <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-arrendar-iniciar" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20el%20arriendo%20de%20mi%20inmueble." external>Iniciar arriendo por WhatsApp</Button>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre arriendo de inmuebles" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Amaru FS Inmobiliaria publica mi inmueble en arriendo de inmediato?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿El propietario publica el inmueble directamente?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. La publicación la realiza Amaru FS después de validar el inmueble y formalizar el acuerdo correspondiente.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Quién estudia al arrendatario?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>La aseguradora realiza el estudio de viabilidad del interesado y su deudor. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación comercial.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Qué porcentaje cobra la inmobiliaria por arrendar?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>La comisión de Amaru FS Inmobiliaria es del 8% sobre el canon de arrendamiento. Adicionalmente, se suma el 2.5% correspondiente al respaldo de la aseguradora por incumplimiento de pago del arrendatario, para un total mensual de 10.5% sobre el canon.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿La póliza de aseguradora cubre daños del inmueble u otros eventos?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>El respaldo inicial de la aseguradora está enfocado en el pago del canon frente a mora o incumplimiento del arrendatario. Coberturas adicionales, como daños a puertas u otros elementos del inmueble, deben revisarse y conversarse directamente según las opciones y beneficios adicionales que ofrezca la aseguradora.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Amaru FS garantiza que el inmueble se arrienda de forma inmediata?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. Amaru FS acompaña la publicación y atención de interesados, pero no promete arriendo inmediato ni cierre garantizado.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes sobre arriendo de inmuebles" items={faqItems} />
   </main>
 </BaseLayout>

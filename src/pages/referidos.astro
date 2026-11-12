@@ -1,8 +1,32 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import "../styles/pages/referidos.css";
+
+const faqItems: FaqItem[] = [
+  {
+    question: "¿Qué se considera un referido válido?",
+    answer: "Un propietario o contacto autorizado con un inmueble para venta o arriendo, o una persona interesada en comprar o arrendar. El contacto debe ser real, verificable y haber autorizado ser contactado."
+  },
+  {
+    question: "¿Cuándo se paga la recompensa?",
+    answer: "La recompensa aplica únicamente cuando el referido termina en un negocio cerrado y documentado por Amaru FS Inmobiliaria, según las reglas internas del programa."
+  },
+  {
+    question: "¿Hay un valor definido de recompensa?",
+    answer: "Para arriendo, la recompensa es del 8% sobre el canon mensual y se paga una sola vez. Para venta, se calcula el 8% sobre la comisión inmobiliaria, que se estima como el 3% del valor de venta."
+  },
+  {
+    question: "¿Qué pasa si dos personas refieren el mismo contacto?",
+    answer: "Se reconoce el primer registro verificable, según la trazabilidad de Amaru FS Inmobiliaria."
+  },
+  {
+    question: "¿Puedo referir a alguien que quiere comprar o arrendar?",
+    answer: "Sí. Puedes referir personas que buscan comprar o tomar en arriendo un inmueble, siempre que el contacto sea válido y autorizado."
+  }
+];
 ---
 
 <BaseLayout
@@ -26,54 +50,6 @@ import "../styles/pages/referidos.css";
             },
             "areaServed": ["Bogotá", "Sabana"],
             "description": "Programa para referir propietarios con inmuebles para venta o arriendo, y personas interesadas en comprar o arrendar. La recompensa aplica por cierre documentado según reglas internas."
-          }
-    </script>
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "¿Qué se considera un referido válido?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Un referido válido puede ser un propietario o contacto autorizado con un inmueble para venta o arriendo, o una persona interesada en comprar o arrendar un inmueble. En ambos casos debe existir autorización de contacto y datos mínimos verificables."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Cuándo se paga la recompensa?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "La recompensa aplica únicamente cuando el referido termina en un negocio cerrado y documentado por Amaru FS Inmobiliaria, según las reglas internas del programa."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Hay un valor definido de recompensa?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Para arriendo, la recompensa es del 8% sobre el canon mensual y se paga una sola vez. Para venta, es el 8% sobre la comisión inmobiliaria, calculada como el 3% del valor de venta."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Qué pasa si dos personas refieren el mismo contacto?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Se reconoce el primer registro verificable, según la trazabilidad de Amaru FS Inmobiliaria."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Puedo referir a alguien que quiere comprar o arrendar?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Sí. También puedes referir personas que buscan comprar o tomar en arriendo un inmueble, siempre que el contacto sea real y haya autorizado ser contactado."
-                }
-              }
-            ]
           }
     </script>
   </Fragment>
@@ -352,57 +328,7 @@ import "../styles/pages/referidos.css";
       </div>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre referidos" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Qué se considera un referido válido?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Un propietario o contacto autorizado con un inmueble para venta o arriendo, o una persona interesada en comprar o arrendar. El contacto debe ser real, verificable y haber autorizado ser contactado.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Cuándo se paga la recompensa?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>La recompensa aplica únicamente cuando el referido termina en un negocio cerrado y documentado por Amaru
-              FS Inmobiliaria, según las reglas internas del programa.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Hay un valor definido de recompensa?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Para arriendo, la recompensa es del 8% sobre el canon mensual y se paga una sola vez. Para venta, se calcula el 8% sobre la comisión inmobiliaria, que se estima como el 3% del valor de venta.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Qué pasa si dos personas refieren el mismo contacto?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Se reconoce el primer registro verificable, según la trazabilidad de Amaru FS Inmobiliaria.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Puedo referir a alguien que quiere comprar o arrendar?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Sí. Puedes referir personas que buscan comprar o tomar en arriendo un inmueble, siempre que el contacto sea válido y autorizado.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes sobre referidos" items={faqItems} />
 
   </main>
 

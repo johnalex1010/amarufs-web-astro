@@ -1,8 +1,32 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../../components/sections/FaqSection.astro";
 import SectionHeading from "../../components/ui/SectionHeading.astro";
 import Button from "../../components/ui/Button.astro";
 import "../../styles/pages/propietarios-venta.css";
+
+const faqItems: FaqItem[] = [
+  {
+    question: "¿Amaru FS Inmobiliaria publica mi inmueble en venta de inmediato?",
+    answer: "No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario."
+  },
+  {
+    question: "¿El propietario publica el inmueble directamente?",
+    answer: "No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente."
+  },
+  {
+    question: "¿Qué porcentaje cobra la inmobiliaria por vender?",
+    answer: "Amaru FS Inmobiliaria cobra el 3% sobre el valor de la venta. La comisión se calcula sobre el valor de venta y se paga al finalizar el proceso de venta."
+  },
+  {
+    question: "¿Amaru FS Inmobiliaria garantiza la venta?",
+    answer: "No. Amaru FS Inmobiliaria acompaña la publicación y el seguimiento comercial, pero no promete cierres garantizados."
+  },
+  {
+    question: "¿Dónde trabaja Amaru FS Inmobiliaria la venta de inmuebles?",
+    answer: "El enfoque inicial está en Bogotá y Sabana, sujeto a validación interna y viabilidad comercial del inmueble."
+  }
+];
 ---
 
 <BaseLayout
@@ -26,54 +50,6 @@ import "../../styles/pages/propietarios-venta.css";
             },
             "areaServed": ["Bogotá", "Sabana"],
             "serviceType": "Acompañamiento comercial para venta de inmuebles"
-          }
-    </script>
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS Inmobiliaria publica mi inmueble en venta de inmediato?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿El propietario publica el inmueble directamente?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Qué porcentaje cobra la inmobiliaria por vender?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Amaru FS Inmobiliaria cobra el 3% sobre el valor de la venta. La comisión se calcula sobre el valor de venta y se paga al finalizar el proceso de venta."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS Inmobiliaria garantiza la venta?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. Amaru FS Inmobiliaria acompaña la publicación y el seguimiento comercial, pero no promete cierres garantizados."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Dónde trabaja Amaru FS Inmobiliaria la venta de inmuebles?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "El enfoque inicial está en Bogotá y Sabana, sujeto a validación interna y viabilidad comercial del inmueble."
-                }
-              }
-            ]
           }
     </script>
   </Fragment>
@@ -303,55 +279,6 @@ import "../../styles/pages/propietarios-venta.css";
       <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-venta-iniciar" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20la%20venta%20de%20mi%20inmueble." external>Iniciar venta por WhatsApp</Button>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre venta de inmuebles" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Amaru FS Inmobiliaria publica mi inmueble en venta de inmediato?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. Primero se revisa el caso, se visita el inmueble, se toman fotos y videos, se verifica la ficha técnica y se formaliza el contrato con el propietario.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿El propietario publica el inmueble directamente?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. La publicación la realiza Amaru FS Inmobiliaria después de validar el inmueble y formalizar el acuerdo correspondiente.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Qué porcentaje cobra la inmobiliaria por vender?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Amaru FS Inmobiliaria cobra el 3% sobre el valor de la venta. La comisión se calcula sobre el valor de venta y se paga al finalizar el proceso de venta.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Amaru FS Inmobiliaria garantiza la venta?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. Amaru FS Inmobiliaria acompaña la publicación y el seguimiento comercial, pero no promete cierres garantizados.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Dónde trabaja Amaru FS Inmobiliaria la venta de inmuebles?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>El enfoque inicial está en Bogotá y Sabana, sujeto a validación interna y viabilidad comercial del inmueble.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes sobre venta de inmuebles" items={faqItems} />
   </main>
 </BaseLayout>

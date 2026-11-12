@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import { site } from "../data/site";
@@ -26,7 +27,7 @@ import "../styles/pages/inmuebles.css";
 
 const properties = await getPublishedProperties();
 const maxPrice = Math.max(...properties.map((property) => getPropertyPrice(property) ?? 0), 8000000);
-const faqItems = [
+const faqItems: FaqItem[] = [
   {
     question: "¿Los inmuebles publicados están disponibles?",
     answer: "La disponibilidad debe confirmarse por WhatsApp, porque puede cambiar según visitas, solicitudes y avances del proceso."
@@ -65,18 +66,6 @@ const collectionJsonLd = {
     }))
   }
 };
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer
-    }
-  }))
-};
 ---
 
 <BaseLayout
@@ -89,7 +78,6 @@ const faqJsonLd = {
   breadcrumbs={[{ name: "Inmuebles", path: "/inmuebles/" }]}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
 
   <main id="inicio">
     <section class="hero listings-hero">
@@ -281,24 +269,7 @@ const faqJsonLd = {
       <Button variant="secondary" icon="fa-solid fa-key" id="inmuebles-publicar-iniciar" href="/propietarios/">Iniciar validación de mi inmueble</Button>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre inmuebles disponibles" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        {
-          faqItems.map((item) => (
-            <article class="faq-item">
-              <button type="button" aria-expanded="false">
-                <span>{item.question}</span>
-                <i class="fa-solid fa-plus" aria-hidden="true"></i>
-              </button>
-              <div class="faq-item__body">
-                <p>{item.answer}</p>
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes sobre inmuebles disponibles" items={faqItems} />
   </main>
 
   <script>

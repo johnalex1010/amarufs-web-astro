@@ -1,8 +1,29 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import "../styles/pages/home.css";
+
+const faqItems: FaqItem[] = [
+  {
+    question: "¿Amaru FS Inmobiliaria publica directamente mi inmueble?",
+    answer: "Sí, pero solo después de validar el inmueble, registrar fotos y videos, verificar la ficha técnica y formalizar el contrato con el propietario."
+  },
+  {
+    question: "¿Dónde trabaja Amaru FS Inmobiliaria?",
+    answer: "El enfoque inicial está en Bogotá y Sabana, según disponibilidad, viabilidad comercial y validación interna del inmueble."
+  },
+  {
+    question: "¿Cómo contacto a Amaru FS Inmobiliaria?",
+    answer: "El canal principal es WhatsApp 315 877 4545, porque permite resolver dudas, compartir información del inmueble y coordinar pasos con rapidez.",
+    answerHtml: "El canal principal es WhatsApp <a href=\"https://wa.me/573158774545\" target=\"_blank\" rel=\"noopener noreferrer\">315 877 4545</a>, porque permite resolver dudas, compartir información del inmueble y coordinar pasos con rapidez."
+  },
+  {
+    question: "¿Qué pasa si quiero tomar un inmueble en arriendo?",
+    answer: "Amaru FS Inmobiliaria comparte información, fotos, videos y requisitos. La aseguradora realiza el estudio de viabilidad del interesado y su deudor."
+  }
+];
 ---
 
 <BaseLayout
@@ -29,47 +50,7 @@ import "../styles/pages/home.css";
             "priceRange": "$$",
             "sameAs": []
           }
-    </script>
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS Inmobiliaria publica directamente mi inmueble?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Sí, pero solo después de validar el inmueble, registrar fotos y videos, verificar la ficha técnica y formalizar el contrato con el propietario. El propietario no publica directamente desde un usuario propio."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Dónde trabaja Amaru FS Inmobiliaria?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "El enfoque inicial está en Bogotá y Sabana, según disponibilidad, viabilidad comercial y validación interna del inmueble."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Cómo contacto a Amaru FS Inmobiliaria?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "El canal principal es WhatsApp 315 877 4545, porque permite resolver dudas, compartir información del inmueble y coordinar pasos con rapidez."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Qué pasa si quiero tomar un inmueble en arriendo?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Amaru FS Inmobiliaria comparte información, fotos, videos y requisitos. La aseguradora realiza el estudio de viabilidad del interesado y su deudor."
-                }
-              }
-            ]
-          }
-    </script>
+    </script>
   </Fragment>
 
   <main id="inicio">
@@ -157,51 +138,6 @@ import "../styles/pages/home.css";
       </div>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes sobre Amaru FS Inmobiliaria" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Amaru FS Inmobiliaria publica directamente mi inmueble?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Sí, pero solo después de validar el inmueble, registrar fotos y videos, verificar la ficha técnica y
-              formalizar el contrato con el propietario.
-            </p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Dónde trabaja Amaru FS Inmobiliaria?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>El enfoque inicial está en Bogotá y Sabana, según disponibilidad, viabilidad comercial y validación
-              interna del inmueble.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Cómo contacto a Amaru FS Inmobiliaria?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>El canal principal es WhatsApp <a href="https://wa.me/573158774545" target="_blank" rel="noopener noreferrer">315 877 4545</a>, porque permite resolver dudas, compartir información del
-              inmueble y coordinar pasos con rapidez.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Qué pasa si quiero tomar un inmueble en arriendo?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Amaru FS Inmobiliaria comparte información, fotos, videos y requisitos. La aseguradora realiza el estudio
-              de viabilidad del interesado y su deudor.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes sobre Amaru FS Inmobiliaria" items={faqItems} />
   </main>
 </BaseLayout>

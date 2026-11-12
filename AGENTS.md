@@ -68,6 +68,7 @@ Este archivo es la referencia principal dentro de `web-astro`. Si existe una con
 - Las páginas de inmueble deben publicar precio, operación, ubicación, fotos, descripción, características y estado comercial verificable.
 - No indexar páginas incompletas, duplicadas, privadas, experimentales o sin intención comercial clara.
 - Mantener estructura legible para IA: encabezados descriptivos, bloques autocontenidos, FAQs reales y datos verificables.
+- Las FAQ se publican solo con `FaqSection`, que genera el JSON-LD `FAQPage` desde las mismas preguntas visibles. No escribir `FAQPage` a mano en el `<head>`.
 - No prometer disponibilidad, tiempos de venta/arriendo, aprobación de aseguradora ni resultados comerciales sin evidencia.
 
 ## Auditorías

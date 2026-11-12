@@ -1,9 +1,33 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import RentalRequirementsModal from "../components/common/RentalRequirementsModal.astro";
 import "../styles/pages/arrendatarios.css";
+
+const faqItems: FaqItem[] = [
+  {
+    question: "¿Amaru FS Inmobiliaria aprueba mi solicitud de arriendo?",
+    answer: "No. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación del proceso. La aseguradora realiza el estudio de viabilidad del interesado y su deudor."
+  },
+  {
+    question: "¿Puedo pedir fotos o videos antes de avanzar?",
+    answer: "Sí. Por página web, WhatsApp o llamada se pueden compartir fotos, videos y características disponibles del inmueble."
+  },
+  {
+    question: "¿Qué pasa después de revisar los requisitos?",
+    answer: "Si decides continuar, se avanza al estudio de viabilidad con la aseguradora. Si el interesado y su deudor son aprobados, se genera el contrato de arrendamiento con las cláusulas correspondientes."
+  },
+  {
+    question: "¿El inmueble siempre estará disponible?",
+    answer: "La disponibilidad debe confirmarse, porque puede cambiar según visitas, solicitudes y avances del proceso."
+  },
+  {
+    question: "¿De qué depende el valor del estudio con la aseguradora?",
+    answer: "El valor del estudio depende del canon de arrendamiento del inmueble. Ese valor es definido y cobrado directamente por la aseguradora."
+  }
+];
 ---
 
 <BaseLayout
@@ -15,57 +39,6 @@ import "../styles/pages/arrendatarios.css";
   activePage="arrendatarios"
   breadcrumbs={[{ name: "Arrendatarios", path: "/arrendatarios/" }]}
 >
-  <Fragment slot="head">
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS Inmobiliaria aprueba mi solicitud de arriendo?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación del proceso. La aseguradora realiza el estudio de viabilidad del interesado y su deudor."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Puedo pedir fotos o videos antes de avanzar?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Sí. Por página web, WhatsApp o llamada se pueden compartir fotos, videos y características disponibles del inmueble."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Qué pasa después de revisar los requisitos?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Si decides continuar, se avanza al estudio de viabilidad con la aseguradora. Si el interesado y su deudor son aprobados, se genera el contrato de arrendamiento con las cláusulas correspondientes."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿El inmueble siempre estará disponible?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "La disponibilidad debe confirmarse, porque puede cambiar según visitas, solicitudes y avances del proceso."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿De qué depende el valor del estudio con la aseguradora?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "El valor del estudio depende del canon de arrendamiento del inmueble. Ese valor es definido y cobrado directamente por la aseguradora."
-                }
-              }
-            ]
-          }
-    </script>
-  </Fragment>
-
   <main id="inicio">
     <section class="hero">
       <div class="hero__content">
@@ -231,31 +204,7 @@ import "../styles/pages/arrendatarios.css";
       <Button variant="secondary" icon="fa-solid fa-building" id="arrendatarios-ver-inmuebles-iniciar" href="/inmuebles/">Ver inmuebles disponibles</Button>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes de arrendatarios" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false"><span>¿Amaru FS Inmobiliaria aprueba mi solicitud de arriendo?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-          <div class="faq-item__body"><p>No. Amaru FS Inmobiliaria acompaña la información inicial y la coordinación del proceso. La aseguradora realiza el estudio de viabilidad del interesado y su deudor.</p></div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false"><span>¿Puedo pedir fotos o videos antes de avanzar?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-          <div class="faq-item__body"><p>Sí. Por página web, WhatsApp o llamada se pueden compartir fotos, videos y características disponibles del inmueble.</p></div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false"><span>¿Qué pasa después de revisar los requisitos?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-          <div class="faq-item__body"><p>Si decides continuar, se avanza al estudio de viabilidad con la aseguradora. Si el interesado y su deudor son aprobados, se genera el contrato de arrendamiento con las cláusulas correspondientes.</p></div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false"><span>¿El inmueble siempre estará disponible?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-          <div class="faq-item__body"><p>La disponibilidad debe confirmarse, porque puede cambiar según visitas, solicitudes y avances del proceso.</p></div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false"><span>¿De qué depende el valor del estudio con la aseguradora?</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-          <div class="faq-item__body"><p>El valor del estudio depende del canon de arrendamiento del inmueble. Ese valor es definido y cobrado directamente por la aseguradora.</p></div>
-        </article>
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes de arrendatarios" items={faqItems} />
 
     <RentalRequirementsModal />
   </main>

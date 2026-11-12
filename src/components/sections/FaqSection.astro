@@ -1,0 +1,74 @@
+---
+/**
+ * Sección de preguntas frecuentes reutilizable (docs/GUIA-UI-UX.md §7.8).
+ * Pinta el acordeón visible y el JSON-LD FAQPage desde los MISMOS datos,
+ * para que lo que ve el usuario y lo que lee Google nunca difieran.
+ *
+ * - `answer`: texto plano; se usa en el schema y, si no hay `answerHtml`, en pantalla.
+ * - `answerHtml`: HTML estático escrito en el código de la página (p. ej. con un enlace).
+ *   Nunca pasar aquí datos de Strapi, formularios ni URL.
+ */
+import SectionHeading from "../ui/SectionHeading.astro";
+import "../../styles/components/faq.css";
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+  answerHtml?: string;
+}
+
+interface Props {
+  items: FaqItem[];
+  title: string;
+  titleId?: string;
+  eyebrow?: string;
+  /** Clases extra para la <section> (p. ej. "section-band section-band--gray"). */
+  class?: string;
+  /** Publicar JSON-LD FAQPage. Desactivar solo si la página ya tiene otro FAQPage. */
+  schema?: boolean;
+}
+
+const { items, title, titleId = "faq-title", eyebrow = "FAQ", class: className, schema = true } = Astro.props;
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+};
+// Escapar "<" evita cerrar el <script> si un texto lo contiene.
+const faqJsonLdText = JSON.stringify(faqJsonLd).replace(/</g, "\\u003c");
+---
+
+<section class:list={["faq", "section-pad", className]} aria-labelledby={titleId}>
+  <SectionHeading eyebrow={eyebrow} title={title} titleId={titleId} />
+  <div class="faq-list" data-faq-list>
+    {
+      items.map((item, index) => {
+        const answerId = `${titleId}-respuesta-${index + 1}`;
+        return (
+          <article class="faq-item">
+            <button type="button" aria-expanded="false" aria-controls={answerId}>
+              <span>{item.question}</span>
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <div class="faq-item__body" id={answerId}>
+              {item.answerHtml ? <p set:html={item.answerHtml} /> : <p>{item.answer}</p>}
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+  {schema && items.length > 0 && <script type="application/ld+json" set:html={faqJsonLdText} />}
+</section>
+
+<script>
+  import "../../scripts/components/faq.js";
+</script>

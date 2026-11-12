@@ -1,8 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection, { type FaqItem } from "../components/sections/FaqSection.astro";
 import SectionHeading from "../components/ui/SectionHeading.astro";
 import Button from "../components/ui/Button.astro";
 import "../styles/pages/propietarios.css";
+
+const faqItems: FaqItem[] = [
+  {
+    question: "¿El propietario publica directamente su inmueble?",
+    answer: "No. Amaru FS Inmobiliaria publica el inmueble después de validar información, registrar fotos y videos, verificar la ficha técnica y formalizar el contrato con el propietario."
+  },
+  {
+    question: "¿Puedo vender y arrendar con Amaru FS Inmobiliaria?",
+    answer: "Sí. La página ofrece rutas claras para venta y arriendo, según el objetivo del propietario."
+  },
+  {
+    question: "¿Qué necesita Amaru FS Inmobiliaria antes de publicar?",
+    answer: "Necesita conocer el inmueble, resolver dudas, visitarlo, registrar material visual, verificar la ficha técnica y formalizar el contrato correspondiente."
+  },
+  {
+    question: "¿Amaru FS Inmobiliaria garantiza el cierre?",
+    answer: "No. Amaru FS Inmobiliaria ofrece acompañamiento, publicación clara y seguimiento comercial, pero no garantiza resultados ni cierres."
+  }
+];
 ---
 
 <BaseLayout
@@ -14,49 +34,6 @@ import "../styles/pages/propietarios.css";
   activePage="propietarios"
   breadcrumbs={[{ name: "Propietarios", path: "/propietarios/" }]}
 >
-  <Fragment slot="head">
-    <script type="application/ld+json">
-      {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "¿El propietario publica directamente su inmueble?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. Amaru FS Inmobiliaria publica el inmueble después de validar información, registrar fotos y videos, verificar la ficha técnica y formalizar el contrato con el propietario."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Puedo vender y arrendar con Amaru FS Inmobiliaria?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Sí. La página ofrece rutas claras para venta y arriendo, según el objetivo del propietario."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Qué necesita Amaru FS Inmobiliaria antes de publicar?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Necesita conocer el inmueble, resolver dudas, visitarlo, registrar material visual, verificar la ficha técnica y formalizar el contrato correspondiente."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "¿Amaru FS Inmobiliaria garantiza el cierre?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "No. El contenido promete acompañamiento, publicación clara y seguimiento, no resultados garantizados."
-                }
-              }
-            ]
-          }
-    </script>
-  </Fragment>
-
   <main id="inicio">
     <section class="hero">
       <div class="hero__content">
@@ -231,39 +208,6 @@ import "../styles/pages/propietarios.css";
       <Button variant="secondary" icon="fa-brands fa-whatsapp" id="propietarios-iniciar-validacion" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20iniciar%20la%20validaci%C3%B3n%20de%20mi%20inmueble." external>Iniciar validación por WhatsApp</Button>
     </section>
 
-    <section class="faq section-pad" aria-labelledby="faq-title">
-      <SectionHeading eyebrow="FAQ" title="Preguntas frecuentes de propietarios" titleId="faq-title" />
-      <div class="faq-list" data-faq-list>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿El propietario publica directamente su inmueble?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>No. Amaru FS Inmobiliaria publica el inmueble después de validar información, registrar fotos y videos,
-              verificar la ficha técnica y formalizar el contrato con el propietario.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Puedo vender y arrendar con Amaru FS Inmobiliaria?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Sí. La página ofrece rutas claras para venta y arriendo, según el objetivo del propietario.</p>
-          </div>
-        </article>
-        <article class="faq-item">
-          <button type="button" aria-expanded="false">
-            <span>¿Qué necesita Amaru FS Inmobiliaria antes de publicar?</span>
-            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-          </button>
-          <div class="faq-item__body">
-            <p>Necesita conocer el inmueble, resolver dudas, visitarlo, registrar material visual, verificar la ficha
-              técnica y formalizar el contrato correspondiente.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+    <FaqSection title="Preguntas frecuentes de propietarios" items={faqItems} />
   </main>
 </BaseLayout>
