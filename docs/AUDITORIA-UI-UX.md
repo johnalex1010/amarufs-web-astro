@@ -155,7 +155,7 @@ Orden recomendado (de mayor a menor reutilización y riesgo bajo primero):
 | # | Componente | Carpeta | Páginas a migrar | Notas |
 | --- | --- | --- | --- | --- |
 | 3.0 | Crear carpetas `components/ui`, `components/sections`, `components/property`, `styles/components`, `scripts/components`. | — | — | Base de la estructura. |
-| 3.1 | `Button` | `ui/` | 8 | CSS único con 4 variantes y estados `hover/focus/active/disabled`; prop `external` añade `target="_blank" rel="noopener noreferrer"`. Borrar ~110 bloques `.btn` de páginas. |
+| 3.1 ✅ | `Button` | `ui/` | 8 | **Hecho (12/11/2026).** 30 botones migrados; CSS único en `styles/components/button.css`; ~530 líneas de CSS duplicado eliminadas de `utilities.css` y las 8 hojas de página; los enlaces externos ahora llevan `rel="noopener noreferrer"`. Los botones que eran `.btn--primary` pero se veían verde menta (hero y ficha) pasaron a `variant="secondary"`, sin cambio visual. |
 | 3.2 | `SectionHeading` | `ui/` | 8 | Incluye `.eyebrow`. |
 | 3.3 | `FaqSection` | `sections/` | 8 | Pinta el acordeón **y** el JSON-LD `FAQPage` desde el mismo arreglo; `aria-controls`. Elimina el riesgo de FAQ visibles distintas a las del schema. |
 | 3.4 | `PageHero` | `sections/` | 7 | Props de contenido + panel; imagen de fondo como `<img fetchpriority="high">` (mejora LCP); `alt` reales. |

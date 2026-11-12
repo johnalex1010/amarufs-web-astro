@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
 import { site } from "../data/site";
 import { getPublishedProperties } from "../lib/properties";
 import {
@@ -96,8 +97,8 @@ const faqJsonLd = {
         <h1>Inmuebles disponibles para arriendo y venta</h1>
         <p class="hero__lead">Consulta propiedades publicadas por Amaru FS Inmobiliaria. Usa el buscador y los filtros para encontrar inmuebles según operación, tipo, ubicación y características disponibles.</p>
         <div class="hero__actions" aria-label="Acciones principales">
-          <a id="inmuebles-buscar" class="btn btn--primary" href="#buscador"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar inmueble</a>
-          <a id="inmuebles-publicar" class="btn btn--light" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Tengo un inmueble para publicar</a>
+          <Button variant="secondary" icon="fa-solid fa-magnifying-glass" id="inmuebles-buscar" href="#buscador">Buscar inmueble</Button>
+          <Button variant="light" icon="fa-solid fa-key" id="inmuebles-publicar" href="/propietarios/">Tengo un inmueble para publicar</Button>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
@@ -174,8 +175,8 @@ const faqJsonLd = {
             </fieldset>
           </div>
           <div class="filter-actions">
-            <button class="btn btn--primary" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar</button>
-            <button class="btn btn--ghost" type="button" data-clear-filters><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Limpiar filtros</button>
+            <Button variant="primary" icon="fa-solid fa-magnifying-glass" type="submit">Buscar</Button>
+            <Button variant="ghost" icon="fa-solid fa-rotate-left" data-clear-filters>Limpiar filtros</Button>
           </div>
         </form>
       </aside>
@@ -260,8 +261,8 @@ const faqJsonLd = {
           <h2>No encontramos inmuebles publicados</h2>
           <p>El inventario visible puede ser limitado mientras Amaru FS valida información, fotos, precio y disponibilidad.</p>
           <div class="empty-state__actions">
-            <button class="btn btn--primary" type="button" data-clear-filters><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Limpiar filtros</button>
-            <a class="btn btn--ghost" href={`https://wa.me/${site.whatsapp}?text=Hola%20Amaru%20FS%2C%20estoy%20buscando%20un%20inmueble.`} target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
+            <Button variant="primary" icon="fa-solid fa-rotate-left" data-clear-filters>Limpiar filtros</Button>
+            <Button variant="ghost" icon="fa-brands fa-whatsapp" href={`https://wa.me/${site.whatsapp}?text=Hola%20Amaru%20FS%2C%20estoy%20buscando%20un%20inmueble.`} external>Consultar por WhatsApp</Button>
           </div>
         </div>
       </div>
@@ -280,7 +281,7 @@ const faqJsonLd = {
         <h2 id="owners-title">¿Tienes un inmueble para vender o arrendar?</h2>
         <p>Amaru FS Inmobiliaria valida tu inmueble, registra fotos y videos, verifica la ficha técnica y publica después del contrato con el propietario.</p>
       </div>
-      <a id="inmuebles-publicar-iniciar" class="btn btn--secondary" href="/propietarios/"><i class="fa-solid fa-key" aria-hidden="true"></i> Iniciar validación de mi inmueble</a>
+      <Button variant="secondary" icon="fa-solid fa-key" id="inmuebles-publicar-iniciar" href="/propietarios/">Iniciar validación de mi inmueble</Button>
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">

@@ -1,0 +1,65 @@
+---
+/**
+ * Botón reutilizable del sitio (docs/GUIA-UI-UX.md §7.1).
+ * - Con `href` se pinta como enlace (<a>); sin `href`, como <button>.
+ * - `external` abre en pestaña nueva con rel="noopener noreferrer".
+ * - Cualquier atributo extra (data-*, aria-*, disabled) se pasa tal cual.
+ */
+import type { HTMLAttributes } from "astro/types";
+import "../../styles/components/button.css";
+
+type Variant = "primary" | "secondary" | "light" | "ghost";
+type Size = "md" | "sm";
+
+interface Props extends Omit<HTMLAttributes<"a"> & HTMLAttributes<"button">, "class" | "type"> {
+  href?: string;
+  variant?: Variant;
+  size?: Size;
+  /** Clases de Font Awesome, p. ej. "fa-brands fa-whatsapp". */
+  icon?: string;
+  external?: boolean;
+  type?: "button" | "submit" | "reset";
+  block?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  icon,
+  external = false,
+  type = "button",
+  block = false,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const classes = [
+  "btn",
+  `btn--${variant}`,
+  size === "sm" && "btn--sm",
+  block && "btn--block",
+  className
+];
+---
+
+{
+  href ? (
+    <a
+      class:list={classes}
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      {...attrs}
+    >
+      {icon && <i class={icon} aria-hidden="true"></i>}
+      <slot />
+    </a>
+  ) : (
+    <button class:list={classes} type={type} {...attrs}>
+      {icon && <i class={icon} aria-hidden="true"></i>}
+      <slot />
+    </button>
+  )
+}

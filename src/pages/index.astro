@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
 import "../styles/pages/home.css";
 ---
 
@@ -79,12 +80,8 @@ import "../styles/pages/home.css";
           información clara, fotos reales, seguimiento por WhatsApp y un proceso pensado para generar confianza desde el
           primer contacto.</p>
         <div class="hero__actions" aria-label="Acciones principales">
-          <a id="home-validar-whatsapp" class="btn btn--primary"
-            href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20validar%20mi%20inmueble."
-            target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Quiero validar mi
-            inmueble</a>
-          <a id="home-ver-inmuebles" class="btn btn--light" href="/inmuebles/"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver
-            inmuebles disponibles</a>
+          <Button variant="secondary" icon="fa-brands fa-whatsapp" id="home-validar-whatsapp" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20validar%20mi%20inmueble." external>Quiero validar mi inmueble</Button>
+          <Button variant="light" icon="fa-solid fa-building" id="home-ver-inmuebles" href="/inmuebles/">Ver inmuebles disponibles</Button>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
@@ -144,8 +141,7 @@ import "../styles/pages/home.css";
         <h2 id="properties-title">Propiedades disponibles para visitar, arrendar o comprar</h2>
         <p>Consulta inmuebles reales con información de precio, ubicación, características, fotos y disponibilidad. Si
           alguno te interesa, escríbenos por WhatsApp para confirmar detalles y avanzar al siguiente paso.</p>
-        <a id="home-ver-inmuebles" class="btn btn--primary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20consultar%20inmuebles%20disponibles." target="_blank" rel="noopener"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Ver
-          todos los inmuebles</a>
+        <Button variant="primary" icon="fa-solid fa-list-check" id="home-ver-inmuebles" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20consultar%20inmuebles%20disponibles." external>Ver todos los inmuebles</Button>
       </div>
       <div class="properties__visual" style="background-image: linear-gradient(180deg, rgba(11, 34, 83, 0.16), rgba(11, 34, 83, 0.48)), url('/images/fotos-reales.webp');" aria-label="Espacio editorial con fotografía real de inmueble">
         <div class="property-window">

@@ -297,12 +297,6 @@ main {
 	gap: 9px;
 }
 
-.property-summary .btn {
-	min-height: 44px;
-	padding: 11px 18px;
-	font-size: 14px;
-}
-
 .summary-note {
 	display: flex;
 	gap: 10px;
@@ -314,54 +308,6 @@ main {
 .summary-note i {
 	color: var(--color-primary);
 	margin-top: 4px;
-}
-
-.btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 9px;
-	min-height: 48px;
-	padding: 13px 22px;
-	border: 1px solid transparent;
-	border-radius: var(--radius);
-	font-weight: 700;
-	text-decoration: none;
-}
-
-.btn:hover,
-.btn:focus-visible {
-	transform: translateY(-2px);
-	box-shadow: 0 16px 34px rgba(16, 26, 45, 0.18);
-}
-
-.btn--primary {
-	color: var(--color-primary);
-	background: var(--color-secondary);
-}
-
-.btn--secondary {
-	color: var(--color-primary);
-	background: var(--color-secondary);
-}
-
-.btn--ghost {
-	color: var(--color-primary);
-	background: var(--color-white);
-	border-color: var(--color-line);
-}
-
-.btn--primary:hover,
-.btn--primary:focus-visible,
-.btn--secondary:hover,
-.btn--secondary:focus-visible {
-	background: #10f0bf;
-}
-
-.btn--ghost:hover,
-.btn--ghost:focus-visible {
-	background: #f7f9fd;
-	border-color: rgba(26, 59, 137, 0.32);
 }
 
 .eyebrow {

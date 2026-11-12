@@ -22,59 +22,6 @@
   font-size: clamp(2.2rem, 4vw, 4.3rem);
 }
 
-.btn {
-  align-items: center;
-  border-radius: 6px;
-  display: inline-flex;
-  font-weight: 800;
-  gap: 10px;
-  justify-content: center;
-  min-height: 48px;
-  padding: 13px 20px;
-  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-.btn--primary {
-  background: var(--color-btn);
-  color: var(--color-white);
-}
-
-.btn--secondary {
-  background: var(--color-secondary);
-  color: #0b2a25;
-}
-
-.btn--light {
-  background: var(--color-white);
-  color: var(--color-primary);
-}
-
-.hero .hero__actions .btn--primary {
-  background: var(--color-secondary);
-  color: var(--color-primary);
-}
-
-.hero .hero__actions .btn--primary:hover,
-.hero .hero__actions .btn--primary:focus-visible {
-  background: #10f0bf;
-}
-
-.hero .hero__actions .btn--light {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  color: var(--color-white);
-}
-
-.hero .hero__actions .btn--light:hover,
-.hero .hero__actions .btn--light:focus-visible {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.78);
-}
-
 .reveal {
   opacity: 0;
   transform: translateY(18px);

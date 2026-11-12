@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
 import "../styles/pages/referidos.css";
 ---
 
@@ -83,11 +84,8 @@ import "../styles/pages/referidos.css";
         <h1>Refiere propietarios o interesados y participa por recompensa de cierre</h1>
         <p class="hero__lead">Si conoces a alguien que quiere vender o arrendar su inmueble, o a una persona que busca comprar o tomar en arriendo, puedes conectarlo con Amaru FS Inmobiliaria. Si el referido es válido y el negocio se cierra con nosotros, puedes recibir una recompensa según las reglas del programa.</p>
         <div class="hero__actions" aria-label="Acciones principales">
-          <a class="btn btn--primary"
-            href="#simulator-title"><i class="fa-solid fa-handshake-angle" aria-hidden="true"></i> Quiero
-            referir ahora</a>
-          <a class="btn btn--light" href="#valid-title"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Ver reglas
-            del programa</a>
+          <Button variant="secondary" icon="fa-solid fa-handshake-angle" href="#simulator-title">Quiero referir ahora</Button>
+          <Button variant="light" icon="fa-solid fa-list-check" href="#valid-title">Ver reglas del programa</Button>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
@@ -317,8 +315,8 @@ import "../styles/pages/referidos.css";
               </div>
             </div>
             <div class="intake-actions">
-              <button type="button" class="btn btn--ghost" data-intake-prev disabled>Anterior</button>
-              <button type="button" class="btn btn--secondary" data-intake-next>Siguiente</button>
+              <Button variant="ghost" data-intake-prev disabled>Anterior</Button>
+              <Button variant="secondary" data-intake-next>Siguiente</Button>
             </div>
             <p class="intake-status" data-intake-status aria-live="polite"></p>
           </form>

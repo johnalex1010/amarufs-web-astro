@@ -137,6 +137,9 @@ amarufs/
     public/
     src/
       components/
+        global/      # header, footer, migas de pan
+        ui/          # piezas genéricas reutilizables (Button, ...)
+        common/      # modales y piezas de negocio
       data/
         properties.ts
       lib/
@@ -145,6 +148,8 @@ amarufs/
         inmuebles/
       scripts/
       styles/
+        components/  # un CSS por componente reutilizable
+        pages/       # layout propio de cada página
     scripts/
       pull-strapi-properties.mjs
 ```

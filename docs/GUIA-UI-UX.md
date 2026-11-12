@@ -360,7 +360,7 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 | `SiteHeader` ✅ | `global/` | `.site-header`, `.main-nav` | `activePage` |
 | `SiteFooter` ✅ | `global/` | `.site-footer` | — |
 | `Breadcrumbs` ✅ | `global/` | `.breadcrumbs` | `items` |
-| `Button` | `ui/` | `.btn`, `.btn--*` | `href?`, `variant`, `icon?`, `id?`, `external?`, `type?` |
+| `Button` ✅ | `ui/` | `.btn`, `.btn--*` | `href?`, `variant`, `size?`, `icon?`, `external?`, `type?`, `block?` (ver §7.1) |
 | `SectionHeading` | `ui/` | `.section-heading` + `.eyebrow` | `eyebrow?`, `title`, `titleId`, `headingLevel?` |
 | `Card` | `ui/` | base de `.route-card`, `.service-card`, `.audience__box`, `.trust-cards` | `variant`, `image?`, `icon?`, `title`, `headingLevel?`, slot |
 | `Badge` | `ui/` | chips/estados (`.property-card__status`, tags de ficha) | `variant`, `icon?`, texto en slot |
@@ -384,22 +384,50 @@ Antes de crear algo, revisar esta tabla. Si la pieza está aquí, se usa el comp
 
 ### 7.1 Botones (`.btn`)
 
-**Anatomía:** ícono opcional (izquierda) + etiqueta verbal. `display: inline-flex; gap: 8px; min-height: 48px; padding: 12px 20px; border-radius: var(--radius); font: 16px var(--font-body); text-decoration: none;`
+**Componente:** `src/components/ui/Button.astro` · **CSS:** `src/styles/components/button.css` (única fuente de `.btn`; prohibido redefinir `.btn` o `.btn--*` en CSS de página).
+
+```astro
+---
+import Button from "../components/ui/Button.astro";
+---
+<!-- Enlace externo (WhatsApp): agrega target="_blank" y rel="noopener noreferrer" -->
+<Button variant="secondary" icon="fa-brands fa-whatsapp" id="pagina-accion" href={whatsappHref} external>Consultar por WhatsApp</Button>
+<!-- Enlace interno -->
+<Button variant="light" icon="fa-solid fa-arrow-down" href="#proceso">Conocer el proceso</Button>
+<!-- Botón de acción (sin href) con atributos data-* -->
+<Button variant="ghost" icon="fa-solid fa-rotate-left" data-clear-filters>Limpiar filtros</Button>
+<Button variant="primary" type="submit">Buscar</Button>
+```
+
+| Prop | Valores | Default |
+| --- | --- | --- |
+| `variant` | `primary` · `secondary` · `light` · `ghost` | `primary` |
+| `size` | `md` (48 px) · `sm` (44 px, 14 px de texto; barras laterales y resúmenes) | `md` |
+| `href` | URL → pinta `<a>`; sin `href` pinta `<button>` | — |
+| `external` | abre en pestaña nueva con `rel="noopener noreferrer"` | `false` |
+| `icon` | clases Font Awesome (se agrega `aria-hidden`) | — |
+| `type` | `button` · `submit` · `reset` (solo sin `href`) | `button` |
+| `block` | ancho completo | `false` |
+| `class`, `id`, `data-*`, `aria-*`, `disabled` | se pasan tal cual | — |
+
+**Anatomía:** ícono opcional (izquierda) + etiqueta verbal. `display: inline-flex; gap: 9px; min-height: 48px; padding: 13px 22px; border-radius: var(--radius); font-weight: 700; text-decoration: none;`
 
 | Variante | Fondo | Texto | Borde | Cuándo |
 | --- | --- | --- | --- | --- |
-| `.btn--primary` | `--color-primary` | `--color-white` | — | Acción principal de la sección. Hover `#143070`. |
-| `.btn--secondary` | `--color-secondary` | `--color-primary` o `#0b2a25` | — | CTA principal **sobre fondo azul** (hero, cierres). Hover `#10f0bf`. |
-| `.btn--light` | `--color-white` | `--color-primary` | — | Acción secundaria sobre fondo azul. Variante translúcida dentro del hero. |
-| `.btn--ghost` | transparente | `--color-primary` | `1px solid var(--color-line)` | Acción secundaria/terciaria sobre fondo claro (limpiar filtros, llamar). |
+| `primary` | `--color-primary` | `--color-white` | — | Acción principal **sobre fondo claro**. Hover `#143070`. |
+| `secondary` | `--color-secondary` | `--color-primary` | — | CTA principal **sobre fondo azul** (hero, cierres) o acción destacada de la ficha. Hover `#10f0bf`. |
+| `light` | `rgba(255,255,255,0.1)` | `--color-white` | `rgba(255,255,255,0.5)` | Acción secundaria **sobre fondo azul/oscuro** (hero). Nunca sobre fondo claro. |
+| `ghost` | `--color-white` | `--color-primary` | `1px solid var(--color-line)` | Acción secundaria/terciaria sobre fondo claro (limpiar filtros, llamar, "Anterior"). |
+
+En CSS de página solo se permiten ajustes de **layout por contexto** (ancho, márgenes, alineación), p. ej. `.hero__actions .btn { width: 100%; }` o `.intake-actions .btn { min-height: 56px; }`.
 
 Reglas:
 
 - **Un solo botón primario por bloque visual.** Si hay dos acciones, la segunda es `light` o `ghost`.
 - Etiquetas con verbo y resultado: "Consultar disponibilidad", "Ver ficha del inmueble". Evitar "Clic aquí", "Más".
-- Botón ≠ enlace: si navega a otra URL es `<a class="btn">`; si ejecuta una acción en la página es `<button type="button">`.
+- Botón ≠ enlace: si navega a otra URL lleva `href` (se pinta `<a>`); si ejecuta una acción en la página va sin `href` (se pinta `<button type="button">`).
 - Si el botón abre WhatsApp, debe decirlo (ícono `fa-whatsapp` + texto "por WhatsApp" o etiqueta clara). **Un botón que dice "Ver inmuebles" debe ir a `/inmuebles/`, no a WhatsApp.**
-- Estados obligatorios: `:hover`, `:focus-visible`, `:active`, `[disabled]`/`[aria-disabled="true"]` (opacidad 0.5, sin elevación, `cursor: not-allowed`).
+- Estados obligatorios (ya incluidos en el componente): `:hover`, `:focus-visible`, `:active`, `[disabled]`/`[aria-disabled="true"]` (opacidad 0.58, sin elevación, `cursor: not-allowed`).
 - En móvil (≤ 520 px) los botones de un grupo pueden ocupar ancho completo.
 - `id` únicos por página (se usan para GTM). No repetir `id`.
 

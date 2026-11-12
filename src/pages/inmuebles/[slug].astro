@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/ui/Button.astro";
 import RentalRequirementsModal from "../../components/common/RentalRequirementsModal.astro";
 import { site } from "../../data/site";
 import { getPublishedProperties, getPublishedPropertyBySlug } from "../../lib/properties";
@@ -371,8 +372,8 @@ const faqJsonLd = {
         ))}
       </dl>
       <div class="summary-actions">
-        <a id="inmueble-consultar-disponibilidad" class="btn btn--primary" href={whatsappHref} target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar disponibilidad</a>
-        <a id="inmueble-llamar-asesor" class="btn btn--ghost" href={`tel:+${site.whatsapp}`}><i class="fa-solid fa-phone" aria-hidden="true"></i> Llamar a un asesor</a>
+        <Button variant="secondary" size="sm" icon="fa-brands fa-whatsapp" id="inmueble-consultar-disponibilidad" href={whatsappHref} external>Consultar disponibilidad</Button>
+        <Button variant="ghost" size="sm" icon="fa-solid fa-phone" id="inmueble-llamar-asesor" href={`tel:+${site.whatsapp}`}>Llamar a un asesor</Button>
       </div>
       <p class="summary-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Escríbenos con el código del inmueble y te confirmamos disponibilidad, condiciones y fecha de visita.</p>
     </aside>
@@ -504,7 +505,7 @@ const faqJsonLd = {
         <h2 id="closing-title">¿Te interesa este inmueble?</h2>
         <p>Escríbenos y te indicamos el siguiente paso para {isDual ? "tomarlo en arriendo o presentar tu oferta de compra" : isRent ? "tomarlo en arriendo" : "visitarlo y presentar tu oferta"}.</p>
       </div>
-      <a id="inmueble-consultar-por-whatsapp" class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
+      <Button variant="secondary" icon="fa-brands fa-whatsapp" id="inmueble-consultar-por-whatsapp" href={whatsappHref} external>Consultar por WhatsApp</Button>
     </section>
 
     <section class="faq section-pad section-band section-band--gray" aria-labelledby="faq-title">
@@ -585,9 +586,7 @@ const faqJsonLd = {
         <p class="eyebrow">Requisitos</p>
         <h2 id="sale-requirements-modal-title">Valida los requisitos con tu asesor</h2>
         <p>Para avanzar con la compra de este inmueble, confirma directamente con tu asesor de Amaru FS Inmobiliaria los documentos, condiciones comerciales y pasos necesarios según el caso.</p>
-        <a class="btn btn--secondary" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Hablar con asesor
-        </a>
+        <Button variant="secondary" icon="fa-brands fa-whatsapp" href={whatsappHref} external>Hablar con asesor</Button>
       </div>
     </dialog>
   )}

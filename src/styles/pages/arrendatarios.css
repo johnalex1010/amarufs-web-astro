@@ -100,58 +100,6 @@
 	color: rgba(255, 255, 255, 0.86);
 }
 
-.btn {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 9px;
-	min-height: 48px;
-	padding: 13px 22px;
-	border: 1px solid transparent;
-	border-radius: var(--radius);
-	font-weight: 700;
-	text-decoration: none;
-	transition:
-		transform 160ms ease,
-		box-shadow 160ms ease,
-		background 160ms ease;
-}
-
-.btn:hover,
-.btn:focus-visible {
-	transform: translateY(-2px);
-	box-shadow: 0 16px 34px rgba(16, 26, 45, 0.18);
-}
-
-.btn--primary {
-	color: var(--color-primary);
-	background: var(--color-secondary);
-}
-
-.btn--light {
-	color: var(--color-white);
-	border-color: rgba(255, 255, 255, 0.5);
-	background: rgba(255, 255, 255, 0.1);
-}
-
-.btn--secondary {
-	color: var(--color-primary);
-	background: var(--color-secondary);
-}
-
-.btn--primary:hover,
-.btn--primary:focus-visible,
-.btn--secondary:hover,
-.btn--secondary:focus-visible {
-	background: #10f0bf;
-}
-
-.btn--light:hover,
-.btn--light:focus-visible {
-	border-color: rgba(255, 255, 255, 0.78);
-	background: rgba(255, 255, 255, 0.18);
-}
-
 .section-heading {
 	max-width: 780px;
 	margin-bottom: 34px;
@@ -587,14 +535,8 @@
 	transform: translateY(0) scale(1);
 }
 
-.btn i,
 .hero__panel-icon {
 	transition: transform 220ms ease;
-}
-
-.btn:hover i,
-.btn:focus-visible i {
-	transform: translateY(-1px);
 }
 
 @media (max-width: 1100px) {

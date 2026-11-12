@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/ui/Button.astro";
 import RentalRequirementsModal from "../components/common/RentalRequirementsModal.astro";
 import "../styles/pages/arrendatarios.css";
 ---
@@ -71,8 +72,8 @@ import "../styles/pages/arrendatarios.css";
         <h1>Encuentra inmuebles en arriendo con información clara y atención directa</h1>
         <p class="hero__lead">Si te interesa un inmueble publicado por Amaru FS Inmobiliaria, te compartimos características, fotos, videos y requisitos. Cuando el proceso avanza, la aseguradora realiza el estudio de viabilidad del interesado y su deudor. Una vez aprobados, generamos el contrato de arrendamiento.</p>
         <div class="hero__actions" aria-label="Acciones principales">
-          <a id="arrendatarios-ver-inmuebles" class="btn btn--primary" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." target="_blank" rel="noopener"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
-          <a id="arrendatarios-mas-informacion" class="btn btn--light" href="#informacion"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i> Más información</a>
+          <Button variant="secondary" icon="fa-solid fa-building" id="arrendatarios-ver-inmuebles" href="https://wa.me/573158774545?text=Hola%20Amaru%20FS%2C%20quiero%20ver%20inmuebles%20disponibles%20en%20arriendo." external>Ver inmuebles disponibles</Button>
+          <Button variant="light" icon="fa-solid fa-arrow-down" id="arrendatarios-mas-informacion" href="#informacion">Más información</Button>
         </div>
       </div>
       <aside class="hero__panel" aria-labelledby="hero-panel-title">
@@ -232,7 +233,7 @@ import "../styles/pages/arrendatarios.css";
         <h2 id="closing-title">¿Ya viste un inmueble que te interesa?</h2>
         <p>Escríbenos por WhatsApp con el nombre o enlace del inmueble. Confirmamos información disponible, te compartimos requisitos y te indicamos el paso siguiente para avanzar con aseguradora.</p>
       </div>
-      <a id="arrendatarios-ver-inmuebles-iniciar" class="btn btn--secondary" href="/inmuebles/"><i class="fa-solid fa-building" aria-hidden="true"></i> Ver inmuebles disponibles</a>
+      <Button variant="secondary" icon="fa-solid fa-building" id="arrendatarios-ver-inmuebles-iniciar" href="/inmuebles/">Ver inmuebles disponibles</Button>
     </section>
 
     <section class="faq section-pad" aria-labelledby="faq-title">
